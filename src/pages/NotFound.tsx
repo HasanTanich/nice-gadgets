@@ -10,7 +10,7 @@ const NotFound = () => {
     }, 1500);
   }, []);
   return (
-    <h1>404 Not Found</h1>
+    <h1 style={{margin: '10%'}}>404 Page Not Found</h1>
   );
 };
 

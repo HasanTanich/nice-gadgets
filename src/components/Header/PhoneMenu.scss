@@ -1,0 +1,48 @@
+@import '../../styles/utils';
+
+.phoneMenu {
+  &-menuItems {
+
+    @include flex-content(center, column);
+    padding: 0px;
+    gap: 16px;
+    margin-top: calc(50% - 38%);
+
+    &-item {
+      padding: 8px 0;
+      color: $secondaryColor;
+      font-weight: 800;
+      font-size: 12px;
+      line-height: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+
+      &:hover {
+        color: $primaryColor;
+      }
+    }
+  }
+
+  &-bottomItems {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    @include flex-content(space-between);
+    width: 100%;
+    border: 1px solid $elementsColor;
+    height: 64px;
+
+    &-item {
+      height: 100%;
+      flex-grow: 1;
+      @include flex-content(center);
+      border: 1px solid $elementsColor;
+
+    }
+  }
+
+  .active {
+    border-bottom: 2px solid $primaryColor;
+    color: $primaryColor;
+  }
+}

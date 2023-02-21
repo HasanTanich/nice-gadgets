@@ -1,16 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import './Header.scss';
 
+import PhoneMenu from './PhoneMenu';
 import Logo  from '../../assets/icons/Logo.svg';
 import Heart  from '../../assets/icons/Heart.svg';
 import Cart  from '../../assets/icons/Cart.svg';
+import Menu  from '../../assets/icons/Menu.svg';
+import Close  from '../../assets/icons/Close.svg';
 
-const Header = () => {
+const Header = ({screenSize} : {screenSize: number}) => {
+
+  const [phoneMenu, setPhoneMenu] = useState(false);
+
+  const onToggleMenu = () => {
+    setPhoneMenu(!phoneMenu);
+  };
+
+  useEffect(() => {
+    if (screenSize <= 640) {
+      phoneMenu && setPhoneMenu(true);
+    } else {
+      setPhoneMenu(false);
+    }
+  }, [screenSize]);
+
+  const onPhoneNavigate = () => {
+    setPhoneMenu(false);
+  };
+  
   return (
     <>
       <nav className="header">
-        <Link to="/" className="header-logoBox">
+
+        <Link to="/" className="header-logoBox" onClick={()=> setPhoneMenu(false)}>
           <div className="header-logoBox-logo">
             <img src={Logo} alt="Logo" />
           </div>
@@ -27,20 +50,35 @@ const Header = () => {
         </div>
 
         <div className="header-buttonsRight">
-          <div className="header-buttonsRight-item">
-            <Link to='/favorites' >
-              <img src={Heart} alt="heart icon" />
-            </Link>
-          </div>
-          <div className="header-buttonsRight-item">
-            <Link to='/cart'>
+          <NavLink to='/favorites' className="header-buttonsRight-item">
+            <div>
+              <img src={Heart} alt="heart icon" className="heartIcon" />
+            </div>
+          </NavLink>
+
+          <NavLink to='/cart' className="header-buttonsRight-item" >
+            <div >
               <img src={Cart} alt="heart icon" />
-            </Link>
-          </div>
+            </div>
+          </NavLink>
+
+          <button 
+            type='button' 
+            className="header-buttonsRight-item header-buttonsRight-phone"
+            onClick={onToggleMenu}
+          >
+            <img 
+              src={phoneMenu ? Close : Menu} 
+              alt="menu icon" 
+              className={`${phoneMenu ? 'activeMenu' : 'normalMenu'}`}
+            />
+          </button>
         </div>
 
       </nav>
-      <Outlet />
+      
+      {phoneMenu && <PhoneMenu onNavigate={onPhoneNavigate}/>}
+      {!phoneMenu && <Outlet />}
     </>
   );
 };

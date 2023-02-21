@@ -66,39 +66,7 @@ button {
   &:hover {
     border: 1px solid variables.$primaryColor;
   }
-
-  &:focus {
-    background-color: variables.$primaryColor;
-    color: variables.$whiteColor;
-  }
 }
-
-// select {
-//   background-color: transparent;
-//   border: 1px solid variables.$iconsColor;
-//   font-size: 14px;
-//   line-height: 21px;
-
-//   &:hover {
-//     border: 1px solid variables.$secondaryColor;
-//   }
-
-//   &:focus {
-//     border: 1px solid variables.$primaryColor;
-//   }
-
-//   & option {
-//     background-color: #FFFFFF;
-//     border: 1px solid #E2E6E9;
-//     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
-//     color: variables.$secondaryColor;
-
-//     &:hover {
-//       background-color: variables.$hoverColor-bg;
-//       color: variables.$primaryColor;
-//     }
-//   }
-// }
 
 img {
   display: block;

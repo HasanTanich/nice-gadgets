@@ -1,34 +1,32 @@
 @import '../../styles/utils';
 
 .header {
-  display: flex;
-  align-items: center;
+  @include flex-content;
   gap: 24px;
   font-size: 12px;
   line-height: 11px;
   box-shadow: 0px 1px 0px $elementsColor;
   height: 64px;
 
-  @include onLarge {
+  @include onMedium {
     gap: 16px;
     height: 48px;
   }
 
   &-logoBox {
-    display: flex;
-    align-items: center;
+    @include flex-content;
     padding: 0px 24px;
     flex: none;
     order: 1;
     align-self: stretch;
 
-    @include onLarge {
+    @include onMedium {
       padding: 0 16px;
     }
 
     &-logo {
 
-      @include onLarge {
+      @include onMedium {
         height: 22px;
         width: 64px;
       }
@@ -38,19 +36,21 @@
   &-menuItems {
     display: flex;
     gap: 64px;
-    text-transform: uppercase;
     flex: none;
     order: 1;
     align-self: stretch;
 
-    @include onLarge {
+    @include onMedium {
       gap: 32px
     }
 
+    @include onSmall {
+      display: none;
+    }
+
     &-item {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      @include flex-content(center, column);
+      text-transform: uppercase;
       padding: 8px 0px;
       gap: 8px;
       color: $secondaryColor;
@@ -64,24 +64,37 @@
   }
 
   &-buttonsRight {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    @include flex-content(flex-end);
     flex: none;
     order: 2;
     flex-grow: 1;
     align-self: stretch;
 
     &-item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include flex-content(center);
       width: 64px;
       height: 100%;
       border-left: 1px solid #E2E6E9;
 
-      @include onLarge {
+      &:hover {
+        border: 1px solid $primaryColor;
+      }
+
+      @include onMedium {
         width: 48px
+      }
+
+      @include onSmall {
+        display: none;
+      }
+    }
+
+    &-phone {
+
+      display: none;
+
+      @include onSmall {
+        display: flex;
       }
     }
   }
@@ -90,4 +103,14 @@
 .active {
   border-bottom: 3px solid $primaryColor;
   color: $primaryColor;
+}
+
+.activeMenu {
+  transition: transform 1.5s;
+  transform: rotate(180deg);
+}
+
+.normalMenu {
+  transition: transform 1.5s;
+  transform: rotate(-180deg);
 }

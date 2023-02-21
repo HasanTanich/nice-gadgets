@@ -1,7 +1,8 @@
-@mixin flex-center {
+@mixin flex-content($position: flex-start, $direction: row) {
   display: flex;
-  justify-content: center;
+  flex-direction: $direction;
   align-items: center;
+  justify-content: $position;
 }
 
 @mixin onSmall {
@@ -11,12 +12,6 @@
 }
 
 @mixin onMedium {
-  @media (max-width:1024) {
-    @content;
-  }
-}
-
-@mixin onLarge {
   @media (max-width:1200px) {
     @content;
   }
