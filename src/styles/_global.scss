@@ -1,0 +1,106 @@
+@use './utils/variables' as variables;
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+p,
+pre,
+blockquote,
+figure,
+hr {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+
+  &:active {
+    color: inherit;
+  }
+}
+
+input,
+textarea,
+select,
+button {
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+select option:hover {
+  background-color: transparent;
+  outline: none;
+}
+
+button {
+  border-radius: 0;
+  padding: 0.75em 1em;
+  background-color: transparent;
+  border: 1px solid variables.$elementsColor;
+  font-size: 14px;
+  line-height: 21px;
+
+  &:hover {
+    border: 1px solid variables.$primaryColor;
+  }
+
+  &:focus {
+    background-color: variables.$primaryColor;
+    color: variables.$whiteColor;
+  }
+}
+
+// select {
+//   background-color: transparent;
+//   border: 1px solid variables.$iconsColor;
+//   font-size: 14px;
+//   line-height: 21px;
+
+//   &:hover {
+//     border: 1px solid variables.$secondaryColor;
+//   }
+
+//   &:focus {
+//     border: 1px solid variables.$primaryColor;
+//   }
+
+//   & option {
+//     background-color: #FFFFFF;
+//     border: 1px solid #E2E6E9;
+//     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
+//     color: variables.$secondaryColor;
+
+//     &:hover {
+//       background-color: variables.$hoverColor-bg;
+//       color: variables.$primaryColor;
+//     }
+//   }
+// }
+
+img {
+  display: block;
+  max-width: 100%;
+}

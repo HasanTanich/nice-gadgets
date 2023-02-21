@@ -1,0 +1,23 @@
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin onSmall {
+  @media (max-width:640px) {
+    @content;
+  }
+}
+
+@mixin onMedium {
+  @media (max-width:1024) {
+    @content;
+  }
+}
+
+@mixin onLarge {
+  @media (max-width:1200px) {
+    @content;
+  }
+}
