@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import './App.scss';
 
 import {Homepage, Phones, Tablets, Accessories, NotFound, Favorites, Cart} from './pages';
 import {Header} from './components';
