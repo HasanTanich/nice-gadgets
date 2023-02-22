@@ -8,6 +8,7 @@ import Heart  from '../../assets/icons/Heart.svg';
 import Cart  from '../../assets/icons/Cart.svg';
 import Menu  from '../../assets/icons/Menu.svg';
 import Close  from '../../assets/icons/Close.svg';
+import Footer from '../Footer/Footer';
 
 const Header = ({screenSize} : {screenSize: number}) => {
 
@@ -79,6 +80,8 @@ const Header = ({screenSize} : {screenSize: number}) => {
       
       {phoneMenu && <PhoneMenu onNavigate={onPhoneNavigate}/>}
       {!phoneMenu && <Outlet />}
+      {!phoneMenu && <Footer />}
+      
     </>
   );
 };
