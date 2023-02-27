@@ -2,86 +2,80 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import './Header.scss';
 
-import PhoneMenu from './PhoneMenu';
-import Logo  from '../../assets/icons/Logo.svg';
-import Heart  from '../../assets/icons/Heart.svg';
-import Cart  from '../../assets/icons/Cart.svg';
-import Menu  from '../../assets/icons/Menu.svg';
-import Close  from '../../assets/icons/Close.svg';
+import { Logo, Heart, Cart, Menu, Close}  from '../../assets/icons';
 import Footer from '../Footer/Footer';
 
 const Header = ({screenSize} : {screenSize: number}) => {
 
-  const [phoneMenu, setPhoneMenu] = useState(false);
+  const [phone, setPhone] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(false);
 
   const onToggleMenu = () => {
-    setPhoneMenu(!phoneMenu);
+    setActiveMenu(!activeMenu);
   };
-
+  
   useEffect(() => {
     if (screenSize <= 640) {
-      phoneMenu && setPhoneMenu(true);
+      setPhone(true);
     } else {
-      setPhoneMenu(false);
+      setPhone(false);
+      setActiveMenu(false);
     }
   }, [screenSize]);
 
-  const onPhoneNavigate = () => {
-    setPhoneMenu(false);
-  };
-  
   return (
     <>
       <nav className="header">
 
-        <Link to="/" className="header-logoBox" onClick={()=> setPhoneMenu(false)}>
+        <Link to="/" className="header-logoBox" onClick={()=> setActiveMenu(false)}>
           <div className="header-logoBox-logo">
             <img src={Logo} alt="Logo" />
           </div>
         </Link>
 
-        <div className="header-menuItems">
-          <NavLink to='/' className="header-menuItems-item">Home</NavLink>
+        <div className={`header-menu ${(!activeMenu === true && phone === true) ? 'phoneMenu' : ''}`}>
+
+          <div className="header-menu-leftItems">
+            <NavLink to='/' className="header-menu-leftItems-item" onClick={()=>setActiveMenu(false)}>Home</NavLink>
        
-          <NavLink to='/phones' className="header-menuItems-item">Phones</NavLink>
+            <NavLink to='/phones' className="header-menu-leftItems-item" onClick={()=>setActiveMenu(false)}>Phones</NavLink>
         
-          <NavLink to='/tablets' className="header-menuItems-item">Tablets</NavLink>
+            <NavLink to='/tablets' className="header-menu-leftItems-item" onClick={()=>setActiveMenu(false)}>Tablets</NavLink>
         
-          <NavLink to='/accessories' className="header-menuItems-item">Accessories</NavLink>
+            <NavLink to='/accessories' className="header-menu-leftItems-item" onClick={()=>setActiveMenu(false)}>Accessories</NavLink>
+          </div>
+
+          <div className="header-menu-buttonsRight">
+            <NavLink to='/favorites' className="header-menu-buttonsRight-item" onClick={()=>setActiveMenu(false)}>
+              <div>
+                <img src={Heart} alt="heart icon" className="heartIcon" />
+              </div>
+            </NavLink>
+
+            <NavLink to='/cart' className="header-menu-buttonsRight-item" onClick={()=>setActiveMenu(false)}>
+              <div >
+                <img src={Cart} alt="heart icon" />
+              </div>
+            </NavLink>
+
+          </div>
         </div>
 
-        <div className="header-buttonsRight">
-          <NavLink to='/favorites' className="header-buttonsRight-item">
-            <div>
-              <img src={Heart} alt="heart icon" className="heartIcon" />
-            </div>
-          </NavLink>
-
-          <NavLink to='/cart' className="header-buttonsRight-item" >
-            <div >
-              <img src={Cart} alt="heart icon" />
-            </div>
-          </NavLink>
-
-          <button 
-            type='button' 
-            className="header-buttonsRight-item header-buttonsRight-phone"
-            onClick={onToggleMenu}
-          >
-            <img 
-              src={phoneMenu ? Close : Menu} 
-              alt="menu icon" 
-              className={`${phoneMenu ? 'activeMenu' : 'normalMenu'}`}
-            />
-          </button>
-        </div>
-
+        <button 
+          type='button' 
+          className="header-phone"
+          onClick={onToggleMenu}
+        >
+          <img 
+            src={activeMenu ? Close : Menu} 
+            alt="menu icon" 
+            className={`${activeMenu ? 'activeMenu' : 'normalMenu'}`}
+          />
+        </button>
       </nav>
-      
-      {phoneMenu && <PhoneMenu onNavigate={onPhoneNavigate}/>}
-      {!phoneMenu && <Outlet />}
-      {!phoneMenu && <Footer />}
-      
+      {(!activeMenu) && <Outlet context={{screenSize, phone}}/>}
+
+      <Footer />
     </>
   );
 };

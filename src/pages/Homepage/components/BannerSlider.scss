@@ -1,0 +1,85 @@
+@import '../../../styles/utils';
+
+.bannerSlider {
+  position: relative;
+  @include flex-content(space-between);
+  gap: 16px;
+  height: 400px;
+  width: 1136px;
+  margin: auto;
+  padding-bottom: 32px;
+
+  @include onMedium {
+    width: 592px;
+    height: 221px;
+    gap: 19px;
+  }
+
+  @include onSmall {
+    width: 100%;
+  }
+
+  & button {
+    border: 1px solid $iconsColor;
+    height: 100%;
+
+    @include onSmall {
+      display: none;
+    }
+  }
+
+  &-leftButton {
+
+    & img {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &-banners {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+
+    @include onSmall {
+      margin: auto;
+    }
+  }
+
+  &-rightButton {
+
+    & img {
+      transform: rotate(90deg);
+    }
+  }
+
+  & .sliderDots {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    @include flex-content(space-between);
+    gap: 14px;
+
+    @include onSmall {
+      left: 43%;
+    }
+
+    &-dotBox {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+    }
+
+    &-dot {
+      align-self: center;
+      width: 14px;
+      height: 4px;
+      background-color: $elementsColor;
+
+      &-active {
+        background-color: $primaryColor;
+      }
+    }
+  }
+
+}

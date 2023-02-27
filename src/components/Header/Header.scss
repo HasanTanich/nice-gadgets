@@ -1,27 +1,27 @@
 @import '../../styles/utils';
 
 .header {
-  @include flex-content;
-  gap: 24px;
-  font-size: 12px;
-  line-height: 11px;
   box-shadow: 0px 1px 0px $elementsColor;
-  height: 64px;
+  min-height: 64px;
+
+  @include flex-content;
 
   @include onMedium {
-    gap: 16px;
-    height: 48px;
+    min-height: 48px;
+  }
+
+  @include onSmall {
+    justify-content: space-between;
+    min-height: 48px;
   }
 
   &-logoBox {
-    @include flex-content;
     padding: 0px 24px;
-    flex: none;
-    order: 1;
-    align-self: stretch;
+    margin-right: 24px;
 
     @include onMedium {
       padding: 0 16px;
+      margin-right: 16px;
     }
 
     &-logo {
@@ -33,71 +33,120 @@
     }
   }
 
-  &-menuItems {
-    display: flex;
-    gap: 64px;
-    flex: none;
-    order: 1;
+  &-menu {
+    @include flex-content;
     align-self: stretch;
+    width: 100%;
+    gap: 24px;
+    font-size: 12px;
+    line-height: 11px;
 
     @include onMedium {
-      gap: 32px
+      gap: 16px
     }
 
     @include onSmall {
-      display: none;
+      position: fixed;
+      top: 49px;
+      left: 0;
+      height: calc(100vh - 48px);
+      background-color: white;
+      z-index: 2;
+      @include flex-content(space-between, column);
+      transition: transform 0.5s;
     }
 
-    &-item {
-      @include flex-content(center, column);
-      text-transform: uppercase;
-      padding: 8px 0px;
-      gap: 8px;
-      color: $secondaryColor;
-      font-weight: 800;
-      letter-spacing: 0.04em;
 
-      &:hover {
-        color: $primaryColor;
-      }
-    }
-  }
-
-  &-buttonsRight {
-    @include flex-content(flex-end);
-    flex: none;
-    order: 2;
-    flex-grow: 1;
-    align-self: stretch;
-
-    &-item {
-      @include flex-content(center);
-      width: 64px;
-      height: 100%;
-      border-left: 1px solid #E2E6E9;
-
-      &:hover {
-        border: 1px solid $primaryColor;
-      }
+    &-leftItems {
+      display: flex;
+      align-self: stretch;
+      gap: 64px;
 
       @include onMedium {
-        width: 48px
+        gap: 32px
       }
 
       @include onSmall {
-        display: none;
+        align-self: normal;
+        @include flex-content(center, column);
+        padding: 0px;
+        gap: 16px;
+        margin-top: 24px;
+
+      }
+
+      &-item {
+        @include flex-content(center, column);
+        align-self: stretch;
+        padding: 8px 0;
+        color: $secondaryColor;
+        @include UPPERCASE;
+
+        &:hover {
+          color: $primaryColor;
+          border-bottom: 3px solid $primaryColor;
+        }
+
+        @include onSmall {
+          align-self: auto;
+        }
       }
     }
 
-    &-phone {
+    &-buttonsRight {
+      @include flex-content(flex-end);
+      flex-grow: 1;
+      align-self: stretch;
 
-      display: none;
+
+      &-item {
+        @include flex-content(center);
+        width: 64px;
+        height: 100%;
+        border-left: 1px solid #E2E6E9;
+
+        &:hover {
+          border-bottom: 3px solid $primaryColor;
+        }
+
+        @include onMedium {
+          width: 48px
+        }
+
+        @include onSmall {
+          height: 100%;
+          flex-grow: 1;
+          @include flex-content(center);
+          border: 1px solid $elementsColor;
+          width: 100%
+        }
+      }
 
       @include onSmall {
-        display: flex;
+        @include flex-content(space-between);
+        width: 100%;
+        border: 1px solid $elementsColor;
+        height: 64px;
+        flex-grow: 0;
       }
     }
   }
+
+  &-phone {
+    display: none;
+
+    @include onSmall {
+      @include flex-content(center);
+      width: 48px;
+      height: 100%;
+      border-bottom: transparent;
+    }
+  }
+}
+
+.phoneMenu {
+  transform: translate(100vh);
+  visibility: hidden;
 }
 
 .active {
@@ -106,7 +155,7 @@
 }
 
 .activeMenu {
-  transition: transform 1.5s;
+  transition: transform 0.5s;
   transform: rotate(180deg);
 }
 

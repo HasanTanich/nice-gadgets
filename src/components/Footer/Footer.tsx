@@ -1,8 +1,7 @@
 import React from 'react';
 import './Footer.scss';
 
-import Logo  from '../../assets/icons/Logo.svg';
-import ArrowUpBlack  from '../../assets/icons/ArrowUpBlack.svg';
+import { Logo, ArrowBlack}  from '../../assets/icons';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -29,15 +28,10 @@ const Footer = () => {
         <p>Back to top</p>
         <button 
           type="button" 
-          onClick={()=>{
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
-            });
-          }}
+          onClick={ ()=> window.scrollTo({top: 0, behavior: 'smooth'})}
           className="footer-backToTopBox-button"
         >
-          <img src={ArrowUpBlack} alt="arrow up icon" />
+          <img src={ArrowBlack} alt="arrow up icon" />
         </button>
       </div>
 

@@ -1,24 +1,50 @@
-@mixin flex-content($position: flex-start, $direction: row) {
+@mixin flex-content($position: flex-start, $direction: row, $alignment: center) {
   display: flex;
   flex-direction: $direction;
-  align-items: center;
+  align-items: $alignment;
   justify-content: $position;
 }
 
+// phone layout
 @mixin onSmall {
   @media (max-width:639px) {
     @content;
   }
 }
 
+// tablet layout 
 @mixin onMedium {
   @media (max-width:1199px) {
     @content;
   }
 }
 
+// desktop layout
 @mixin onLarge {
   @media (max-width:1200px) {
     @content;
   }
+}
+
+// only for homepage because figma design for slider for 1200+ seemed to look wrong for me
+@mixin onXLarge {
+  @media (max-width:1440px) {
+    @content;
+  }
+}
+
+// typography mixins
+@mixin UPPERCASE {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.04em;
+}
+
+@mixin smallText {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0;
 }
