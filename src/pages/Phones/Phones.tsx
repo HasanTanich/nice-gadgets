@@ -1,13 +1,14 @@
 import React from 'react';
+import './Phones.scss';
 
-const Tablets = () => {
+const Phones = () => {
   return (
     <div className="container">
       <h1 className="pageTitle">
-        Tablets
+        Mobile Phones
       </h1>
     </div>
   );
 };
 
-export default Tablets;
+export default Phones;

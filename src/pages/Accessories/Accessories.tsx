@@ -1,13 +1,14 @@
 import React from 'react';
+import './Accessories.scss';
 
-const Tablets = () => {
+const Accessories = () => {
   return (
     <div className="container">
       <h1 className="pageTitle">
-        Tablets
+        Accessories
       </h1>
     </div>
   );
 };
 
-export default Tablets;
+export default Accessories;

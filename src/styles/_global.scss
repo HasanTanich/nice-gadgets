@@ -2,6 +2,7 @@
 
 html {
   box-sizing: border-box;
+  color: variables.$primaryColor;
 }
 
 *,
@@ -41,15 +42,6 @@ a {
   }
 }
 
-input,
-textarea,
-select,
-button {
-  color: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-}
-
 select option:hover {
   background-color: transparent;
   outline: none;
@@ -57,18 +49,33 @@ select option:hover {
 
 button {
   border-radius: 0;
-  padding: 0.75em 1em;
+  padding: 0.5em;
   background-color: transparent;
   border: 1px solid variables.$elementsColor;
-  font-size: 14px;
-  line-height: 21px;
+  cursor: pointer;
 
   &:hover {
     border: 1px solid variables.$primaryColor;
+  }
+
+  &:disabled:hover {
+    border: 1px solid variables.$elementsColor;
+  }
+
+  & img {
+    margin: auto;
   }
 }
 
 img {
   display: block;
   max-width: 100%;
+}
+
+.imageLink {
+  cursor: pointer;
+
+  &:hover {
+    scale: 110%;
+  }
 }

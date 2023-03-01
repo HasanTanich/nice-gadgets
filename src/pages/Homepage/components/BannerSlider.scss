@@ -1,0 +1,105 @@
+@import '../../../styles/utils';
+
+.bannerSlider {
+  position: relative;
+  @include flex-content(space-between);
+  gap: 16px;
+  height: 432px;
+  width: 1136px;
+  padding-bottom: 32px;
+
+  @include onMedium {
+    width: 592px;
+    height: 222px;
+    gap: 19px;
+  }
+
+  @include onSmall {
+    width: 300px;
+    height: 356px;
+    margin: auto;
+  }
+
+  & button {
+    border: 1px solid $iconsColor;
+    height: 100%;
+
+    @include onSmall {
+      display: none;
+    }
+  }
+
+  &-leftButton {
+
+    & img {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &-banners {
+    width: 1040px;
+    height: 400px;
+    display: flex;
+    overflow: hidden;
+
+    @include onMedium {
+      height: 190px;
+      width: 490px;
+    }
+
+    @include onSmall {
+      width: 320px;
+      height: 320px;
+      position: absolute;
+      left: -16px;
+    }
+
+    &-banner {
+      transition: 1.25s;
+      min-width: 100%;
+    }
+  }
+
+  &-rightButton {
+
+    & img {
+      transform: rotate(90deg);
+    }
+  }
+
+  & .sliderDots {
+    position: absolute;
+    bottom: 0;
+    left: 47%;
+    gap: 14px;
+    @include flex-content(space-between);
+
+    @include onMedium {
+      left: 43%;
+    }
+
+    @include onSmall {
+      left: 33%;
+    }
+
+    &-dotBox {
+      width: 24px;
+      height: 24px;
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+    }
+
+    &-dot {
+      align-self: center;
+      width: 14px;
+      height: 4px;
+      background-color: $elementsColor;
+
+      &-active {
+        background-color: $primaryColor;
+      }
+    }
+  }
+
+}

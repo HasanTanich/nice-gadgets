@@ -1,0 +1,12 @@
+@import '../../styles/utils';
+
+.container {
+
+  @include onXLarge {
+    padding: 56px 32px 80px 32px;
+  }
+
+  @include onSmall {
+    padding: 24px 16px 64px 16px;
+  }
+}

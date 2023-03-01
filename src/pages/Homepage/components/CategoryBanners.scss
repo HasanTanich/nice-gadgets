@@ -1,0 +1,60 @@
+@import '../../../styles/utils';
+
+.categoryBanners {
+  margin-top: 80px;
+
+  &-title {
+    margin-bottom: 24px;
+  }
+
+  &-bannersBox {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    height: 443px;
+
+    @include onMedium {
+      height: 262px;
+    }
+
+    @include onSmall {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    &-banner {
+      height: 100%;
+
+      @include onMedium {
+        height: 262px;
+      }
+
+      @include onSmall {
+        height: 363px;
+        width: 288px;
+      }
+    }
+
+    &-bannerImg {
+      @include onMedium {
+        height: 187px;
+      }
+
+      @include onSmall {
+        height: 288px;
+      }
+    }
+
+    &-title {
+      margin-top: 24px;
+    }
+
+    &-models {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 21px;
+      color: $secondaryColor;
+    }
+  }
+}
