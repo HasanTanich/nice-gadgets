@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ProductsSlider.scss';
 
 import { ArrowBlack, Heart, Arrow}  from '../../assets/icons';
@@ -6,62 +6,60 @@ import { Phone } from '../../core/types/Phone';
 import { filterData } from '../../core/hooks';
 
 type Props = {
-  screenSize: number;
   data: Phone[];
   title: string;
   filterParams: string;
 }
 
-const ProductsSlider = ({screenSize, data, title, filterParams} : Props) => {
-
-  const CARD_GAP = 16;
-  const SMALL_SCREEN_SIZE = 640;
-  const MEDIUM_SCREEN_SIZE = 1200;
-
-  const getWidth = () => {
+const ProductsSlider = ({data, title, filterParams} : Props) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(0);
+  const visibleProducts = filterData(data, filterParams);
+  const [cardWidth, setCardWidth] = useState(0);
+  const screenWidth = window.innerWidth;
+  const cardsGap = 16;
+  
+  useEffect(() => {
     let width;
-    if(screenSize < SMALL_SCREEN_SIZE){
+    let itemsPerSlide = 4;
+
+    if(screenWidth <= 639){
+      itemsPerSlide = 1;
       width = 212;
-    }else if(screenSize < MEDIUM_SCREEN_SIZE){
+    }else if(screenWidth <= 809){
+      itemsPerSlide = 2;
+      width = 238;
+    }else if(screenWidth <= 1139){
+      itemsPerSlide = 3;
       width = 238;
     }else {
       width = 272 ;
     }
-    return width;
-  };
-
-  const visibleProducts = filterData(data, filterParams);
-
-  const [transform, setTransform] = useState(0);
-  const itemWidth = getWidth();
-  const maxTransform = -1 * (visibleProducts.length * itemWidth + (visibleProducts.length - 1) * CARD_GAP - screenSize) - itemWidth;
-
-  const nextProduct = () => {
-    setTransform(transform-itemWidth - CARD_GAP);
-  };
-
-  const prevProduct = () => {
-    if(transform + itemWidth + 16 >= 0){
-      setTransform(0);
+    setCardWidth(width+cardsGap);
+    setMaxIndex(visibleProducts.length - itemsPerSlide);
+  }, [activeIndex, screenWidth]);
+  
+  const updateIndex = (newIndex: number) => {
+    if(newIndex < 0){
+      newIndex = 0;
+    }else if (newIndex > maxIndex){
+      newIndex = maxIndex;
     }
-    else {
-      setTransform(transform+itemWidth + CARD_GAP);
-    }
+    setActiveIndex(newIndex);
   };
-
 
   return (
     <div className="products-slider">
 
       <div className="titleArrows">
-        <h2>{title}</h2>
+        <h2 className="titleArrows-title">{title}</h2>
         <div className="titleArrows-arrows">
 
-          <button type="button" onClick={prevProduct} disabled={transform >= 0}>
-            <img src={transform >= 0 ? Arrow : ArrowBlack} alt="previous item icon" className="leftArrow" />
+          <button type="button" onClick={() => updateIndex(activeIndex-1)} disabled={activeIndex===0}>
+            <img src={activeIndex === 0 ? Arrow : ArrowBlack} alt="previous item icon" className="leftArrow" />
           </button>
-          <button type="button" onClick={nextProduct} disabled={transform <= maxTransform}>
-            <img src={transform <= maxTransform ? Arrow : ArrowBlack} alt="next item icon" className="rightArrow"/>
+          <button type="button" onClick={() => updateIndex(activeIndex+1)} disabled={activeIndex === maxIndex}>
+            <img src={activeIndex === maxIndex ? Arrow : ArrowBlack} alt="next item icon" className="rightArrow"/>
           </button>
           
         </div>
@@ -76,13 +74,13 @@ const ProductsSlider = ({screenSize, data, title, filterParams} : Props) => {
         <div className="cardsBox">
           {visibleProducts.map( (item) => {
             const {id, name, price, fullPrice, screen, capacity, ram, image} = item;
+            
             return (
               <div
                 key={id}
                 className="cardsBox-card" 
                 style={{
-                  transform: `translateX(${transform}px)`,
-                  transition: '1s',
+                  transform: `translateX(-${activeIndex * cardWidth}px)`,
                 }}
               >
 
@@ -127,7 +125,7 @@ const ProductsSlider = ({screenSize, data, title, filterParams} : Props) => {
                 </div>
               </div>
             );
-          })};
+          })}
         </div>}
 
     </div>

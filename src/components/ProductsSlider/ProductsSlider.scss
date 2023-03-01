@@ -3,6 +3,7 @@
 .products-slider {
   margin-top: 80px;
   width: 100%;
+  max-width: 1136px;
 
   @include onMedium {
     margin-top: 64px;
@@ -15,6 +16,10 @@
   .titleArrows {
     @include flex-content(space-between);
     margin-bottom: 24px;
+
+    &-title {
+      flex-basis: 50%
+    }
 
     &-arrows {
       @include flex-content(space-between);
@@ -52,6 +57,7 @@
       height: 100%;
       padding: 32px;
       border: 1px solid $elementsColor;
+      transition: 0.7s;
 
       @include onMedium {
         min-width: 238px;

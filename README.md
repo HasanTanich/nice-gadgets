@@ -102,7 +102,6 @@ There should be 3 separate pages `/phones`, `/tablets` and `/accessories`.
    - it should limit the products you show to the user;
    - save pagination params in the url `?page=2&perPage=8` (`page=1` and `perPage=all` are the default values and should not be added to the URL;
    - Hide pagination elements if they does not make sense;
-   - You can use the logic explained in [the React Pagination task](https://github.com/mate-academy/react_pagination#react-pagination);
 
 ## Shopping Cart page
 

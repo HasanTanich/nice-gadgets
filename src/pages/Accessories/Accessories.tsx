@@ -3,7 +3,11 @@ import './Accessories.scss';
 
 const Accessories = () => {
   return (
-    <div>Accessories</div>
+    <div className="container">
+      <h1 className="pageTitle">
+        Accessories
+      </h1>
+    </div>
   );
 };
 

@@ -1,10 +1,10 @@
 @import '../../styles/utils';
 
 .header {
+  @include flex-content;
   box-shadow: 0px 1px 0px $elementsColor;
   min-height: 64px;
 
-  @include flex-content;
 
   @include onMedium {
     min-height: 48px;
@@ -40,20 +40,30 @@
     gap: 24px;
     font-size: 12px;
     line-height: 11px;
+    transition: transform 0.5s;
 
     @include onMedium {
       gap: 16px
     }
 
     @include onSmall {
+      @include flex-content(space-between, column);
+      position: fixed;
+      left: 0;
+      top: 49px;
+      height: calc(100vh - 48px);
+      transform: translateX(100%);
+    }
+
+    &-active {
+      @include flex-content(space-between, column);
       position: fixed;
       top: 49px;
       left: 0;
       height: calc(100vh - 48px);
       background-color: white;
       z-index: 2;
-      @include flex-content(space-between, column);
-      transition: transform 0.5s;
+      transform: translateX(0);
     }
 
 
@@ -67,20 +77,19 @@
       }
 
       @include onSmall {
-        align-self: normal;
         @include flex-content(center, column);
+        align-self: normal;
         padding: 0px;
         gap: 16px;
         margin-top: 24px;
-
       }
 
       &-item {
         @include flex-content(center, column);
+        @include UPPERCASE;
         align-self: stretch;
         padding: 8px 0;
         color: $secondaryColor;
-        @include UPPERCASE;
 
         &:hover {
           color: $primaryColor;
@@ -114,9 +123,9 @@
         }
 
         @include onSmall {
+          @include flex-content(center);
           height: 100%;
           flex-grow: 1;
-          @include flex-content(center);
           border: 1px solid $elementsColor;
           width: 100%
         }
@@ -156,10 +165,10 @@
 
 .activeMenu {
   transition: transform 0.5s;
-  transform: rotate(180deg);
+  transform: rotate(-180deg);
 }
 
 .normalMenu {
   transition: transform 1.5s;
-  transform: rotate(-180deg);
+  transform: rotate(180deg);
 }

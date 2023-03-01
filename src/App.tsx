@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import './App.scss';
@@ -10,23 +10,11 @@ const queryClient = new QueryClient();
 
 function App() {
 
-  const [screenSize, setScreenSize] = useState(0);
-
-  useEffect(() => {
-    const handleResize = () => setScreenSize(window.innerWidth);
-
-    window.addEventListener('resize', handleResize);
-
-    handleResize();
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <Routes>
-          <Route element={<Header screenSize={screenSize}/>}>
+          <Route element={<Header/>}>
             <Route index element={<Homepage />}/>
             <Route path="/phones" element={<Phones />}/>
             <Route path="/tablets" element={<Tablets />}/>

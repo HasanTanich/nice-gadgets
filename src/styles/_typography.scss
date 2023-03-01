@@ -58,3 +58,15 @@ Button {
   line-height: 21px;
   letter-spacing: 0;
 }
+
+.pageTitle {
+  margin-bottom: 56px;
+
+  @include onMedium {
+    margin-bottom: 32px;
+  }
+
+  @include onSmall {
+    margin-bottom: 24px;
+  }
+}

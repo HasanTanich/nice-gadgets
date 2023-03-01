@@ -4,7 +4,9 @@ import './Phones.scss';
 const Phones = () => {
   return (
     <div className="container">
-      Phones
+      <h1 className="pageTitle">
+        Mobile Phones
+      </h1>
     </div>
   );
 };

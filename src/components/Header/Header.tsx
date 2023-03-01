@@ -5,9 +5,8 @@ import './Header.scss';
 import { Logo, Heart, Cart, Menu, Close}  from '../../assets/icons';
 import Footer from '../Footer/Footer';
 
-const Header = ({screenSize} : {screenSize: number}) => {
+const Header = () => {
 
-  const [phone, setPhone] = useState(false);
   const [activeMenu, setActiveMenu] = useState(false);
 
   const onToggleMenu = () => {
@@ -15,13 +14,10 @@ const Header = ({screenSize} : {screenSize: number}) => {
   };
   
   useEffect(() => {
-    if (screenSize <= 640) {
-      setPhone(true);
-    } else {
-      setPhone(false);
+    if (window.innerWidth >= 640) {
       setActiveMenu(false);
     }
-  }, [screenSize]);
+  }, [window.innerWidth]);
 
   return (
     <>
@@ -33,7 +29,7 @@ const Header = ({screenSize} : {screenSize: number}) => {
           </div>
         </Link>
 
-        <div className={`header-menu ${(!activeMenu === true && phone === true) ? 'phoneMenu' : ''}`}>
+        <div className={`header-menu ${activeMenu ? 'header-menu-active' : ''}`}>
 
           <div className="header-menu-leftItems">
             <NavLink to='/' className="header-menu-leftItems-item" onClick={()=>setActiveMenu(false)}>Home</NavLink>
@@ -73,7 +69,8 @@ const Header = ({screenSize} : {screenSize: number}) => {
           />
         </button>
       </nav>
-      {(!activeMenu) && <Outlet context={{screenSize, phone}}/>}
+      
+      {(!activeMenu) && <Outlet/>}
 
       <Footer />
     </>
