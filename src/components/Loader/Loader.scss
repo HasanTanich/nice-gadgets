@@ -1,0 +1,13 @@
+@import '../../styles/utils';
+
+.loader {
+    width: 100%;
+    @include flex-content(center);
+    height: 50px
+}
+
+.rotate-element {
+    height: 100%;
+    width: 50px;
+    @include rotate-infinite(1s);
+}

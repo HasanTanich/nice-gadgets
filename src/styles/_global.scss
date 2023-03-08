@@ -42,6 +42,14 @@ a {
   }
 }
 
+select option {
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+}
+
 select option:hover {
   background-color: transparent;
   outline: none;
@@ -74,8 +82,21 @@ img {
 
 .imageLink {
   cursor: pointer;
+  transition: all 0.3s ease;
 
   &:hover {
     scale: 110%;
   }
+}
+
+.rightArrow {
+  transform: rotate(90deg);
+}
+
+.leftArrow {
+  transform: rotate(-90deg);
+}
+
+.downArrow {
+  transform: rotate(180deg);
 }

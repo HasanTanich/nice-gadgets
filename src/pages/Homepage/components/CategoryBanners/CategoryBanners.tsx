@@ -1,7 +1,6 @@
-import React from 'react';
 import './CategoryBanners.scss';
 
-import { mobilePhones, tablets, accessories} from '../../../assets/img/category-banners';
+import { mobilePhones, tablets, accessories} from '../../../../assets/img/category-banners';
 import { useNavigate } from 'react-router-dom';
 
 const CategoryBanners = () => {

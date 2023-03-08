@@ -3,6 +3,10 @@
 .container {
   padding: 56px 152px 80px 152px;
 
+  @include onXLarge {
+    padding: 56px 32px 80px 32px;
+  }
+
   @include onLarge {
     padding: 56px 32px 80px 32px;
   }

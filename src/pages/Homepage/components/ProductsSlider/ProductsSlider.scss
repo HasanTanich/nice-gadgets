@@ -1,0 +1,41 @@
+@import '../../../../styles/utils';
+
+.products-slider {
+  margin-top: 80px;
+  width: 100%;
+  max-width: 1136px;
+
+  @include onMedium {
+    margin-top: 64px;
+  }
+
+  @include onSmall {
+    margin-top: 56px;
+  }
+
+  .titleArrows {
+    @include flex-content(space-between);
+    margin-bottom: 24px;
+
+    &-title {
+      flex-basis: 50%
+    }
+
+    &-arrows {
+      @include flex-content(space-between);
+      gap: 16px;
+    }
+  }
+
+  .cardsBox {
+    display: flex;
+    gap: 16px;
+    overflow: hidden;
+    height: 506px;
+    width: 100%;
+
+    @include onSmall {
+      height: 440px
+    }
+  }
+}

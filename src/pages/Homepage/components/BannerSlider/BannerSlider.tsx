@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './BannerSlider.scss';
 
-import { ArrowBlack} from '../../../assets/icons';
-import { Banner1, Banner2, Banner3, MobileBanner1, MobileBanner2, MobileBanner3 } from '../../../assets/img/homepage-banners';
+import { ArrowBlack} from '../../../../assets/icons';
+import { Banner1, Banner2, Banner3, MobileBanner1, MobileBanner2, MobileBanner3 } from '../../../../assets/img/homepage-banners';
+import { useOutletContext } from 'react-router-dom';
 
 const BannerSlider = () => {
   const BannerImages = [
@@ -10,27 +11,27 @@ const BannerSlider = () => {
     Banner2,
     Banner3,
   ];
-
   const MobileBannerImages = [
     MobileBanner1, 
     MobileBanner2, 
     MobileBanner3,
   ];
 
+  const screenSize : number = useOutletContext();
   const [phone, setPhone] = useState(false);
   const [paused, setPaused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const productslength = BannerImages.length;
   const [startX, setStartX] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
-
+  const productslength = BannerImages.length;
+  
   useEffect(() => {
-    if (window.innerWidth <= 639) {
+    if (screenSize <= 639) {
       setPhone(true);
     }else {
       setPhone(false);
     }
-  }, [window.innerWidth]);
+  }, [screenSize]);
 
   useEffect( () => {
     const interval = setInterval(() => {
@@ -83,12 +84,11 @@ const BannerSlider = () => {
     <div className="bannerSlider">
 
       <button 
-        className="bannerSlider-leftButton" 
         onClick={()=> updateIndex(activeIndex-1)}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        <img src={ArrowBlack} alt="banner img"/>
+        <img src={ArrowBlack} alt="banner img" className="leftArrow"/>
       </button>
 
       {phone && <div className="bannerSlider-banners">
@@ -126,12 +126,11 @@ const BannerSlider = () => {
       </div>}
 
       <button 
-        className="bannerSlider-rightButton" 
         onClick={() => updateIndex(activeIndex+1)}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        <img src={ArrowBlack} alt="banner img"/>
+        <img src={ArrowBlack} alt="banner img" className="rightArrow"/>
       </button>
 
       <div className="sliderDots">
