@@ -6,3 +6,4 @@ export {default as HeartFilled} from './HeartFilled.svg';
 export {default as Close} from './Close.svg';
 export {default as Logo} from './Logo.svg';
 export {default as Menu} from './Menu.svg';
+export {default as Home} from './Home.svg';

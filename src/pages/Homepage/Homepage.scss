@@ -1,12 +1,13 @@
 @import '../../styles/utils';
 
-.container {
+.title {
+  margin-bottom: 56px;
 
-  @include onXLarge {
-    padding: 56px 32px 80px 32px;
+  @include onMedium {
+    margin-bottom: 32px;
   }
 
   @include onSmall {
-    padding: 24px 16px 64px 16px;
+    margin-bottom: 24px;
   }
 }

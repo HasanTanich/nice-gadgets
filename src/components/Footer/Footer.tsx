@@ -1,4 +1,3 @@
-import React from 'react';
 import './Footer.scss';
 
 import { Logo, ArrowBlack}  from '../../assets/icons';

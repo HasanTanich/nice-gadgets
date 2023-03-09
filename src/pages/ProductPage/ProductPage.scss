@@ -1,0 +1,65 @@
+@import '../../styles/utils';
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  height: 16px;
+  gap: 8px;
+  overflow: hidden;
+  padding: 0 152px 0 152px;
+  margin-top: 24px;
+
+  @include onXLarge {
+    padding: 0 32px 0 32px;
+  }
+
+  @include onLarge {
+    padding: 0 32px 0 32px;
+  }
+
+  @include onMedium {
+    padding: 0 24px 0 24px;
+  }
+
+  @include onSmall {
+    padding: 0 16px 0 16px;
+  }
+}
+
+.product {
+  font-size: 12px;
+  line-height: 15px;
+  color: $secondaryColor;
+  height: 100%;
+}
+
+.currentProductPage {
+  color: $primaryColor;
+}
+
+.modelsCount {
+  font-size: 14px;
+  line-height: 21px;
+  color: $secondaryColor;
+  margin-bottom: 40px;
+
+  @include onSmall {
+    margin-bottom: 32px;
+  }
+}
+
+.producTitle {
+  margin-bottom: 8px;
+}
+
+.sortProducts {
+  @include flex-content;
+  gap: 16px;
+  color: $secondaryColor;
+  margin-bottom: 24px;
+
+  & p {
+    margin-bottom: 4px;
+    @include smallText;
+  }
+}

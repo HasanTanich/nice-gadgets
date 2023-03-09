@@ -100,7 +100,7 @@ There should be 3 separate pages `/phones`, `/tablets` and `/accessories`.
    - save the sort value in the URL `?sort=age` and apply it after the page reload;
 1. Add `Pagination` buttons and `Items on page` select element with `4`, `8`, `16` and `all` options.
    - it should limit the products you show to the user;
-   - save pagination params in the url `?page=2&perPage=8` (`page=1` and `perPage=all` are the default values and should not be added to the URL;
+   - save pagination params in the url `?page=2&perPage=8` `page=1` and `perPage=all` are the default values and should not be added to the URL;
    - Hide pagination elements if they does not make sense;
 
 ## Shopping Cart page
@@ -124,7 +124,7 @@ Use the React Context or Redux to store Items.
 
 ## Home page
 
-Implement Home page at available at `/`.
+Implement Home page available at `/`.
 
 1. `<h1>Product Catalog</h1>` should be visually hidden.
 1. `PicturesSlider`:

@@ -1,39 +1,59 @@
-import React from 'react';
 import './Homepage.scss';
 
-import { ProductsSlider } from '../../components';
-import { BannerSlider, CategoryBanners } from './components';
+import { BannerSlider, CategoryBanners, ProductsSlider } from './components';
 import { getItems } from '../../core/api';
+import { Phone } from '../../core/types/Phone';
+import { sortData } from '../../core/hooks';
 
 const Homepage = () => {
 
-  const {isLoading, data} = getItems('/phones.json');
+  function getProductsSliderData(data: Phone[], filterKey1: string, filterKey2?: string){
+    let filteredData = data.slice();
+    filteredData = filteredData.filter((item) => {
+  
+      if(filterKey1 === 'fullPrice'){  // filter items if they have no discounts (fullPrice === price)
+        return item.fullPrice === item.price; 
+      } else {                        // filter items if they have discounts (fullPrice !== price)
+        return item.fullPrice !== item.price;
+      }
+    });
+  
+    return sortData(filteredData, filterKey1, filterKey2);
+  }
 
+  const {isLoading, data, error} = getItems('/phones.json', 'phones-data');
+
+  let brandNewPhones: Phone[] = [];
+  let hotPricesPhones: Phone[] = [];
+
+  if(!isLoading && !error){
+    brandNewPhones = getProductsSliderData(data?.data, 'fullPrice');
+    hotPricesPhones = getProductsSliderData(data?.data, 'price', 'fullPrice');
+  }
+  
   return (
     <div className="container">
 
-      <h1 className="pageTitle">
+      <h1 className="title">
         Welcome to Nice Gadgets store!
       </h1>
 
       <BannerSlider/>
 
-      {isLoading && <h1>Loading...</h1>}
-
       {!isLoading && 
       <>
         <ProductsSlider
-          data={data?.data} 
-          title="Brand new models" 
-          filterParams="fullPrice" 
+          data={brandNewPhones} 
+          title="Brand new models"
+          error={error}
         />
 
         <CategoryBanners />
 
         <ProductsSlider 
-          data={data?.data} 
-          title="Hot prices" 
-          filterParams="price" 
+          data={hotPricesPhones}
+          title="Hot prices"
+          error={error}
         />
       </>
       }

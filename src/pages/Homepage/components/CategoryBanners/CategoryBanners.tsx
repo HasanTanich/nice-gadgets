@@ -1,16 +1,27 @@
-import React from 'react';
 import './CategoryBanners.scss';
-
-import { mobilePhones, tablets, accessories} from '../../../assets/img/category-banners';
 import { useNavigate } from 'react-router-dom';
+
+import { getItems } from '../../../../core/api';
+import { getProductPageData } from '../../../../core/hooks';
+import { mobilePhones, tablets, accessories} from '../../../../assets/img/category-banners';
 
 const CategoryBanners = () => {
   const navigate = useNavigate();
+  
+  const {data, isLoading, error} = getItems('/old-api/products.json', 'category-data');
+  let mobilePhonesLength = 0;
+  let tabletsLength = 0;
+  let accessoriesLength = 0;
+  if(!isLoading && !error){
+    mobilePhonesLength = getProductPageData(data?.data, 'type', 'phone', 'age').length;
+    tabletsLength = getProductPageData(data?.data, 'type', 'tablet', 'age').length;
+    accessoriesLength = getProductPageData(data?.data, 'type', 'accessory', 'age').length;
+  }
 
   const categoryBanners = [
-    {title: 'Mobile phones', image: mobilePhones, models: 95, path: '/phones'},
-    {title: 'Tablets', image: tablets, models: 24, path: '/tablets'},
-    {title: 'Accessories', image: accessories, models: 100, path: '/accessories'},
+    {title: 'Mobile phones', image: mobilePhones, models: mobilePhonesLength, path: '/phones',},
+    {title: 'Tablets', image: tablets, models: tabletsLength, path: '/tablets'},
+    {title: 'Accessories', image: accessories, models: accessoriesLength, path: '/accessories'},
   ];
 
   return (

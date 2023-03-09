@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import './Header.scss';
 
@@ -8,16 +8,27 @@ import Footer from '../Footer/Footer';
 const Header = () => {
 
   const [activeMenu, setActiveMenu] = useState(false);
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
 
   const onToggleMenu = () => {
     setActiveMenu(!activeMenu);
   };
-  
+
   useEffect(() => {
-    if (window.innerWidth >= 640) {
+    const handleResize = () => setScreenSize(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (screenSize >= 640) {
       setActiveMenu(false);
     }
-  }, [window.innerWidth]);
+  }, [screenSize]);
 
   return (
     <>
@@ -70,7 +81,9 @@ const Header = () => {
         </button>
       </nav>
       
-      {(!activeMenu) && <Outlet/>}
+      <div style={ activeMenu ? {overflow: 'hidden'} : {} }>
+        <Outlet context={screenSize}/>
+      </div>
 
       <Footer />
     </>

@@ -1,4 +1,3 @@
-import React from 'react';
 import './Accessories.scss';
 
 const Accessories = () => {

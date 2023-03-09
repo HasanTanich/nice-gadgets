@@ -10,4 +10,6 @@ export interface Product {
     screen: string;
     capacity: string;
     ram: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
 }
