@@ -124,7 +124,7 @@ Use the React Context or Redux to store Items.
 
 ## Home page
 
-Implement Home page at available at `/`.
+Implement Home page available at `/`.
 
 1. `<h1>Product Catalog</h1>` should be visually hidden.
 1. `PicturesSlider`:
