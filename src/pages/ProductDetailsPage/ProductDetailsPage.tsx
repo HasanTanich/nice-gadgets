@@ -6,10 +6,13 @@ const ProductDetailsPage = () => {
   const {productId} = useParams();
   
   const {data} = getItems('/old-api/products/'+productId+'.json', productId+'-data');  
-  console.log(data?.data);
-  
   return (
-    <div>ProductDetailsPage</div>
+    <>
+      <h1>{productId}</h1>
+      {data && 
+      <img src={data?.data.images[0]} alt="" />
+      }
+    </>
   );
 };
 

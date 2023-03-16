@@ -10,29 +10,13 @@ type Props = {
   sortBy?: boolean
 }
 
-const FilterSelect = ({options, width, selectedValue, sortBy}: Props) => {
+const FilterSelect = ({options, width, selectedValue, sortBy}: Props) => {  
   const [params, setParams] = useSearchParams();
-  const defaultValue: FilterOption = {
-    value: selectedValue,
-    label: 'Newest',
-  };
 
-  if(sortBy){
-    switch (selectedValue) {
-    case 'age':
-      defaultValue.label = 'Newest';
-      break;
-    case 'name':
-      defaultValue.label = 'Alphabatically';
-      break;
-    case 'price':
-      defaultValue.label = 'Cheapest';
-      break;
-    default:
-      break;
-    }
-  }else {
-    defaultValue.label = selectedValue;
+  let defaultValue = options.find(item => item.value === selectedValue ? item : null);
+
+  if(!defaultValue){
+    defaultValue = sortBy ? {value: 'age', label: 'newest'} : {value: 'all', label: 'all'};
   }
 
   const onChangeHandle = (e: SingleValue<{value: string, label: string}>) => {

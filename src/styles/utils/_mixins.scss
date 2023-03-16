@@ -26,7 +26,7 @@
   }
 }
 
-// only for homepage because figma design for slider for 1200+ seemed to look wrong for me
+// big screens
 @mixin onXLarge {
   @media (max-width:1440px) {
     @content;

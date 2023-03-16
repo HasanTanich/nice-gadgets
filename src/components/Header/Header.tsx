@@ -81,11 +81,12 @@ const Header = () => {
         </button>
       </nav>
       
-      <div style={ activeMenu ? {overflow: 'hidden'} : {} }>
+      <div style={ activeMenu ? {display: 'none'} : {} }>
         <Outlet context={screenSize}/>
       </div>
-
-      <Footer />
+      <div style={ activeMenu ? {display: 'none'} : {} } className="footerBox">
+        <Footer />
+      </div>
     </>
   );
 };

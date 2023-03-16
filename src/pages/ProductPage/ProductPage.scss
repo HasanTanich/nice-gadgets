@@ -1,5 +1,9 @@
 @import '../../styles/utils';
 
+.productPage {
+  flex-grow: 1;
+}
+
 .breadcrumbs {
   display: flex;
   align-items: center;
@@ -62,4 +66,8 @@
     margin-bottom: 4px;
     @include smallText;
   }
+}
+
+.productsList {
+  margin-bottom: 40px;
 }

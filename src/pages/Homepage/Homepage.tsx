@@ -32,7 +32,7 @@ const Homepage = () => {
   }
   
   return (
-    <div className="container">
+    <div className="homepage">
 
       <h1 className="title">
         Welcome to Nice Gadgets store!

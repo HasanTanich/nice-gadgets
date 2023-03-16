@@ -1,9 +1,33 @@
 @import '../../styles/utils';
 
-.title {
-  margin-bottom: 56px;
+.homepage {
+  padding: 56px 152px 80px 152px;
+  @include flex-content(flex-start, column);
+
+  @include onXLarge {
+    padding: 56px 32px 80px 32px;
+    align-items: flex-start;
+  }
+
+  @include onLarge {
+    padding: 56px 32px 80px 32px;
+  }
 
   @include onMedium {
+    padding: 32px 24px 64px 24px;
+  }
+
+  @include onSmall {
+    padding: 24px 16px 64px 16px;
+  }
+}
+
+.title {
+  margin-bottom: 56px;
+  width: 1136px;
+
+  @include onMedium {
+    width: 100%;
     margin-bottom: 32px;
   }
 
