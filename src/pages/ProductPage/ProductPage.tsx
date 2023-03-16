@@ -3,7 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import './ProductPage.scss';
 
 import { Home, Arrow } from '../../assets/icons';
-import { FilterSelect, ProductsList, Reload, Loader } from '../../components';
+import { FilterSelect, ProductsList, Reload, Loader, Paginator } from '../../components';
 import { NotFound, ProductDetailsPage } from '../../pages';
 import { getItems } from '../../core/api';
 import { getProductPageData } from '../../core/hooks';
@@ -15,11 +15,43 @@ export interface FilterOption {
 }
 
 const ProductPage = () => {
-
   const {product, productId} = useParams();
-  const [params] = useSearchParams();
-  const [productType, setProductType] = useState('');
+
+  if(product !== 'phones' && product !== 'tablets' && product !== 'accessories'){
+    return <NotFound />;
+  }
+
+  const sortTypeOptions : FilterOption[] = [
+    { value: 'age', label: 'Newest' },
+    { value: 'name', label: 'Alphabatically' },
+    { value: 'price', label: 'Cheapest' }
+  ];
+  const itemsOnPageOptions: FilterOption[] = [
+    { value: '4', label: '4' },
+    { value: '8', label: '8' },
+    { value: '16', label: '16' },
+    { value: 'all', label: 'all' }
+  ];
+  
+  const [params, setParams] = useSearchParams();
   const [title, setTitle] = useState('');
+  const [productType, setProductType] = useState('');
+  const sortType = params.get('sort') || 'age';
+  const itemsPerPage = params.get('perPage') || 'all';
+  const currentPage = Number(params.get('page')) || 1;
+  let productsData : Product[] = [];
+
+  useEffect(() => {    
+    // in case 'sort' or 'perPage' route params values were changed manually by user through route, and didn't match the options, set it to default.
+    if(sortTypeOptions.find(item => item.value === sortType) === undefined){
+      params.delete('sort');
+      setParams(params);    
+    }else if(itemsOnPageOptions.find(item => item.value === itemsPerPage) === undefined){
+      params.delete('perPage');
+      setParams(params);
+    }
+  }, []);
+  
 
   useEffect(() => {
     switch (product) {
@@ -39,33 +71,31 @@ const ProductPage = () => {
       break;
     }
   },[product]);
-  
-
-  if(product !== 'phones' && product !== 'tablets' && product !== 'accessories'){
-    return <NotFound />;
-  }
-  
-  const sortType = params.get('sort') || 'age';
-  const itemsPerPage = params.get('perPage') || 'all';
     
-  const sortTypeOptions : FilterOption[] = [
-    { value: 'age', label: 'Newest' },
-    { value: 'name', label: 'Alphabatically' },
-    { value: 'price', label: 'Cheapest' }
-  ];
-  const itemsOnPageOptions: FilterOption[] = [
-    { value: '4', label: '4' },
-    { value: '8', label: '8' },
-    { value: '16', label: '16' },
-    { value: 'all', label: 'all' }
-  ];
 
   const {data, isLoading, error} = getItems('/old-api/products.json', 'product-'+product+'-data');
-  let visibleProducts: Product[] = [];
-  if(!isLoading && !error){
-    visibleProducts = getProductPageData(data?.data, 'type', productType, sortType);
+  
+  if(!isLoading && !error){    
+    productsData = getProductPageData(data?.data, 'type', productType, sortType);
   }
-
+  
+  const onPageChange = (page: number) => {    
+    if(page === 1){
+      params.delete('page');
+      setParams(params);
+    }else{
+      params.set('page', page.toString());
+      setParams(params);
+    }
+  };
+  
+  let currentProducts = productsData.slice();
+  if(itemsPerPage!== 'all'){
+    const indexOfLastProduct = currentPage * Number(itemsPerPage);
+    const indexOfFirstProduct = indexOfLastProduct - Number(itemsPerPage);
+    currentProducts = productsData.slice(indexOfFirstProduct, indexOfLastProduct);
+  }
+  
   return (
     <>
       <div className="breadcrumbs">
@@ -91,7 +121,7 @@ const ProductPage = () => {
             {title}
           </h1>
 
-          <p className="modelsCount">95 models</p>
+          <p className="modelsCount">{productsData.length} models</p>
 
           <div className="sortProducts">
             <div>
@@ -129,14 +159,23 @@ const ProductPage = () => {
             }
           </>
 
-          {(visibleProducts.length === 0 && !error && !isLoading) &&
+          {(productsData.length === 0 && !error && !isLoading) &&
         <h3>There are no {product} yet</h3>
           }
         
           {(!isLoading && !error) &&
-        <ProductsList data={visibleProducts}/>
+          <div className="productsList">
+            <ProductsList data={currentProducts}/>
+          </div>
           }
 
+          { (!isLoading && !error && productsData.length > 0) &&
+            <Paginator
+              onPageChange={onPageChange}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              totalItems={productsData.length}
+            />}
         </>
         }
 

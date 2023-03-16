@@ -34,7 +34,7 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
       style={(activeIndex && cardWidth) ? 
         { transform: `translateX(-${activeIndex * cardWidth}px)`} : {}}
     >
-      <img src={image} alt={name} className="card-img" onClick={navigateToItem}/>
+      <img src={image} alt={name} className="card-img imageLink" onClick={navigateToItem}/>
 
       <p className="card-title" onClick={navigateToItem}>
         {name}

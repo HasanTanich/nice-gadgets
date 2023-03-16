@@ -2,36 +2,23 @@ import React, { useEffect, useState } from 'react';
 import './BannerSlider.scss';
 
 import { ArrowBlack} from '../../../../assets/icons';
-import { Banner1, Banner2, Banner3, MobileBanner1, MobileBanner2, MobileBanner3 } from '../../../../assets/img/homepage-banners';
+import { Banner1, Banner2, Banner3, MobileBanner1} from '../../../../assets/img/homepage-banners';
 import { useOutletContext } from 'react-router-dom';
 
 const BannerSlider = () => {
+  const screenSize : number = useOutletContext();
+  
   const BannerImages = [
-    Banner1,
+    screenSize <= 639 ? MobileBanner1 : Banner1,
     Banner2,
     Banner3,
   ];
-  const MobileBannerImages = [
-    MobileBanner1, 
-    MobileBanner2, 
-    MobileBanner3,
-  ];
 
-  const screenSize : number = useOutletContext();
-  const [phone, setPhone] = useState(false);
   const [paused, setPaused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [startX, setStartX] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
   const productslength = BannerImages.length;
-  
-  useEffect(() => {
-    if (screenSize <= 639) {
-      setPhone(true);
-    }else {
-      setPhone(false);
-    }
-  }, [screenSize]);
 
   useEffect( () => {
     const interval = setInterval(() => {
@@ -81,58 +68,42 @@ const BannerSlider = () => {
   };
 
   return (
-    <div className="bannerSlider">
-
-      <button 
-        onClick={()=> updateIndex(activeIndex-1)}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        <img src={ArrowBlack} alt="banner img" className="leftArrow"/>
-      </button>
-
-      {phone && <div className="bannerSlider-banners">
-        {MobileBannerImages.map((item, index) =>
-          <img
-            key={index}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            src={item}
-            alt="banner img"
-            className="bannerSlider-banners-banner" 
-            style={{transform: `translateX(-${activeIndex * 100}%)`}}
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-          />
-        )}
-      </div>}
+    <>
+      <div className="bannerSlider">
+        <button 
+          onClick={()=> updateIndex(activeIndex-1)}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <img src={ArrowBlack} alt="banner img" className="leftArrow"/>
+        </button>
       
-      {!phone && <div className="bannerSlider-banners">
-        {BannerImages.map((item, index) =>
-          <img
-            key={index}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            src={item}
-            alt="banner img"
-            className="bannerSlider-banners-banner"
-            style={{transform: `translateX(-${activeIndex * 100}%)`}}
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-          />
-        )}
-      </div>}
+        <div className="bannerSlider-banners">
+          {BannerImages.map((item, index) =>
+            <div
+              key={index}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              className={`bannerSlider-banners-banner bannerSlider-banners-banner-${index+1}`}
+              style={{transform: `translateX(-${activeIndex * 100}%)`}}
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+            >
+              <img src={item} alt="banner img" />
+            </div>
+          )}
+        </div>
 
-      <button 
-        onClick={() => updateIndex(activeIndex+1)}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        <img src={ArrowBlack} alt="banner img" className="rightArrow"/>
-      </button>
+        <button 
+          onClick={() => updateIndex(activeIndex+1)}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <img src={ArrowBlack} alt="banner img" className="rightArrow"/>
+        </button>
 
+      </div>
       <div className="sliderDots">
         {BannerImages.map((item, index) =>
           <div 
@@ -144,8 +115,8 @@ const BannerSlider = () => {
           </div>
         )}
       </div>
+    </>
       
-    </div>
   );
 };
   

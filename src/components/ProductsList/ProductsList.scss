@@ -6,4 +6,8 @@
     column-gap: 16px;
     row-gap: 40px;
     width: 100%;
+
+    @include onSmall {
+        justify-content: center;
+    }
 }

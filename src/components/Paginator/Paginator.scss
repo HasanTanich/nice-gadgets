@@ -1,0 +1,44 @@
+@import '../../styles/utils';
+
+.paginator {
+    margin: auto;
+    height: 32px;
+    display: flex;
+    align-items: center;
+
+    & button {
+        font-weight: 500;
+        width: 32px;
+        height: 100%;
+        line-height: 0;
+    }
+
+    &-controller {
+        border: 1px solid $iconsColor;
+    }
+
+    &-prevPage {
+        margin-right: 16px;
+    }
+
+    &-pageNumbersBox {
+        overflow: hidden;
+        display: flex;
+        gap: 8px;
+        height: 100%;
+
+        &-pageNumber {
+            min-width: 32px;
+            transition: transform 0.5s;
+
+            &--active {
+                background-color: $primaryColor;
+                color: white;
+            }
+        }
+    }
+
+    &-nextPage {
+        margin-left: 16px;
+    }
+}
