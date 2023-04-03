@@ -160,15 +160,23 @@
       }
     }
   }
-
-
 }
 
 .sliderDots {
   @include flex-content(space-between);
+  margin-bottom: 80px;
+
   gap: 14px;
   margin-top: 8px;
   align-self: center;
+
+  @include onMedium {
+    margin-bottom: 64px;
+  }
+
+  @include onSmall {
+    margin-bottom: 56px;
+  }
 
   &-dotBox {
     width: 24px;

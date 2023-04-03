@@ -11,7 +11,7 @@ const Footer = () => {
         <img src={Logo} alt="Logo" />
       </div>
 
-      <div className="footer-items">
+      <div className="footer-items uppercase">
         <Link to="https://github.com/HasanTanich/nice-gadgets" className="footer-items-item">
           Github
         </Link>
@@ -23,7 +23,7 @@ const Footer = () => {
         </Link>
       </div>
 
-      <div className="footer-backToTopBox">
+      <div className="footer-backToTopBox small-text">
         <p>Back to top</p>
         <button 
           type="button" 

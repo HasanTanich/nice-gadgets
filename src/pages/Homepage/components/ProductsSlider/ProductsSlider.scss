@@ -1,17 +1,8 @@
 @import '../../../../styles/utils';
 
 .products-slider {
-  margin-top: 80px;
   width: 100%;
   max-width: 1136px;
-
-  @include onMedium {
-    margin-top: 64px;
-  }
-
-  @include onSmall {
-    margin-top: 56px;
-  }
 
   .titleArrows {
     @include flex-content(space-between);

@@ -17,13 +17,15 @@ type Props = {
 }
 
 const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, capacity, ram, image, productPage, id}: Props) => {
-  const {product} = useParams();
+  const {product, productId} = useParams();
   const navigate = useNavigate();
 
-  const navigateToItem = () => {    
+  const navigateToItem = () => {
     if(product){
       navigate(id);
-    }else{
+    } else if(productId){
+      navigate(id);
+    } else{
       navigate(`phones/${id}`);
     }
   };
@@ -48,15 +50,15 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
       <hr className="card-divider" />
 
       <div className="card-specsBox">
-        <div className="card-specsBox-spec">
+        <div className="card-specsBox-spec small-text">
           <p className="card-specsBox-spec-title">Screen</p>
           <p className="card-specsBox-spec-value">{screen}</p>
         </div>
-        <div className="card-specsBox-spec">
+        <div className="card-specsBox-spec small-text">
           <p className="card-specsBox-spec-title">Capacity</p>
           <p className="card-specsBox-spec-value">{capacity}</p>
         </div>
-        <div className="card-specsBox-spec">
+        <div className="card-specsBox-spec small-text">
           <p className="card-specsBox-spec-title">RAM</p>
           <p className="card-specsBox-spec-value">{ram}</p>
         </div>
@@ -70,7 +72,7 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
 
         {/* // Todo Add to favourites */}
         <button type="button" className="card-buttons-like">
-          <img src={Heart} alt="like" />
+          <img src={Heart} alt="like" className="imageLink"/>
         </button>
       </div>
     </div>

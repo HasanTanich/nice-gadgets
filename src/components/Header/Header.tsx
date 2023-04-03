@@ -42,7 +42,7 @@ const Header = () => {
 
         <div className={`header-menu ${activeMenu ? 'header-menu-active' : ''}`}>
 
-          <div className="header-menu-leftItems">
+          <div className="header-menu-leftItems uppercase">
             <NavLink to='/' className="header-menu-leftItems-item" onClick={()=>setActiveMenu(false)}>Home</NavLink>
        
             <NavLink to='/phones' className="header-menu-leftItems-item" onClick={()=>setActiveMenu(false)}>Phones</NavLink>

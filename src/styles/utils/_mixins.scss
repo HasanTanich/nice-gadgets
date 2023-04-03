@@ -33,22 +33,6 @@
   }
 }
 
-// typography mixins
-@mixin UPPERCASE {
-  text-transform: uppercase;
-  font-weight: 800;
-  font-size: 12px;
-  line-height: 12px;
-  letter-spacing: 0.04em;
-}
-
-@mixin smallText {
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: 0;
-}
-
 @mixin rotate-infinite($duration: 1s) {
   @keyframes rotate-infinite {
     from {

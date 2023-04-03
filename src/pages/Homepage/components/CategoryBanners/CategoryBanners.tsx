@@ -7,15 +7,19 @@ import { mobilePhones, tablets, accessories} from '../../../../assets/img/catego
 
 const CategoryBanners = () => {
   const navigate = useNavigate();
-  
-  const {data, isLoading, error} = getItems('/old-api/products.json', 'category-data');
+  const productData = getItems('/old-api/products.json', ['categories-old-phones-data']).data;
+  const phoneData = getItems('/phones.json', ['categories-new-phones-data']).data;
+
   let mobilePhonesLength = 0;
   let tabletsLength = 0;
   let accessoriesLength = 0;
-  if(!isLoading && !error){
-    mobilePhonesLength = getProductPageData(data?.data, 'type', 'phone', 'age').length;
-    tabletsLength = getProductPageData(data?.data, 'type', 'tablet', 'age').length;
-    accessoriesLength = getProductPageData(data?.data, 'type', 'accessory', 'age').length;
+  if(productData){
+    mobilePhonesLength = getProductPageData(productData, 'type', 'phone').length;
+    tabletsLength = getProductPageData(productData, 'type', 'tablet').length;
+    accessoriesLength = getProductPageData(productData, 'type', 'accessory').length;
+  }
+  if(phoneData){
+    mobilePhonesLength += phoneData.length;
   }
 
   const categoryBanners = [

@@ -4,21 +4,23 @@ import './ProductsSlider.scss';
 import { ArrowBlack, Arrow}  from '../../../../assets/icons';
 import { Phone } from '../../../../core/types/Phone';
 import { useOutletContext } from 'react-router-dom';
-import { ProductCard } from '../../../../components';
+import { Loader, ProductCard } from '../../../../components';
 
 type Props = {
   data: Phone[];
   title: string;
-  error: unknown;
+  isLoading: boolean;
+  isError: boolean;
 }
 
-const ProductsSlider = ({data, title, error} : Props) => {
+const ProductsSlider = ({data, title, isError, isLoading} : Props) => {
   
   const [activeIndex, setActiveIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
   const [cardWidth, setCardWidth] = useState(0);
   const screenSize : number = useOutletContext();
   const cardsGap = 16;
+  
   
   useEffect(() => {
     let width;
@@ -37,7 +39,7 @@ const ProductsSlider = ({data, title, error} : Props) => {
       width = 272 ;
     }
     setCardWidth(width+cardsGap);
-    setMaxIndex(data.length - itemsPerSlide);
+    setMaxIndex(data?.length - itemsPerSlide);
     if(activeIndex >= maxIndex){
       setActiveIndex(maxIndex);
     }
@@ -51,33 +53,36 @@ const ProductsSlider = ({data, title, error} : Props) => {
     }
     setActiveIndex(newIndex);
   };
+  
+  if(isLoading){
+    return <Loader />;
+  }
 
   return (
     <div className="products-slider">
 
       <div className="titleArrows">
-        <h2 className="titleArrows-title">{title}</h2>
-        <div className="titleArrows-arrows">
 
+        <h2 className="titleArrows-title">{title}</h2>
+
+        <div className="titleArrows-arrows">
           <button type="button" onClick={() => updateIndex(activeIndex-1)} disabled={(activeIndex === 0)}>
             <img src={activeIndex === 0 ? Arrow : ArrowBlack} alt="previous item icon" className="leftArrow" />
           </button>
           <button type="button" onClick={() => updateIndex(activeIndex+1)} disabled={activeIndex === maxIndex}>
             <img src={activeIndex === maxIndex ? Arrow : ArrowBlack} alt="next item icon" className="rightArrow"/>
           </button>
-          
         </div>
-        
+
       </div>
 
       <>
-        {error && <h4>Something went wrong, data not found</h4>}
+        {isError && <h4>Something went wrong, data not found</h4>}
       </>
 
-      {(data.length === 0 && !error) && <h4>No products available</h4>
-      }
+      {(data?.length === 0 && !isError) && <h4>No products available</h4>}
 
-      {(data.length > 0 && !error) &&
+      {(data?.length > 0 && !isError) &&
         <div className="cardsBox">
           {data.map( (item) => {
             const {id, name, price, fullPrice, screen, capacity, ram, image, itemId} = item;
