@@ -5,8 +5,9 @@ import './ProductPage.scss';
 import { Home, Arrow } from '../../assets/icons';
 import { FilterSelect, ProductsList, Reload, Loader, Paginator } from '../../components';
 import { NotFound, ProductDetailsPage } from '../../pages';
-import { getItems, getItemsFromMultiple } from '../../core/api';
-import { getProductPageData, sortData } from '../../core/hooks';
+import { useGetItems, useFetchDataFromMultipleUrls
+} from '../../core/api';
+import { getProductPageData, sortData } from '../../core/dataUtils';
 import { Product } from '../../core/types/Product';
 import { Phone } from '../../core/types/Phone';
 
@@ -17,63 +18,28 @@ export interface FilterOption {
 
 const ProductPage = () => {
   const {product, productId} = useParams();
-
-  if(product !== 'phones' && product !== 'tablets' && product !== 'accessories'){
-    return <NotFound />;
-  }
+  const [params, setParams] = useSearchParams();
+  const [title, setTitle] = useState('');
+  const [productType, setProductType] = useState('');
 
   const sortTypeOptions : FilterOption[] = [
     { value: 'age', label: 'Newest' },
     { value: 'name', label: 'Alphabatically' },
     { value: 'price', label: 'Cheapest' }
   ];
+
   const itemsOnPageOptions: FilterOption[] = [
     { value: '4', label: '4' },
     { value: '8', label: '8' },
     { value: '16', label: '16' },
     { value: 'all', label: 'all' }
   ];
-  const [params, setParams] = useSearchParams();
-  const [title, setTitle] = useState('');
-  const [productType, setProductType] = useState('');
+
+  // get data from route params
   const sortType = params.get('sort') || 'age';
   const itemsPerPage = params.get('perPage') || 'all';
   const currentPage = Number(params.get('page')) || 1;
-  let productsData : Array<Phone | Product> = [];
-  let isLoading = true;
-  let isError = false;
-  let singleProductFetchUrl = '';
 
-  if (product === 'phones') {
-    const multipleQueries = getItemsFromMultiple(['phones-data'], ['old-phones-data'], '/phones.json', '/old-api/products.json');
-    isLoading = multipleQueries.isLoading;
-    isError = multipleQueries.isError;
-    if(multipleQueries.data){
-      const query1 : Phone[] = multipleQueries.data[0];
-      const query2 : Product[] = multipleQueries.data[1];
-      const filteredPhonesFromProducts = getProductPageData(query2, 'type', productType);
-      productsData = [...query1, ...filteredPhonesFromProducts];
-
-      if(query1.find((item: Phone) => item.itemId === productId)){// check if productId is from new api
-        singleProductFetchUrl = '/phones/'+productId+'.json';
-      }else {
-        singleProductFetchUrl = '/old-api/products/'+productId+'.json';
-      }
-    }
-  } else {
-    const singleQuery = getItems('/old-api/products.json', ['old-' + product + '-data']);
-    isLoading = singleQuery.isLoading;
-    isError = singleQuery.isError;
-    const data : Product[] = singleQuery.data;
-    
-    if(data){
-      productsData = getProductPageData(data, 'type', productType);
-    }
-    singleProductFetchUrl = '/old-api/products/'+productId+'.json';
-  }
-
-  productsData = sortData(productsData, sortType);
-  
   useEffect(() => {
     // in case 'sort' or 'perPage' route params values were changed manually by user through route, and didn't match the options, reset to default.
     if(sortTypeOptions.find(item => item.value === sortType) === undefined){
@@ -107,6 +73,44 @@ const ProductPage = () => {
       break;
     }    
   },[product]);
+
+  const multipleQueries = useFetchDataFromMultipleUrls(
+    ['phones-data'],
+    ['old-phones-data'],
+    '/phones.json',
+    '/old-api/products.json',
+  );
+  
+  const singleQuery = useGetItems(
+    '/old-api/products.json',
+    ['old-' + product + '-data'],
+  );
+
+  const isLoading = multipleQueries.isLoading || singleQuery.isLoading;
+  const isError = multipleQueries.isError || singleQuery.isError;
+  let productsData : Array<Phone | Product> = [];
+  let singleProductFetchUrl;
+
+  if (product === 'phones' && multipleQueries.data) {
+    const query1: Phone[] = multipleQueries.data[0];
+    const query2: Product[] = multipleQueries.data[1];
+    const filteredPhonesFromProducts = getProductPageData(query2, 'type', productType);
+    productsData = [...query1, ...filteredPhonesFromProducts];
+    
+    if(productId){
+      // check if productId is from old api
+      if (query2.find((item: Product) => item.id === productId)) {
+        singleProductFetchUrl = '/old-api/products/' + productId + '.json';
+      } else {
+        singleProductFetchUrl = '/phones/' + productId + '.json';
+      }
+    }
+  } else if (product !== 'phones' && singleQuery.data) {
+    const data: Product[] = singleQuery.data;
+    productsData = getProductPageData(data, 'type', productType);    
+    singleProductFetchUrl = '/old-api/products/' + productId + '.json';
+  }
+  productsData = sortData(productsData, sortType);
   
   const onPageChange = (page: number) => {
     if(page === 1){
@@ -117,12 +121,17 @@ const ProductPage = () => {
       setParams(params);
     }
   };
-  
+
   let currentProducts = productsData?.slice();
+  
   if(itemsPerPage!== 'all'){
     const indexOfLastProduct = currentPage * Number(itemsPerPage);
     const indexOfFirstProduct = indexOfLastProduct - Number(itemsPerPage);
     currentProducts = productsData.slice(indexOfFirstProduct, indexOfLastProduct);
+  }
+  
+  if(product !== 'phones' && product !== 'tablets' && product !== 'accessories'){
+    return <NotFound />;
   }
 
   return (

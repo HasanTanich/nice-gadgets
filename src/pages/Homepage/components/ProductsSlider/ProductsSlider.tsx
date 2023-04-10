@@ -16,11 +16,10 @@ type Props = {
 const ProductsSlider = ({data, title, isError, isLoading} : Props) => {
   
   const [activeIndex, setActiveIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(4);
   const [cardWidth, setCardWidth] = useState(0);
   const screenSize : number = useOutletContext();
   const cardsGap = 16;
-  
   
   useEffect(() => {
     let width;
@@ -38,11 +37,18 @@ const ProductsSlider = ({data, title, isError, isLoading} : Props) => {
     }else {
       width = 272 ;
     }
+    
     setCardWidth(width+cardsGap);
-    setMaxIndex(data?.length - itemsPerSlide);
+
+    if(data?.length > 0){
+      setMaxIndex(data?.length - itemsPerSlide);
+    }else {
+      setMaxIndex(4);
+    }
+
     if(activeIndex >= maxIndex){
       setActiveIndex(maxIndex);
-    }
+    }    
   }, [activeIndex, screenSize]);
   
   const updateIndex = (newIndex: number) => {
@@ -57,7 +63,7 @@ const ProductsSlider = ({data, title, isError, isLoading} : Props) => {
   if(isLoading){
     return <Loader />;
   }
-
+  
   return (
     <div className="products-slider">
 

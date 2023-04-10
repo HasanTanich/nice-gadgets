@@ -1,9 +1,9 @@
 import './Homepage.scss';
 
 import { BannerSlider, CategoryBanners, ProductsSlider } from './components';
-import { getItems } from '../../core/api';
+import { useGetItems } from '../../core/api';
 import { Phone } from '../../core/types/Phone';
-import { sortData } from '../../core/hooks';
+import { sortData } from '../../core/dataUtils';
 
 const Homepage = () => {
 
@@ -16,12 +16,11 @@ const Homepage = () => {
       } else {                        // filter items if they have discounts (fullPrice !== price)
         return item.fullPrice !== item.price;
       }
-    });
-  
+    });  
     return sortData(filteredData, filterKey1, filterKey2);
   }
 
-  const {isLoading, data, isError} = getItems('/phones.json', ['new-phones-data']);
+  const {isLoading, data, isError} = useGetItems('/phones.json', ['new-phones-data']);
 
   let brandNewPhones: Phone[] = [];
   let hotPricesPhones: Phone[] = [];
@@ -41,7 +40,7 @@ const Homepage = () => {
       <BannerSlider/>
 
       <ProductsSlider
-        data={brandNewPhones} 
+        data={brandNewPhones}
         title="Brand new models"
         isLoading={isLoading}
         isError={isError}

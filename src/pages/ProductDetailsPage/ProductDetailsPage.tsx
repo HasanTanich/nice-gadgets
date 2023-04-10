@@ -1,28 +1,50 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './ProductDetailsPage.scss';
 
 import { ArrowBlack, Heart } from '../../assets/icons';
 import { Loader } from '../../components';
-import { getItems } from '../../core/api';
+import { useGetItems } from '../../core/api';
 import { ProductsSlider } from '../Homepage/components';
 import Tech from './Tech';
-import { getSuggestedProducts } from '../../core/hooks';
+import { useGetSuggestedProducts } from '../../core/dataUtils';
 
 const ProductDetailsPage = ({url} : {url : string}) => {
   const navigate = useNavigate();
   const {productId} = useParams();
   const [currentSliderImage, setCurrentSliderImage] = useState(0);
-  const [selectedColor, setSelectedColor] = useState('');
+  const tempColor = productId?.split('-').pop();
+  const [selectedColor, setSelectedColor] = useState(tempColor);
   const [selectedCapacity, setSelectedCapacity] = useState('');
-  const {data, isLoading, isError} = getItems(url, [productId+'-data']);
-  const suggestedProducts = getSuggestedProducts('/phones.json', 'phones');
+  const {data, isLoading, isError} = useGetItems(url, [productId+'-data']);
+  const suggestedProducts = useGetSuggestedProducts('/phones.json', 'phones');
+
   useEffect(() => {
     if(data){
-      setSelectedColor(data.color);
-      setSelectedCapacity(data.capacity);
+      setSelectedColor(data?.color);
+      setSelectedCapacity(data?.capacity);      
     }
   }, [isLoading]);
+  
+  const onSelectSliderImage = (i : number) => {
+    setCurrentSliderImage(i);
+  };
+
+  const onSelectedColor = (color: string) => {
+    if(selectedColor!== color){
+      setSelectedColor(color);
+      const newUrl = `/phones/${data.namespaceId}-${data.capacity.toLowerCase()}-${color}`;
+      navigate(newUrl);
+    }
+  };
+  
+  const onSelectedCapacity = (capacity: string) => {
+    if(selectedCapacity !== capacity){
+      setSelectedCapacity(capacity);
+      const newUrl = `/phones/${data.namespaceId}-${capacity.toLowerCase()}-${selectedColor}`;
+      navigate(newUrl);
+    }
+  };
   
   if(isLoading){
     return <Loader />;
@@ -32,35 +54,10 @@ const ProductDetailsPage = ({url} : {url : string}) => {
     return <h3>Product was not found</h3>;
   }
 
-  const onSelectSliderImage = (i : number) => {
-    setCurrentSliderImage(i);
-  };
-
-  const onSelectedColor = (color: string) => {
-    if(selectedColor!== color){
-      setSelectedColor(color);
-    }
-  };
-  
-  const onSelectedCapacity = (capacity: string) => {
-    if(selectedCapacity !== capacity){
-      setSelectedCapacity(capacity);
-    }
-  };
-
-  // let name = '', images = [''], colorsAvailable = [''], capacityAvailable = [''], priceRegular = 0, priceDiscount = 0, 
-  //   screen = '', resolution = '', ram = '', processor = '', description = [{title: '', text: ['']}]
-  //   , camera = '', zoom = '', cell = [''], capacity = '';
-  // if(visibleItem){
-  //   ({
-  //     name, images, colorsAvailable, capacityAvailable, priceRegular, priceDiscount, 
-  //     screen, resolution, ram, processor, description, camera, zoom, cell, capacity
-  //   } = visibleItem);
-  // }
-  
   const { name, images, colorsAvailable, capacityAvailable, priceRegular, priceDiscount, 
-    screen, resolution, ram, processor, description, camera, zoom, cell, capacity
+    screen, resolution, ram, processor, description, camera, zoom, cell, capacity,
   } = data;
+  
   return (
     <>
       <div className="backBtn" onClick={() => navigate(-1)}>
@@ -99,18 +96,24 @@ const ProductDetailsPage = ({url} : {url : string}) => {
           <div className="productCustomization-specs-availableColors">
             <p className="small-text">Available Colors</p>
             <div className="productCustomization-specs-colors">
-              {colorsAvailable.map((item: string) => 
-                <div 
+              {colorsAvailable.map((item: string) =>{
+                const customColors = [
+                  {name: 'spacegray', hex: '#110022'},
+                  {name: 'rosegold', hex: '#B76E79'},
+                  {name: 'midnightgreen', hex: '#004953'},
+                ];
+                const customColor = customColors.find(i => i.name === item);
+                return <div 
                   key={item} 
                   className={`productCustomization-specs-colors-colorBox productCustomization-specs-colors-colorBox--${selectedColor === item ? 'active' : ''}`}
                   onClick={()=>onSelectedColor(item)}
                 >
                   <div 
                     className="productCustomization-specs-colors-colorBox-color" 
-                    style={{background: item}}
+                    style={{background: customColor ? customColor.hex : item}}
                   />
-                </div>
-              )}
+                </div>;
+              })}
             </div>
             
           </div>}

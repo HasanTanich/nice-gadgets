@@ -1,14 +1,15 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import './CategoryBanners.scss';
 import { useNavigate } from 'react-router-dom';
 
-import { getItems } from '../../../../core/api';
-import { getProductPageData } from '../../../../core/hooks';
+import { useGetItems } from '../../../../core/api';
+import { getProductPageData } from '../../../../core/dataUtils';
 import { mobilePhones, tablets, accessories} from '../../../../assets/img/category-banners';
 
 const CategoryBanners = () => {
   const navigate = useNavigate();
-  const productData = getItems('/old-api/products.json', ['categories-old-phones-data']).data;
-  const phoneData = getItems('/phones.json', ['categories-new-phones-data']).data;
+  const productData = useGetItems('/old-api/products.json', ['categories-old-phones-data']).data;
+  const phoneData = useGetItems('/phones.json', ['categories-new-phones-data']).data;
 
   let mobilePhonesLength = 0;
   let tabletsLength = 0;

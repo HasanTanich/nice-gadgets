@@ -1,4 +1,4 @@
-import { getItems } from './api';
+import { useGetItems } from './api';
 import { Phone } from './types/Phone';
 
 export function sortData<T>(data: T[], sortKey: keyof T, sortKey2?: keyof T, desc = false) : T[]{
@@ -43,7 +43,7 @@ export function getProductPageData<T>(data: T[], filterKey: keyof T, filterValue
   return filteredData;
 }
 
-export function getSuggestedProducts(url: string, key: string){
-  const {data, isError, isLoading} = getItems(url, [key]);
+export function useGetSuggestedProducts(url: string, key: string){
+  const {data, isError, isLoading} = useGetItems(url, [key]);
   return {data, isError, isLoading};
 }
