@@ -74,27 +74,31 @@ const ProductPage = () => {
     }    
   },[product]);
 
-  const multipleQueries = useFetchDataFromMultipleUrls(
+const {data: multipleQueries, isLoading: isLoadingNewApi, isError: isErrorNewApi} = useFetchDataFromMultipleUrls(
     ['phones-data'],
     ['old-phones-data'],
     '/phones.json',
     '/old-api/products.json',
+    product === 'phones'
   );
   
-  const singleQuery = useGetItems(
+  const {data: singleQuery, isLoading: isLoadingOldApi, isError: isErrorOldApi} = useGetItems(
     '/old-api/products.json',
     ['old-' + product + '-data'],
+    product !== 'phones'
   );
-
-  const isLoading = multipleQueries.isLoading || singleQuery.isLoading;
-  const isError = multipleQueries.isError || singleQuery.isError;
+  
+  let isLoading = true;
+  let isError = false;
   let productsData : Array<Phone | Product> = [];
   let singleProductFetchUrl;
 
-  if (product === 'phones' && multipleQueries.data) {
-    const query1: Phone[] = multipleQueries.data[0];
-    const query2: Product[] = multipleQueries.data[1];
-    const filteredPhonesFromProducts = getProductPageData(query2, 'type', productType);
+  if (product === 'phones' && multipleQueries) {
+    const query1: Phone[] = multipleQueries[0];
+    const query2: Product[] = multipleQueries[1];
+    const filteredPhonesFromProducts = getProductPageData(query2, productType);
+    isLoading = isLoadingNewApi;
+    isError = isErrorNewApi;
     productsData = [...query1, ...filteredPhonesFromProducts];
     
     if(productId){
@@ -105,9 +109,11 @@ const ProductPage = () => {
         singleProductFetchUrl = '/phones/' + productId + '.json';
       }
     }
-  } else if (product !== 'phones' && singleQuery.data) {
-    const data: Product[] = singleQuery.data;
-    productsData = getProductPageData(data, 'type', productType);    
+  } else if (product !== 'phones' && singleQuery) {
+    const data: Product[] = singleQuery;
+    productsData = getProductPageData(data, productType);    
+    isLoading = isLoadingOldApi;
+    isError = isErrorOldApi;
     singleProductFetchUrl = '/old-api/products/' + productId + '.json';
   }
   productsData = sortData(productsData, sortType);

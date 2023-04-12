@@ -13,9 +13,11 @@ const ProductDetailsPage = ({url} : {url : string}) => {
   const navigate = useNavigate();
   const {productId} = useParams();
   const [currentSliderImage, setCurrentSliderImage] = useState(0);
-  const tempColor = productId?.split('-').pop();
-  const [selectedColor, setSelectedColor] = useState(tempColor);
+  const [selectedColor, setSelectedColor] = useState('');
   const [selectedCapacity, setSelectedCapacity] = useState('');
+  const [startX, setStartX] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
+  const [imageActiveIndex, setImageActiveIndex] = useState(0);
   const {data, isLoading, isError} = useGetItems(url, [productId+'-data']);
   const suggestedProducts = useGetSuggestedProducts('/phones.json', 'phones');
 
@@ -26,11 +28,7 @@ const ProductDetailsPage = ({url} : {url : string}) => {
     }
   }, [isLoading]);
   
-  const onSelectSliderImage = (i : number) => {
-    setCurrentSliderImage(i);
-  };
-
-  const onSelectedColor = (color: string) => {
+    const onSelectedColor = (color: string) => {
     if(selectedColor!== color){
       setSelectedColor(color);
       const newUrl = `/phones/${data.namespaceId}-${data.capacity.toLowerCase()}-${color}`;
@@ -45,6 +43,41 @@ const ProductDetailsPage = ({url} : {url : string}) => {
       navigate(newUrl);
     }
   };
+
+  const updateImageIndex = (i : number) => {
+    const imagesLength = data.images.length - 1;
+    if(i < 0){
+      setImageActiveIndex(0);
+    }else if(i > imagesLength){
+      setImageActiveIndex(imagesLength)
+    }else {
+      setImageActiveIndex(i);
+    }
+  };
+  
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartX(e.touches[0].clientX);
+    setIsSwiping(true);
+  };
+
+  const handleTouchMove = () => {
+    if (!isSwiping) {
+      return;
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
+    setIsSwiping(false);
+
+    const currentX = e.changedTouches[0].clientX;
+    const deltaX = currentX - startX;
+
+    if (deltaX > 70) {
+      updateImageIndex(imageActiveIndex-1);
+    } else if (deltaX < -70) {
+      updateImageIndex(imageActiveIndex+1);
+    }
+  };
   
   if(isLoading){
     return <Loader />;
@@ -54,7 +87,7 @@ const ProductDetailsPage = ({url} : {url : string}) => {
     return <h3>Product was not found</h3>;
   }
 
-  const { name, images, colorsAvailable, capacityAvailable, priceRegular, priceDiscount, 
+  const { name, images, colorsAvailable, capacityAvailable, priceRegular, priceDiscount,
     screen, resolution, ram, processor, description, camera, zoom, cell, capacity,
   } = data;
   
@@ -72,8 +105,8 @@ const ProductDetailsPage = ({url} : {url : string}) => {
           {images.map((item : string, index: number) =>
             <div 
               key={index} 
-              className={`productCustomization-productImages-image productCustomization-productImages-image--${index === currentSliderImage ? 'active' : ''}`}
-              onClick={ () => onSelectSliderImage(index)}
+              className={`productCustomization-productImages-image productCustomization-productImages-image--${index === imageActiveIndex ? 'active' : ''}`}
+              onClick={ () => updateImageIndex(index)}
             >
               <img
                 src={item}
@@ -83,9 +116,14 @@ const ProductDetailsPage = ({url} : {url : string}) => {
           )}
         </div>
 
-        <div className="productCustomization-imageSelectedBox">
+        <div 
+          className="productCustomization-imageSelectedBox"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <img 
-            src={images[currentSliderImage]} 
+            src={images[imageActiveIndex]} 
             alt="image selected"
             className="productCustomization-imageSelectedBox-image"
           />

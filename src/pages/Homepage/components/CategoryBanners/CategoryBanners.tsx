@@ -15,9 +15,9 @@ const CategoryBanners = () => {
   let tabletsLength = 0;
   let accessoriesLength = 0;
   if(productData){
-    mobilePhonesLength = getProductPageData(productData, 'type', 'phone').length;
-    tabletsLength = getProductPageData(productData, 'type', 'tablet').length;
-    accessoriesLength = getProductPageData(productData, 'type', 'accessory').length;
+    mobilePhonesLength = getProductPageData(productData, 'phone').length;
+    tabletsLength = getProductPageData(productData, 'tablet').length;
+    accessoriesLength = getProductPageData(productData, 'accessory').length;
   }
   if(phoneData){
     mobilePhonesLength += phoneData.length;
