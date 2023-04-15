@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer';
 import { useCart } from '../../core/ContextProviders/CartContext';
 
 const Header = () => {
-  // const { totalCount } = useCart();
+  const { totalCount } = useCart();
   const [activeMenu, setActiveMenu] = useState(false);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
 
@@ -55,13 +55,21 @@ const Header = () => {
 
           <div className="header-menu-buttonsRight">
             <NavLink to='/favorites' className="header-menu-buttonsRight-item" onClick={() => setActiveMenu(false)}>
-              <div>
+              <div className="icon">
+                {/* {totalCount > 0 &&
+                  <div className="icon-iconCounter">
+                    {3}
+                  </div>} */}
                 <img src={Heart} alt="heart icon" className="heartIcon" />
               </div>
             </NavLink>
 
             <NavLink to='/cart' className="header-menu-buttonsRight-item" onClick={() => setActiveMenu(false)}>
-              <div >
+              <div className="icon">
+                {totalCount > 0 &&
+                  <div className="icon-iconCounter">
+                    {totalCount}
+                  </div>}
                 <img src={Cart} alt="heart icon" />
               </div>
             </NavLink>

@@ -4,16 +4,30 @@
     width: 100%;
     height: 128px;
     padding: 24px;
-    @include flex-content(center, row, center);
-    gap: 24px;
+    @include flex-content(space-between, row);
     border: 1px solid $elementsColor;
 
     @include onSmall {
         height: 160px;
-        flex-wrap: wrap;
+        padding: 16px;
+        flex-direction: column;
+        row-gap: 16px
+    }
+
+    &-firstColumn {
+        @include flex-content(space-between, row, center);
+        gap: 24px;
+        align-self: stretch;
+    }
+
+    &-secondColumn {
+        @include flex-content(space-between, row, center);
+        gap: 24px;
+        align-self: stretch;
     }
 
     &-image {
+        order: 1;
         width: 80px;
         height: 80px;
 
@@ -25,10 +39,12 @@
     }
 
     &-name {
+        order: 1;
         flex-grow: 1;
     }
 
     &-counter {
+        order: 2;
         display: flex;
         align-items: center;
         width: 96px;
@@ -44,11 +60,13 @@
     }
 
     &-price {
+        order: 2;
         width: 80px;
         text-align: right;
     }
 }
 
 .deleteIcon {
+    order: 1;
     cursor: pointer;
 }

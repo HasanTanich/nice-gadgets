@@ -10,41 +10,46 @@ const CartCard = ({ data }: { data: CartItem }) => {
 
   return (
     <div className="cartCard">
-      <img
-        src={GrayClose}
-        alt="Remove Cart Item from Cart"
-        className="deleteIcon"
-        onClick={() => removeCartItem(id)}
-      />
+      <div className="cartCard-firstColumn">
+        <img
+          src={GrayClose}
+          alt="Remove Cart Item from Cart"
+          className="deleteIcon"
+          onClick={() => removeCartItem(id)}
+        />
 
-      <div className="cartCard-image">
-        <img src={image} alt="product image" />
+        <div className="cartCard-image">
+          <img src={image} alt="product image" />
+        </div>
+
+        <p className="body-text cartCard-name">{name}</p>
       </div>
 
-      <p className="body-text cartCard-name">{name}</p>
+      <div className="cartCard-secondColumn">
 
-      <div className="cartCard-counter">
-        <button
-          type="button"
-          className="cartCard-counter-minusButton"
-          onClick={() => updateCartItemQuantity(id, false)}
-          disabled={quantity === 1}
-        >
-          <img src={quantity === 1 ? Minus : BlackMinus} alt="" />
-        </button>
+        <div className="cartCard-counter">
+          <button
+            type="button"
+            className="cartCard-counter-minusButton"
+            onClick={() => updateCartItemQuantity(id, false)}
+            disabled={quantity === 1}
+          >
+            <img src={quantity === 1 ? Minus : BlackMinus} alt="" />
+          </button>
 
-        <p className="body-text cartCard-counter-quantity">{quantity}</p>
+          <p className="body-text cartCard-counter-quantity">{quantity}</p>
 
-        <button
-          type="button"
-          className="cartCard-counter-plusButton"
-          onClick={() => updateCartItemQuantity(id, true)}
-        >
-          <img src={Plus} alt="" />
-        </button>
+          <button
+            type="button"
+            className="cartCard-counter-plusButton"
+            onClick={() => updateCartItemQuantity(id, true)}
+          >
+            <img src={Plus} alt="" />
+          </button>
+        </div>
+
+        <h3 className="cartCard-price">${price * quantity}</h3>
       </div>
-
-      <h3 className="cartCard-price">${price * quantity}</h3>
 
     </div>
   )
