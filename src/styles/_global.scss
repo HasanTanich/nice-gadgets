@@ -102,3 +102,8 @@ img {
 .downArrow {
   transform: rotate(180deg);
 }
+
+.divider {
+  border: 1px solid variables.$elementsColor;
+  width: 100%;
+}

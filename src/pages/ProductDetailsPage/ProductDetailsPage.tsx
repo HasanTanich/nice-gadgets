@@ -2,17 +2,19 @@ import { useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './ProductDetailsPage.scss';
 
-import { ArrowBlack, Heart } from '../../assets/icons';
-import { Loader } from '../../components';
+import { Heart } from '../../assets/icons';
+import { Loader, BackButton } from '../../components';
 import { useGetItems } from '../../core/api';
 import { ProductsSlider } from '../Homepage/components';
-import Tech from './Tech';
 import { useGetSuggestedProducts } from '../../core/dataUtils';
+import Tech from './Tech';
+import { useCart } from '../../core/ContextProviders/CartContext';
 
 const ProductDetailsPage = ({url} : {url : string}) => {
   const navigate = useNavigate();
   const {productId} = useParams();
-  const [currentSliderImage, setCurrentSliderImage] = useState(0);
+  const {addToCart} = useCart();
+  
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedCapacity, setSelectedCapacity] = useState('');
   const [startX, setStartX] = useState(0);
@@ -93,10 +95,7 @@ const ProductDetailsPage = ({url} : {url : string}) => {
   
   return (
     <>
-      <div className="backBtn" onClick={() => navigate(-1)}>
-        <img src={ArrowBlack} alt="Arrow icon" className="leftArrow"/>
-        <p className="small-text">Back</p>
-      </div>
+      <BackButton />      
 
       <h2>{name}</h2>
 
@@ -186,7 +185,11 @@ const ProductDetailsPage = ({url} : {url : string}) => {
           </div>
 
           <div className="productCustomization-specs-actionButtons">
-            <button type="button" className="productCustomization-specs-actionButtons-addToCart">
+            <button 
+              type="button" 
+              className="productCustomization-specs-actionButtons-addToCart"
+              onClick={() => addToCart({image: images[0], price: priceDiscount, name})}
+            >
               Add to cart
             </button>
 

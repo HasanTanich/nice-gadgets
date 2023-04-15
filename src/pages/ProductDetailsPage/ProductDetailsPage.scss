@@ -1,18 +1,5 @@
 @import '../../styles/utils';
 
-.backBtn {
-    width: 66px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    margin-bottom: 16px;
-
-    & p {
-        color: $secondaryColor;
-    }
-}
-
 .productCustomization {
     width: 944px;
     height: 464px;
@@ -276,10 +263,6 @@
             margin-top: 26px;
         }
     }
-}
-
-.divider {
-    border: 1px solid $elementsColor;
 }
 
 .colors-divider {
