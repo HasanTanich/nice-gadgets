@@ -1,19 +1,27 @@
-import { useLocation } from "react-router-dom";
-import { BackButton } from "../../components";
-import { useCart } from "../../core/ContextProviders/CartContext";
 import './Cart.scss';
-import CartCard from "./CartCard/CartCard";
+import { BackButton } from '../../components';
+import { useCart } from '../../core/ContextProviders/CartContext';
+import { CartCard, CheckoutModal } from './components';
+import { useState } from 'react';
 
 const Cart = () => {
   const { cartItems, totalCount } = useCart();
   const totalPrice = cartItems.reduce((sum, item) => sum + item.quantity * item.product.price, 0);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onCloseModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <div className="container">
       <BackButton />
+
       <h1 className="cartTitle">Cart</h1>
+
       {cartItems.length > 0 &&
         <div className="columns">
+
           <div className="cartItems">
             {cartItems.map(item => (
               <div className="cartItemsCard" key={item.id}>
@@ -26,16 +34,21 @@ const Cart = () => {
             <h2>${totalPrice}</h2>
             <p className="body-text">Total for {totalCount} items</p>
             <div className="divider checkoutDivider" />
-            <button type="button" onClick={() => console.log('xd')
-            }>
+            <button 
+              type="button" 
+              onClick={() => setIsOpen(true)}
+            >
               Checkout
             </button>
+            
           </div>
         </div>}
 
       {cartItems.length === 0 &&
         <h3>Your cart is empty</h3>
       }
+
+      <CheckoutModal open={isOpen} onClose={onCloseModal} />
     </div>
   );
 };

@@ -74,7 +74,7 @@ const ProductPage = () => {
     }    
   },[product]);
 
-const {data: multipleQueries, isLoading: isLoadingNewApi, isError: isErrorNewApi} = useFetchDataFromMultipleUrls(
+  const {data: multipleQueries, isLoading: isLoadingNewApi, isError: isErrorNewApi} = useFetchDataFromMultipleUrls(
     ['phones-data'],
     ['old-phones-data'],
     '/phones.json',

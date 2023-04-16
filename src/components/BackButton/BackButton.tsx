@@ -3,13 +3,13 @@ import { ArrowBlack } from '../../assets/icons';
 import './BackButton.scss';
 
 const BackButton = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="backBtn" onClick={() => navigate(-1)}>
-        <img src={ArrowBlack} alt="Arrow icon" className="leftArrow"/>
-        <p className="small-text">Back</p>
-      </div>
-  )
-}
+      <img src={ArrowBlack} alt="Arrow icon" className="leftArrow"/>
+      <p className="small-text">Back</p>
+    </div>
+  );
+};
 
-export default BackButton
+export default BackButton;

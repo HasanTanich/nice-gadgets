@@ -1,0 +1,17 @@
+@import '../../styles/utils';
+
+.toasterContainer {
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+    z-index: 10000;
+    padding: 12px;
+    background-color: $primaryColor;
+    border-radius: 16px;
+    align-items: center;
+
+    p {
+        text-align: center;
+        color: white;
+    }
+}

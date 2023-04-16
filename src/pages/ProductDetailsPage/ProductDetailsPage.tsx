@@ -30,7 +30,7 @@ const ProductDetailsPage = ({url} : {url : string}) => {
     }
   }, [isLoading]);
   
-    const onSelectedColor = (color: string) => {
+  const onSelectedColor = (color: string) => {
     if(selectedColor!== color){
       setSelectedColor(color);
       const newUrl = `/phones/${data.namespaceId}-${data.capacity.toLowerCase()}-${color}`;
@@ -51,7 +51,7 @@ const ProductDetailsPage = ({url} : {url : string}) => {
     if(i < 0){
       setImageActiveIndex(0);
     }else if(i > imagesLength){
-      setImageActiveIndex(imagesLength)
+      setImageActiveIndex(imagesLength);
     }else {
       setImageActiveIndex(i);
     }

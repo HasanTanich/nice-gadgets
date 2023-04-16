@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export interface cartItemProduct {
     image: string;
     price: number;
@@ -16,4 +17,5 @@ export type CartContextType = {
     addToCart: (product: cartItemProduct) => void;
     updateCartItemQuantity: (id: number, add: boolean) => void;
     removeCartItem: (id: number) => void;
+    clearCart : () => void;
 };

@@ -1,7 +1,7 @@
 import './CartCard.scss';
-import { GrayClose, Close, Minus, Plus, BlackMinus } from '../../../assets/icons';
-import { CartItem } from '../../../core/types/Cart';
-import { useCart } from '../../../core/ContextProviders/CartContext';
+import { GrayClose, Minus, Plus, BlackMinus } from '../../../../assets/icons';
+import { CartItem } from '../../../../core/types/Cart';
+import { useCart } from '../../../../core/ContextProviders/CartContext';
 
 const CartCard = ({ data }: { data: CartItem }) => {
   const { updateCartItemQuantity, removeCartItem } = useCart();
@@ -52,7 +52,7 @@ const CartCard = ({ data }: { data: CartItem }) => {
       </div>
 
     </div>
-  )
-}
+  );
+};
 
 export default CartCard;
