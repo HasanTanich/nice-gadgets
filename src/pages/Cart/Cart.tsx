@@ -14,7 +14,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="container">
+    <div className="cart">
       <BackButton />
 
       <h1 className="cartTitle">Cart</h1>

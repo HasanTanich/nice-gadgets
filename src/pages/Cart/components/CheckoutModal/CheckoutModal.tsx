@@ -15,9 +15,10 @@ const CheckoutModal = ({open, onClose}: {open: boolean, onClose: ()=> void}) => 
     <>
       <div className="overlay" />
       <div className="modal">
-        <h4 className="modal-message">
+        <h4 className="modal-message-1">
           Checkout is not implemented yet.
-          <br />
+        </h4>
+        <h4 className="modal-message-2">
           Do you want to clear the Cart?
         </h4>
         <div className="modal-actions">

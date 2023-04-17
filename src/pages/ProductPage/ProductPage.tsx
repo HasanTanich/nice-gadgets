@@ -10,7 +10,6 @@ import { useGetItems, useFetchDataFromMultipleUrls
 import { getProductPageData, sortData } from '../../core/dataUtils';
 import { Product } from '../../core/types/Product';
 import { Phone } from '../../core/types/Phone';
-
 export interface FilterOption {
   value: string;
   label: string;
@@ -156,7 +155,7 @@ const ProductPage = () => {
         }
 
       </div>
-      <div className="productContainer">
+      <div className="container">
         {(productId && singleProductFetchUrl) &&
         <ProductDetailsPage 
           url={singleProductFetchUrl}

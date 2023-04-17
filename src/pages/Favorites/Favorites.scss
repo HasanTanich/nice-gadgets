@@ -1,0 +1,47 @@
+@import '../../styles/utils';
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    height: 16px;
+    gap: 8px;
+    overflow: hidden;
+    padding: 0 152px 0 152px;
+    margin-top: 24px;
+
+    @include onXLarge {
+        padding: 0 32px 0 32px;
+    }
+
+    @include onLarge {
+        padding: 0 32px 0 32px;
+    }
+
+    @include onMedium {
+        padding: 0 24px 0 24px;
+    }
+
+    @include onSmall {
+        padding: 0 16px 0 16px;
+    }
+
+    &-page {
+        font-size: 12px;
+        color: $secondaryColor;
+        height: 100%;
+        text-transform: capitalize;
+    }
+}
+
+.favoritesTitle {
+    margin-bottom: 8px;
+}
+
+.itemsLength {
+    color: $secondaryColor;
+    margin-bottom: 40px;
+
+    @include onSmall {
+        margin-bottom: 32px;
+    }
+}

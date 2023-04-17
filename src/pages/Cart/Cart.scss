@@ -1,5 +1,25 @@
 @import '../../styles/utils';
 
+.cart {
+    padding: 40px 152px 80px 152px;
+
+    @include onXLarge {
+        padding: 40px 32px 80px 32px;
+    }
+
+    @include onLarge {
+        padding: 40px 32px 80px 32px;
+    }
+
+    @include onMedium {
+        padding: 40px 24px 64px 24px;
+    }
+
+    @include onSmall {
+        padding: 24px 16px 56px 16px;
+    }
+}
+
 .cartTitle {
     margin-bottom: 32px;
 }

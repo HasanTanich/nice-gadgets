@@ -1,23 +1,22 @@
-import { Phone } from '../../core/types/Phone';
-import { Product } from '../../core/types/Product';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ProductCard from '../ProductCard/ProductCard';
 import './ProductsList.scss';
 
-const ProductsList = ({data}: {data: Array<Product | Phone>}) => {
+const ProductsList = ({data}: {data: any}) => {
   
   return (
     <div className="products">
-      {data.map(item => {
+      {data.map((item : any) => {
         const {id, name, price, discount, screen, capacity, ram, imageUrl, image, itemId, fullPrice} = item;
 
         // when the array has different property names
-        const imgUrl = image ? image : imageUrl;
+        const imgUrl = imageUrl ? imageUrl : image;
         const Id = itemId ? itemId : id;
-        const itemPrice = fullPrice ? price : price-discount;
+        const itemPrice = discount ? price-discount : price;
         const itemFullPrice = fullPrice ? fullPrice : price;
 
         return (
-          <ProductCard 
+          <ProductCard
             key={id}
             id={Id}
             name={name} 
