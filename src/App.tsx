@@ -23,7 +23,7 @@ function App() {
 
             <Route path="/cart" element={<Cart />}/>
             <Route path="/favorites" element={<Favorites />}/>
-
+            
           </Route>
           <Route path="*" element={<NotFound />}/>
         </Routes>

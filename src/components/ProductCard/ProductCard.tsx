@@ -30,13 +30,13 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
     } else{
       navigate(`phones/${id}`);
     }
+    window.scrollTo({top: 0, behavior: 'smooth'});
   };
 
   return (
     <div
       className={`card ${productPage ? 'productPageCard' : ''}`} 
-      style={(activeIndex && cardWidth) ? 
-        { transform: `translateX(-${activeIndex * cardWidth}px)`} : {}}
+      style={{ transform: activeIndex && cardWidth ? `translateX(-${activeIndex * cardWidth}px)` : '' }}
     >
       <img src={image} alt={name} className="card-img imageLink" onClick={navigateToItem}/>
 

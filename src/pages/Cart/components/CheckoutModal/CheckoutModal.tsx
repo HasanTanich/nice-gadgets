@@ -6,6 +6,11 @@ const CheckoutModal = ({open, onClose}: {open: boolean, onClose: ()=> void}) => 
   const {clearCart} = useCart();
   if(!open) return null;
 
+  const onConfirm = () => {
+    clearCart();
+    onClose();
+  };
+  
   return ReactDom.createPortal(
     <>
       <div className="overlay" />
@@ -17,7 +22,7 @@ const CheckoutModal = ({open, onClose}: {open: boolean, onClose: ()=> void}) => 
         </h4>
         <div className="modal-actions">
           <button
-            onClick={clearCart}
+            onClick={onConfirm}
             className="modal-actions-confirm"
           >
             Confirm
