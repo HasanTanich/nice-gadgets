@@ -22,6 +22,7 @@ module.exports = {
         '@typescript-eslint',
     ],
     'rules': {
+        'no-unused-vars': 'error',
         'indent': [
             'error',
             2
@@ -38,6 +39,6 @@ module.exports = {
             'error',
             'always'
         ],
-        "react-hooks/rules-of-hooks": "error",
+        'react-hooks/rules-of-hooks': 'error',
     }
 };

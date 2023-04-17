@@ -1,6 +1,7 @@
 import './ProductCard.scss';
 import { Heart } from '../../assets/icons';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useCart } from '../../core/ContextProviders/CartContext';
 
 type Props = {
     activeIndex?: number;
@@ -19,6 +20,7 @@ type Props = {
 const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, capacity, ram, image, productPage, id}: Props) => {
   const {product, productId} = useParams();
   const navigate = useNavigate();
+  const {addToCart} = useCart();
 
   const navigateToItem = () => {
     if(product){
@@ -64,13 +66,15 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
         </div>
       </div>
 
-      {/* // Todo Add to cart */}
       <div className="card-buttons">
-        <button type="button" className="card-buttons-addToCart">
+        <button 
+          type="button" 
+          className="card-buttons-addToCart"
+          onClick={() => addToCart({image, price, name})}
+        >
               Add to cart
         </button>
 
-        {/* // Todo Add to favourites */}
         <button type="button" className="card-buttons-like">
           <img src={Heart} alt="like" className="imageLink"/>
         </button>

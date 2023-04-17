@@ -1,0 +1,45 @@
+@import '../../styles/utils';
+
+.cartTitle {
+    margin-bottom: 32px;
+}
+
+.cartItemsCard {
+    margin-bottom: 16px;
+}
+
+.cartItems {
+    flex-grow: 1;
+}
+
+.columns {
+    display: flex;
+    gap: 16px;
+
+    @include onMedium {
+        flex-direction: column;
+    }
+}
+
+.checkoutBox {
+    width: 368px;
+    height: 206px;
+    padding: 24px;
+    @include flex-content(center, column, center);
+    border: 1px solid $elementsColor;
+
+    @include onMedium {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        height: 48px;
+        background-color: $primaryColor;
+        color: white;
+    }
+}
+
+.checkoutDivider {
+    margin: 22px 0;
+}

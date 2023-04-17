@@ -4,6 +4,7 @@ import { Arrow, ArrowBlack } from '../../assets/icons';
 import './Paginator.scss';
 
 type Props = {
+  // eslint-disable-next-line no-unused-vars
   onPageChange: (page: number) => void;
   currentPage: number
   itemsPerPage: string;

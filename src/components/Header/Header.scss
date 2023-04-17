@@ -174,3 +174,24 @@
 .footerBox {
   margin-top: auto;
 }
+
+.icon {
+  position: relative;
+  text-align: center;
+
+  &-iconCounter {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    top: -7px;
+    right: -7px;
+    z-index: 2;
+    background-color: #EB5757;
+    border-radius: 50%;
+    border: 1px solid white;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 12px;
+    color: white;
+  }
+}
