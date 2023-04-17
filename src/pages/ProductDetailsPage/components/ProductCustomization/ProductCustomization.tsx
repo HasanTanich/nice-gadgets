@@ -3,6 +3,7 @@ import './ProductCustomization.scss';
 import { useState, useEffect, useMemo } from 'react';
 import { Heart } from '../../../../assets/icons';
 import Tech from '../Tech';
+import { useCart } from '../../../../core/ContextProviders/CartContext';
 
 type Props = {
   images: string[];
@@ -15,13 +16,15 @@ type Props = {
   processor: string;
   ram: string;
   screen: string;
-  priceRegular: string;
-  priceDiscount: string;
+  priceRegular: number;
+  priceDiscount: number;
   url : string | undefined;
+  name: string;
 }
 
-const ProductCustomization = ({images, colorsAvailable, capacity, color, capacityAvailable, namespaceId, resolution, processor, ram, screen, priceRegular, priceDiscount, url} : Props) => {
+const ProductCustomization = ({images, colorsAvailable, capacity, color, capacityAvailable, namespaceId, resolution, processor, ram, screen, priceRegular, priceDiscount, url, name} : Props) => {
   const screenSize : number = useOutletContext();
+  const {addToCart} = useCart();
   const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState(color);
   const [selectedCapacity, setSelectedCapacity] = useState(capacity);
@@ -35,7 +38,6 @@ const ProductCustomization = ({images, colorsAvailable, capacity, color, capacit
     setSelectedColor(color);
     setImageActiveIndex(0);
   }, [url]);
-  
   
   const onSelectedColor = (color: string) => {
     if(selectedColor!== color){
@@ -182,7 +184,11 @@ const ProductCustomization = ({images, colorsAvailable, capacity, color, capacit
         </div>
 
         <div className="productCustomization-specs-actionButtons">
-          <button type="button" className="productCustomization-specs-actionButtons-addToCart">
+          <button 
+            type="button" 
+            className="productCustomization-specs-actionButtons-addToCart"
+            onClick={() => addToCart({image: images[0], price: priceDiscount, name: name})}
+          >
               Add to cart
           </button>
 
