@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.scss';
 
-import { Homepage, NotFound, Favorites, Cart, ProductDetailsPage, ProductPage } from './pages';
+import { Homepage, NotFound, Favorites, Cart, ProductPage } from './pages';
 import { Header } from './components';
 
 const queryClient = new QueryClient();
@@ -16,7 +16,7 @@ function App() {
           <Route index element={<Homepage />}/>
 
           <Route path="/:product" element={<ProductPage />}>
-            <Route path=':productId' element={<ProductDetailsPage />}/>
+            <Route path=':productId' element={<ProductPage />}/>
           </Route>
 
           <Route path="/cart" element={<Cart />}/>
