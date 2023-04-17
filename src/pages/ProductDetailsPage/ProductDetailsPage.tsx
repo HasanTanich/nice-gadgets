@@ -52,6 +52,7 @@ const ProductDetailsPage = ({url} : {url : string}) => {
         priceRegular={priceRegular}
         processor={processor}
         url={productId}
+        name={name}
       />
 
       <ProductDescription
