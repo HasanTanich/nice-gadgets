@@ -1,9 +1,10 @@
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import './ProductCustomization.scss';
 import { useState, useEffect, useMemo } from 'react';
-import { Heart } from '../../../../assets/icons';
+import { Heart, HeartFilled } from '../../../../assets/icons';
 import Tech from '../Tech';
 import { useCart } from '../../../../core/ContextProviders/CartContext';
+import { useFavorites } from '../../../../core/ContextProviders/FavoritesContext';
 
 type Props = {
   images: string[];
@@ -25,6 +26,7 @@ type Props = {
 const ProductCustomization = ({images, colorsAvailable, capacity, color, capacityAvailable, namespaceId, resolution, processor, ram, screen, priceRegular, priceDiscount, url, name} : Props) => {
   const screenSize : number = useOutletContext();
   const {addToCart} = useCart();
+  const {addToFavorites, favoritesItems, removeFromFavorites} = useFavorites();
   const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState(color);
   const [selectedCapacity, setSelectedCapacity] = useState(capacity);
@@ -32,7 +34,6 @@ const ProductCustomization = ({images, colorsAvailable, capacity, color, capacit
   const [isSwiping, setIsSwiping] = useState(false);
   const [imageActiveIndex, setImageActiveIndex] = useState(0);
   const isTranslateImages = useMemo(() => (imageActiveIndex > 3 && imageActiveIndex !== images.length && images.length > 5 && screenSize < 640), [imageActiveIndex, screenSize]);
-
   useEffect(() => {
     setSelectedCapacity(capacity);
     setSelectedColor(color);
@@ -81,13 +82,26 @@ const ProductCustomization = ({images, colorsAvailable, capacity, color, capacit
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
     setIsSwiping(false);
 
-    const currentX = e.changedTouches[0].clientX;
-    const deltaX = currentX - startX;
+    if(screenSize < 640){
+      const currentX = e.changedTouches[0].clientX;
+      const deltaX = currentX - startX;
+      
+      if (deltaX > 70) {
+        updateImageIndex(imageActiveIndex-1);
+      } else if (deltaX < -70) {
+        updateImageIndex(imageActiveIndex+1);
+      }
+    }
+  };
 
-    if (deltaX > 70) {
-      updateImageIndex(imageActiveIndex-1);
-    } else if (deltaX < -70) {
-      updateImageIndex(imageActiveIndex+1);
+  const onLikeProduct = () => {
+    if(url){
+      const image = images[0];
+      if(favoritesItems.find(item => item.id === url)){
+        removeFromFavorites(url);
+      }else {
+        addToFavorites({id: url, name, price: priceDiscount, fullPrice: priceRegular, screen, capacity, ram, image});
+      }
     }
   };
 
@@ -192,8 +206,12 @@ const ProductCustomization = ({images, colorsAvailable, capacity, color, capacit
               Add to cart
           </button>
 
-          <button type="button" className="productCustomization-specs-actionButtons-like">
-            <img src={Heart} alt="like" className="imageLink"/>
+          <button 
+            type="button" 
+            className="productCustomization-specs-actionButtons-like"
+            onClick={onLikeProduct}
+          >
+            <img src={!favoritesItems.find(item => item.name === name) ? Heart : HeartFilled} alt="like" className="imageLink"/>
           </button>
         </div>
 

@@ -1,7 +1,8 @@
 import './ProductCard.scss';
-import { Heart } from '../../assets/icons';
+import { Heart, HeartFilled } from '../../assets/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCart } from '../../core/ContextProviders/CartContext';
+import { useFavorites } from '../../core/ContextProviders/FavoritesContext';
 
 type Props = {
     activeIndex?: number;
@@ -21,16 +22,27 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
   const {product, productId} = useParams();
   const navigate = useNavigate();
   const {addToCart} = useCart();
-
+  const {addToFavorites, favoritesItems, removeFromFavorites} = useFavorites();
+  
   const navigateToItem = () => {
-    if(product){
+    if(product === 'phones'){
       navigate(id);
-    } else if(productId){
+    } else if (product === 'tablets') {
+      navigate(`/phones/${id}`);
+    }else if(productId){
       navigate(id);
     } else{
-      navigate(`phones/${id}`);
+      navigate(`/phones/${id}`);
     }
     window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+
+  const onLikeProduct = () => {
+    if(favoritesItems.find(item => item.id === id)){
+      removeFromFavorites(id);
+    }else {
+      addToFavorites({id, name, price, fullPrice, screen, capacity, ram, image});
+    }
   };
 
   return (
@@ -75,8 +87,12 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
               Add to cart
         </button>
 
-        <button type="button" className="card-buttons-like">
-          <img src={Heart} alt="like" className="imageLink"/>
+        <button 
+          type="button" 
+          className="card-buttons-like"
+          onClick={onLikeProduct}
+        >
+          <img src={!favoritesItems.find(item => item.name === name) ? Heart : HeartFilled} alt="like" className="imageLink"/>
         </button>
       </div>
     </div>
