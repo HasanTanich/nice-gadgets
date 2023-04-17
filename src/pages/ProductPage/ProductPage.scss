@@ -1,7 +1,23 @@
 @import '../../styles/utils';
 
-.productPage {
-  flex-grow: 1;
+.productContainer {
+  padding: 40px 152px 80px 152px;
+
+  @include onXLarge {
+    padding: 40px 32px 80px 32px;
+  }
+
+  @include onLarge {
+    padding: 40px 32px 80px 32px;
+  }
+
+  @include onMedium {
+    padding: 40px 24px 64px 24px;
+  }
+
+  @include onSmall {
+    padding: 24px 16px 64px 16px;
+  }
 }
 
 .breadcrumbs {
@@ -28,16 +44,16 @@
   @include onSmall {
     padding: 0 16px 0 16px;
   }
+
+  &-product {
+    font-size: 12px;
+    color: $secondaryColor;
+    height: 100%;
+    text-transform: capitalize;
+  }
 }
 
-.product {
-  font-size: 12px;
-  line-height: 15px;
-  color: $secondaryColor;
-  height: 100%;
-}
-
-.currentProductPage {
+.currentPage {
   color: $primaryColor;
 }
 
@@ -64,7 +80,6 @@
 
   & p {
     margin-bottom: 4px;
-    @include smallText;
   }
 }
 

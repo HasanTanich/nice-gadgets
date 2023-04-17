@@ -27,10 +27,10 @@ const Paginator = ({ onPageChange, currentPage, itemsPerPage, totalItems} : Prop
     onPageChange(page);
   };
 
-  useEffect(() => {  
+  useEffect(() => {
     if(itemsPerPage === 'all' || Number(itemsPerPage) === totalItems){
       params.delete('page');
-      setParams(params);
+      setParams(params, {replace: true});
       setNumberOfPages([1]);
       setTransform(0);
     }else {
@@ -43,7 +43,7 @@ const Paginator = ({ onPageChange, currentPage, itemsPerPage, totalItems} : Prop
       if(currentPage > _pagesCount){
         setTransform((_pagesCount - 4) * 40);
         params.set('page', _pagesCount.toString());
-        setParams(params);
+        setParams(params, {replace: true});
       }
     }    
   }, [itemsPerPage]);

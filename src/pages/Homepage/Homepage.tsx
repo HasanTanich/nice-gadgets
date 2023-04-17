@@ -1,9 +1,9 @@
 import './Homepage.scss';
 
 import { BannerSlider, CategoryBanners, ProductsSlider } from './components';
-import { getItems } from '../../core/api';
+import { useGetItems } from '../../core/api';
 import { Phone } from '../../core/types/Phone';
-import { sortData } from '../../core/hooks';
+import { sortData } from '../../core/dataUtils';
 
 const Homepage = () => {
 
@@ -16,19 +16,18 @@ const Homepage = () => {
       } else {                        // filter items if they have discounts (fullPrice !== price)
         return item.fullPrice !== item.price;
       }
-    });
-  
+    });  
     return sortData(filteredData, filterKey1, filterKey2);
   }
 
-  const {isLoading, data, error} = getItems('/phones.json', 'phones-data');
+  const {isLoading, data, isError} = useGetItems('/phones.json', ['new-phones-data']);
 
   let brandNewPhones: Phone[] = [];
   let hotPricesPhones: Phone[] = [];
 
-  if(!isLoading && !error){
-    brandNewPhones = getProductsSliderData(data?.data, 'fullPrice');
-    hotPricesPhones = getProductsSliderData(data?.data, 'price', 'fullPrice');
+  if(!isLoading && !isError){
+    brandNewPhones = getProductsSliderData(data, 'fullPrice');
+    hotPricesPhones = getProductsSliderData(data, 'price', 'fullPrice');
   }
   
   return (
@@ -40,23 +39,21 @@ const Homepage = () => {
 
       <BannerSlider/>
 
-      {!isLoading && 
-      <>
-        <ProductsSlider
-          data={brandNewPhones} 
-          title="Brand new models"
-          error={error}
-        />
+      <ProductsSlider
+        data={brandNewPhones}
+        title="Brand new models"
+        isLoading={isLoading}
+        isError={isError}
+      />
 
-        <CategoryBanners />
+      <CategoryBanners />
 
-        <ProductsSlider 
-          data={hotPricesPhones}
-          title="Hot prices"
-          error={error}
-        />
-      </>
-      }
+      <ProductsSlider 
+        data={hotPricesPhones}
+        title="Hot prices"
+        isLoading={isLoading}
+        isError={isError}
+      />
 
     </div>
   );

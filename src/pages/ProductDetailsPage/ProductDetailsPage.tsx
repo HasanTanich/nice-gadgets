@@ -1,17 +1,77 @@
-import { useParams } from 'react-router-dom';
-import { getItems } from '../../core/api';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ProductDetailsPage.scss';
 
-const ProductDetailsPage = () => {
+import { ArrowBlack } from '../../assets/icons';
+import { useGetItems } from '../../core/api';
+import { useGetSuggestedProducts } from '../../core/dataUtils';
+
+import { Loader } from '../../components';
+import { ProductsSlider } from '../Homepage/components';
+import { ProductCustomization, ProductDescription } from './components';
+
+const ProductDetailsPage = ({url} : {url : string}) => {
+  const navigate = useNavigate();
   const {productId} = useParams();
+  const {data, isLoading, isError} = useGetItems(url, [productId+'-data']);
+  const suggestedProducts = useGetSuggestedProducts('/phones.json', 'phones');
   
-  const {data} = getItems('/old-api/products/'+productId+'.json', productId+'-data');  
+  if(isLoading){
+    return <Loader />;
+  }
+  
+  if(isError){
+    return <h3>Product was not found</h3>;
+  }
+  
+  const { 
+    name, images, colorsAvailable, capacityAvailable, priceRegular, 
+    priceDiscount, screen, resolution, ram, processor, description, camera, 
+    zoom, cell, capacity, color, namespaceId
+  } = data;
+  
   return (
     <>
-      <h1>{productId}</h1>
-      {data && 
-      <img src={data?.data.images[0]} alt="" />
-      }
+      <div className="backBtn" onClick={() => navigate(-1)}>
+        <img src={ArrowBlack} alt="Arrow icon" className="leftArrow"/>
+        <p className="small-text">Back</p>
+      </div>
+
+      <h2>{name}</h2>
+
+      <ProductCustomization 
+        images={images} 
+        colorsAvailable={colorsAvailable}
+        capacityAvailable={capacityAvailable}
+        color={color}
+        capacity={capacity}
+        namespaceId={namespaceId}
+        resolution={resolution}
+        screen={screen}
+        ram={ram}
+        priceDiscount={priceDiscount}
+        priceRegular={priceRegular}
+        processor={processor}
+        url={productId}
+      />
+
+      <ProductDescription
+        description={description}
+        resolution={resolution}
+        processor={processor}
+        ram={ram}
+        capacity={capacity}
+        camera={camera}
+        zoom={zoom}
+        cell={cell}
+        screen={screen}
+      />
+
+      <ProductsSlider 
+        data={suggestedProducts.data}
+        title="You may also like"
+        isLoading={suggestedProducts.isLoading}
+        isError={suggestedProducts.isError}
+      />
     </>
   );
 };

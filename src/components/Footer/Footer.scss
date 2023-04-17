@@ -31,7 +31,6 @@
 
   &-items {
     @include flex-content(space-between);
-    @include UPPERCASE;
     flex-grow: 1;
 
     @include onSmall {
@@ -53,7 +52,6 @@
 
   &-backToTopBox {
     @include flex-content(flex-end);
-    @include smallText;
     gap: 16px;
     flex-grow: 1;
 

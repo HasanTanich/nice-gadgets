@@ -58,3 +58,24 @@ button {
   line-height: 21px;
   letter-spacing: 0;
 }
+
+.small-text {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0;
+}
+
+.uppercase {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.04em;
+}
+
+.body-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+}

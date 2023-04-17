@@ -86,7 +86,6 @@
 
       &-item {
         @include flex-content(center, column);
-        @include UPPERCASE;
         align-self: stretch;
         padding: 8px 0;
         color: $secondaryColor;

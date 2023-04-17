@@ -69,7 +69,6 @@
         &-spec {
             align-self: stretch;
             @include flex-content(space-between);
-            @include smallText;
 
             &-title {
                 color: $secondaryColor;
@@ -90,7 +89,6 @@
         &-addToCart {
             background-color: $primaryColor;
             flex-grow: 1;
-            padding: 0;
             height: 100%;
             color: white;
         }
@@ -98,8 +96,6 @@
         &-like {
             width: 40px;
             height: 100%;
-            line-height: 21px;
-            text-align: center;
             border: 1px solid $iconsColor;
         }
     }

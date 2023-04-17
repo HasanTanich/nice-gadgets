@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import { QueryClientProvider, QueryClient } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.scss';
 
 import { Homepage, NotFound, Favorites, Cart, ProductDetailsPage, ProductPage } from './pages';
-import { Header} from './components';
+import { Header } from './components';
 
 const queryClient = new QueryClient();
 

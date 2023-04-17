@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import './FilterSelect.scss';
 import Select, { CSSObjectWithLabel, SingleValue } from 'react-select';
 import { FilterOption } from '../../pages/ProductPage/ProductPage';
@@ -7,35 +8,45 @@ type Props = {
   options: FilterOption[];
   width: number;
   selectedValue: string;
-  sortBy?: boolean
+  sortBy?: boolean; // True if select is sortBy select
 }
 
-const FilterSelect = ({options, width, selectedValue, sortBy}: Props) => {  
+const FilterSelect = ({options, width, selectedValue, sortBy}: Props) => {
   const [params, setParams] = useSearchParams();
 
-  let defaultValue = options.find(item => item.value === selectedValue ? item : null);
-
-  if(!defaultValue){
-    defaultValue = sortBy ? {value: 'age', label: 'newest'} : {value: 'all', label: 'all'};
-  }
+  useEffect(() => {
+    let newDefaultValue = options.find(item => item.value === selectedValue);
+    if(!newDefaultValue) {
+      newDefaultValue = sortBy ? {value: 'age', label: 'newest'} : {value: 'all', label: 'all'};
+    }
+    setDefaultValue(newDefaultValue);
+  }, [selectedValue, sortBy, options]);
+  
+  const [defaultValue, setDefaultValue] = useState(() => {
+    let defaultVal = options.find(item => item.value === selectedValue);
+    if(!defaultVal) {
+      defaultVal = sortBy ? {value: 'age', label: 'newest'} : {value: 'all', label: 'all'};
+    }
+    return defaultVal;
+  });
 
   const onChangeHandle = (e: SingleValue<{value: string, label: string}>) => {
     if(e?.value){
       if(sortBy){
         if(e?.value !== 'age'){
           params.set('sort', e.value);
-          setParams(params);    
+          setParams(params, {replace: true});
         }else{
           params.delete('sort');
-          setParams(params);
+          setParams(params, {replace: true});
         }
       }else {
         if(e?.value !== 'all'){
           params.set('perPage', e.value);
-          setParams(params);    
+          setParams(params, {replace: true});
         }else{
           params.delete('perPage');
-          setParams(params);
+          setParams(params, {replace: true});
         }
       }
     }
@@ -67,7 +78,7 @@ const FilterSelect = ({options, width, selectedValue, sortBy}: Props) => {
   };
   return (
     <Select 
-      defaultValue={defaultValue}
+      value={defaultValue}
       options={options}
       components={{IndicatorSeparator: () => null}}
       styles={colourStyles}

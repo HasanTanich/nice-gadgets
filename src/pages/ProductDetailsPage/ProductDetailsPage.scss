@@ -1,0 +1,32 @@
+@import '../../styles/utils';
+
+.backBtn {
+    width: 66px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    margin-bottom: 16px;
+
+    & p {
+        color: $secondaryColor;
+    }
+}
+
+.techSpecs {
+    @include flex-content(space-between, row, center);
+    gap: 50px;
+
+    &-value {
+        color: $primaryColor;
+    }
+}
+
+.divider {
+    border: 1px solid $elementsColor;
+}
+
+p {
+    color: $secondaryColor;
+    font-weight: 500;
+}

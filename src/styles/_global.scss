@@ -56,9 +56,11 @@ select option:hover {
 }
 
 button {
+  font-family: "Mont", sans-serif;
   border-radius: 0;
   padding: 0.5em;
   background-color: transparent;
+  color: variables.$primaryColor;
   border: 1px solid variables.$elementsColor;
   cursor: pointer;
 

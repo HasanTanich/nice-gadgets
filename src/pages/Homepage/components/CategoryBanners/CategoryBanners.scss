@@ -2,9 +2,15 @@
 
 .categoryBanners {
   margin-top: 80px;
+  margin-bottom: 80px;
+
+  @include onMedium {
+    margin-bottom: 64px;
+  }
 
   @include onSmall {
     width: 100%;
+    margin-bottom: 56px;
   }
 
   &-title {
