@@ -5,13 +5,15 @@ import { Toaster } from '../../components';
 export const CartContext = createContext<CartContextType | null>(null);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const SavedCartData = localStorage.getItem('cart');
+  const SavedCartData = localStorage.getItem('cart');  
+  
   const [cartItems, setCartItems] = useState<CartItem[]>(SavedCartData ? JSON.parse(SavedCartData) : []);
-  const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const maxId = useMemo(() => cartItems.length > 0 ? cartItems[cartItems.length - 1].id : 0, [cartItems.length]);
 
+  const maxId = useMemo(() => cartItems.length > 0 ? cartItems[cartItems.length - 1].id : 0, [cartItems.length]);
+  const totalCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.quantity, 0), [cartItems.length]);
+  
   const addToCart = (product: cartItemProduct) => {
     setToastMessage('Added to cart');
     setToastVisible(true);
@@ -37,17 +39,18 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       setToastVisible(false);
     }, 1000);
 
-    const updatedCartItems = cartItems.filter(item => {
-      return item.id !== id;
+    setCartItems((currentItems)=> {
+      return currentItems.filter(item => {
+        return item.id !== id;
+      });
     });
-    setCartItems(updatedCartItems);
   };
 
-  const updateCartItemQuantity = (id: number, add: boolean) => {
+  const updateCartItemQuantity = (id: number, isAdd: boolean) => {
     const itemIndex = cartItems.findIndex(item => item.id === id);
     const updatedCartItems = [...cartItems];
     if (itemIndex !== -1) {
-      updatedCartItems[itemIndex].quantity += add ? 1 : -1;
+      updatedCartItems[itemIndex].quantity += isAdd ? 1 : -1;
       setCartItems(updatedCartItems);
     }
   };
