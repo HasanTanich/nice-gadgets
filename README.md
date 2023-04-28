@@ -1,8 +1,8 @@
-# Nice Gadgets
+### Nice Gadgets
+# Finished the initial idea of the project, might finish the bonus tasks later.
 
-# Design:
-
-      - [Figma]: https://www.figma.com/file/novGM5DyRXWa4ssuyR4pMo/Phone-catalog-(V2)?node-id=0%3A1&t=jvOqLnx99GvkDR0F-0
+## Design:
+- [Figma]: https://www.figma.com/file/novGM5DyRXWa4ssuyR4pMo/Phone-catalog-(V2)?node-id=0%3A1&t=jvOqLnx99GvkDR0F-0
 
 ## (\*) TODO Tasks
 
