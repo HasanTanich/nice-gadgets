@@ -47,7 +47,7 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
 
   return (
     <div
-      className={`card ${productPage ? 'productPageCard' : ''}`} 
+      className={`card ${productPage ? 'productPageCard' : ''} shadow-lg`} 
       style={{ transform: activeIndex && cardWidth ? `translateX(-${activeIndex * cardWidth}px)` : '' }}
     >
       <img src={image} alt={name} className="card-img imageLink" onClick={navigateToItem}/>

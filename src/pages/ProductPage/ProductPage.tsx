@@ -151,8 +151,7 @@ const ProductPage = () => {
         <>
           <img src={Arrow} alt="Arrow icon" className="rightArrow"/>
           <p className="breadcrumbs-product">{productId}</p>
-        </>
-        }
+        </>}
 
       </div>
       <div className="container">
@@ -193,38 +192,32 @@ const ProductPage = () => {
           {isLoading &&
         <div style={{margin: '10% 10%'}}>
           <Loader />
-        </div>
-          }
+        </div>}
 
           <>
             {isError &&
             <div style={{margin: '10% 10%'}}>
               <h3>Something went wrong, refresh page please</h3>
               <Reload />
-            </div>
-            }
+            </div>}
           </>
 
           {(productsData.length === 0 && !isError && !isLoading) &&
-        <h3>There are no {product} yet</h3>
-          }
+        <h3>There are no {product} yet</h3>}
         
           {(!isLoading && !isError) &&
           <div className="productsList">
             <ProductsList data={currentProducts}/>
-          </div>
-          }
+          </div>}
 
-          { (!isLoading && !isError && productsData.length > 0) &&
+          {(!isLoading && !isError && productsData.length > 0) &&
             <Paginator
               onPageChange={onPageChange}
               itemsPerPage={itemsPerPage}
               currentPage={currentPage}
               totalItems={productsData.length}
             />}
-        </>
-        }
-
+        </>}
       </div>
     </>
   );

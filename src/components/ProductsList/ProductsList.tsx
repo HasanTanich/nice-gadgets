@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ProductCard from '../ProductCard/ProductCard';
+import {ProductCard} from '../';
 import './ProductsList.scss';
 
 const ProductsList = ({data}: {data: any}) => {
