@@ -69,4 +69,9 @@
 .deleteIcon {
     order: 1;
     cursor: pointer;
+    transition: all 0.1s ease;
+  
+    &:hover {
+      scale: 140%;
+    }
 }

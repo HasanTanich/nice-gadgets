@@ -58,7 +58,7 @@ const Header = () => {
             <NavLink to='/accessories' className="header-menu-leftItems-item" onClick={() => setActiveMenu(false)}>Accessories</NavLink>
             
             <div className="header-menu-buttonsRight-searchBarItem">
-              { isSearchBar && <SearchBar />}
+              { (isSearchBar && screenSize >= 640) && <SearchBar />}
             </div>
           </div>
 

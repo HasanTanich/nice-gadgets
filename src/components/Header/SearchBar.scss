@@ -4,8 +4,11 @@
     position: relative;
     border-left: 1px solid $elementsColor;
     height: 100%;
-    width: 327px;
     padding: 24px;
+
+    @include onMedium {
+        padding: 16px;
+    }
     
     &-searchBar {
         width: 100%;
