@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useEffect, useState, useMemo } from 'react';
 import './ProductPage.scss';
 
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Home, Arrow } from '../../assets/icons';
 import { FilterSelect, ProductsList, Reload, Loader, Paginator } from '../../components';
 import { NotFound, ProductDetailsPage } from '../../pages';
-import { useGetItems, useFetchDataFromMultipleUrls
-} from '../../core/api';
-import { getProductPageData, sortData } from '../../core/dataUtils';
-import { Product } from '../../core/types/Product';
-import { Phone } from '../../core/types/Phone';
+import { sortData } from '../../core/dataUtils';
+import { GetProductData } from './utils';
+
 export interface FilterOption {
   value: string;
   label: string;
@@ -20,7 +18,7 @@ const ProductPage = () => {
   const [params, setParams] = useSearchParams();
   const [title, setTitle] = useState('');
   const [productType, setProductType] = useState('');
-
+  
   const sortTypeOptions : FilterOption[] = [
     { value: 'age', label: 'Newest' },
     { value: 'name', label: 'Alphabatically' },
@@ -34,10 +32,11 @@ const ProductPage = () => {
     { value: 'all', label: 'all' }
   ];
 
-  // get data from route params
+  // Data from route params
   const sortType = params.get('sort') || 'age';
   const itemsPerPage = params.get('perPage') || 'all';
   const currentPage = Number(params.get('page')) || 1;
+  const searchQuery = params.get('query');
 
   useEffect(() => {
     // in case 'sort' or 'perPage' route params values were changed manually by user through route, and didn't match the options, reset to default.
@@ -70,52 +69,22 @@ const ProductPage = () => {
       setTitle('Accessories');
       setProductType('accessory');
       break;
-    }    
+    }
   },[product]);
 
-  const {data: multipleQueries, isLoading: isLoadingNewApi, isError: isErrorNewApi} = useFetchDataFromMultipleUrls(
-    ['phones-data'],
-    ['old-phones-data'],
-    '/phones.json',
-    '/old-api/products.json',
-    product === 'phones'
-  );
-  
-  const {data: singleQuery, isLoading: isLoadingOldApi, isError: isErrorOldApi} = useGetItems(
-    '/old-api/products.json',
-    ['old-' + product + '-data'],
-    product !== 'phones'
-  );
-  
-  let isLoading = true;
-  let isError = false;
-  let productsData : Array<Phone | Product> = [];
-  let singleProductFetchUrl;
 
-  if (product === 'phones' && multipleQueries) {
-    const query1: Phone[] = multipleQueries[0];
-    const query2: Product[] = multipleQueries[1];
-    const filteredPhonesFromProducts = getProductPageData(query2, productType);
-    isLoading = isLoadingNewApi;
-    isError = isErrorNewApi;
-    productsData = [...query1, ...filteredPhonesFromProducts];
-    
-    if(productId){
-      // check if productId is from old api
-      if (query2.find((item: Product) => item.id === productId)) {
-        singleProductFetchUrl = '/old-api/products/' + productId + '.json';
-      } else {
-        singleProductFetchUrl = '/phones/' + productId + '.json';
-      }
+  const {isLoading, isError, data, productDetailsFetchUrl} = GetProductData(product, productType, productId, searchQuery);
+
+  const currentProducts = useMemo(()=> {
+    if(itemsPerPage === 'all'){
+      return sortData(data, sortType);
+    }else {
+      const indexOfLastProduct = currentPage * Number(itemsPerPage);
+      const indexOfFirstProduct = indexOfLastProduct - Number(itemsPerPage);
+      sortData(data, sortType);
+      return data.slice(indexOfFirstProduct, indexOfLastProduct);
     }
-  } else if (product !== 'phones' && singleQuery) {
-    const data: Product[] = singleQuery;
-    productsData = getProductPageData(data, productType);    
-    isLoading = isLoadingOldApi;
-    isError = isErrorOldApi;
-    singleProductFetchUrl = '/old-api/products/' + productId + '.json';
-  }
-  productsData = sortData(productsData, sortType);
+  }, [data]);
   
   const onPageChange = (page: number) => {
     if(page === 1){
@@ -127,14 +96,6 @@ const ProductPage = () => {
     }
   };
 
-  let currentProducts = productsData?.slice();
-  
-  if(itemsPerPage!== 'all'){
-    const indexOfLastProduct = currentPage * Number(itemsPerPage);
-    const indexOfFirstProduct = indexOfLastProduct - Number(itemsPerPage);
-    currentProducts = productsData.slice(indexOfFirstProduct, indexOfLastProduct);
-  }
-  
   if(product !== 'phones' && product !== 'tablets' && product !== 'accessories'){
     return <NotFound />;
   }
@@ -155,9 +116,9 @@ const ProductPage = () => {
 
       </div>
       <div className="container">
-        {(productId && singleProductFetchUrl) &&
+        {(productId && productDetailsFetchUrl) &&
         <ProductDetailsPage 
-          url={singleProductFetchUrl}
+          url={productDetailsFetchUrl}
         />}
 
         {!productId &&
@@ -166,7 +127,7 @@ const ProductPage = () => {
             {title}
           </h1>
 
-          <p className="modelsCount">{productsData.length} models</p>
+          <p className="modelsCount">{data.length} models</p>
 
           <div className="sortProducts">
             <div>
@@ -202,20 +163,23 @@ const ProductPage = () => {
             </div>}
           </>
 
-          {(productsData.length === 0 && !isError && !isLoading) &&
+          {(data.length === 0 && !searchQuery && !isError && !isLoading) &&
         <h3>There are no {product} yet</h3>}
+
+          {(currentProducts.length === 0 && searchQuery && !isError && !isLoading) &&
+        <h4>No results found for {'\''+searchQuery+'\''}</h4>}
         
           {(!isLoading && !isError) &&
           <div className="productsList">
             <ProductsList data={currentProducts}/>
           </div>}
 
-          {(!isLoading && !isError && productsData.length > 0) &&
+          {(!isLoading && !isError && data.length > 0) &&
             <Paginator
               onPageChange={onPageChange}
               itemsPerPage={itemsPerPage}
               currentPage={currentPage}
-              totalItems={productsData.length}
+              totalItems={data.length}
             />}
         </>}
       </div>

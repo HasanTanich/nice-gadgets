@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useState, useMemo } from 'react';
+import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import './Header.scss';
 
 import { Logo, Heart, Cart, Menu, Close } from '../../assets/icons';
-import Footer from '../Footer/Footer';
+import {Footer} from '../';
+import SearchBar from './SearchBar';
 import { useCart } from '../../core/ContextProviders/CartContext';
 import { useFavorites } from '../../core/ContextProviders/FavoritesContext';
 
 const Header = () => {
   const { totalCount } = useCart();
   const { favoritesItems } = useFavorites();
+  const location = useLocation();
+  const {product} = useParams();
   const [activeMenu, setActiveMenu] = useState(false);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const isSearchBar = useMemo(() => (location.pathname === '/'+product), [location.pathname]);
 
   const onToggleMenu = () => {
     setActiveMenu(!activeMenu);
   };
-
+  
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
-
     window.addEventListener('resize', handleResize);
-
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
@@ -46,6 +48,7 @@ const Header = () => {
         <div className={`header-menu ${activeMenu ? 'header-menu-active' : ''}`}>
 
           <div className="header-menu-leftItems uppercase">
+            
             <NavLink to='/' className="header-menu-leftItems-item" onClick={() => setActiveMenu(false)}>Home</NavLink>
 
             <NavLink to='/phones' className="header-menu-leftItems-item" onClick={() => setActiveMenu(false)}>Phones</NavLink>
@@ -53,6 +56,10 @@ const Header = () => {
             <NavLink to='/tablets' className="header-menu-leftItems-item" onClick={() => setActiveMenu(false)}>Tablets</NavLink>
 
             <NavLink to='/accessories' className="header-menu-leftItems-item" onClick={() => setActiveMenu(false)}>Accessories</NavLink>
+            
+            <div className="header-menu-buttonsRight-searchBarItem">
+              { isSearchBar && <SearchBar />}
+            </div>
           </div>
 
           <div className="header-menu-buttonsRight">

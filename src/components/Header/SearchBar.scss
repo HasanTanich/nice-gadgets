@@ -1,0 +1,35 @@
+@import '../../styles/utils';
+
+.searchBarBox {
+    position: relative;
+    border-left: 1px solid $elementsColor;
+    height: 100%;
+    width: 327px;
+    padding: 24px;
+    
+    &-searchBar {
+        width: 100%;
+        border : none;
+        outline: none;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+        color: $iconsColor;
+
+        &::placeholder {
+            color: $iconsColor;
+        }
+    }
+
+    &-icon {
+        position: absolute;
+        right: 24px;
+        top: 24px;
+    }
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}

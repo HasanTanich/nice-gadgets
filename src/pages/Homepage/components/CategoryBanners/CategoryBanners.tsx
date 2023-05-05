@@ -3,7 +3,7 @@ import './CategoryBanners.scss';
 import { useNavigate } from 'react-router-dom';
 
 import { useGetItems } from '../../../../core/api';
-import { getProductPageData } from '../../../../core/dataUtils';
+import { getProductsFromType } from '../../../../core/dataUtils';
 import { mobilePhones, tablets, accessories} from '../../../../assets/img/category-banners';
 
 const CategoryBanners = () => {
@@ -15,9 +15,9 @@ const CategoryBanners = () => {
   let tabletsLength = 0;
   let accessoriesLength = 0;
   if(productData){
-    mobilePhonesLength = getProductPageData(productData, 'phone').length;
-    tabletsLength = getProductPageData(productData, 'tablet').length;
-    accessoriesLength = getProductPageData(productData, 'accessory').length;
+    mobilePhonesLength = getProductsFromType(productData, 'phone').length;
+    tabletsLength = getProductsFromType(productData, 'tablet').length;
+    accessoriesLength = getProductsFromType(productData, 'accessory').length;
   }
   if(phoneData){
     mobilePhonesLength += phoneData.length;
