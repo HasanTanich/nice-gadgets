@@ -34,9 +34,6 @@ export function GetProductData(product: string | undefined, productType: string,
     const productsFromOldApi: Product[] = multipleQueries[1];
     const phonesFromOldApi = getProductsFromType(productsFromOldApi, productType);
     let data = [...phonesFromNewApi, ...phonesFromOldApi];
-    if(searchQuery){
-      data = data.filter(item=> item.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    }
     if(id){
       // check if id is from old api
       if (productsFromOldApi.find((item: Product) => item.id === id)) {
@@ -44,6 +41,9 @@ export function GetProductData(product: string | undefined, productType: string,
       } else {
         productDetailsFetchUrl = '/phones/' + id + '.json';
       }
+    }
+    if(searchQuery){
+      data = data.filter(item=> item.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }
     return {isLoading: isLoadingNewApi, isError: isErrorNewApi, data, productDetailsFetchUrl: productDetailsFetchUrl};
   } else if (product !== 'phones' && singleQuery) {

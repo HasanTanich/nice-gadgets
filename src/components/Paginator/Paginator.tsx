@@ -47,7 +47,7 @@ const Paginator = ({ onPageChange, currentPage, itemsPerPage, totalItems} : Prop
         setParams(params, {replace: true});
       }
     }    
-  }, [itemsPerPage]);
+  }, [itemsPerPage, totalItems]);
 
   return (
     <div className="paginator" 
