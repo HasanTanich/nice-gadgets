@@ -113,6 +113,10 @@
         min-height: 64px;
       }
 
+      &-searchBarItem {
+        margin-left: -40px;
+      }
+
       &-item {
         @include flex-content(center);
         width: 64px;

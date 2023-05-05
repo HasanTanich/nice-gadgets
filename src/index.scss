@@ -1,8 +1,6 @@
 @import './styles/main.scss';
 
 body {
-  font-family: 'Mont', sans-serif;
-
   & #root {
     display: flex;
     flex-direction: column;

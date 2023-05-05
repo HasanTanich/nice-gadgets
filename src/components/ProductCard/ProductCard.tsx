@@ -25,13 +25,13 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
   const {addToFavorites, favoritesItems, removeFromFavorites} = useFavorites();
   
   const navigateToItem = () => {
-    if(product === 'phones'){
-      navigate(id);
-    } else if (product === 'tablets') {
+    if(productId){
       navigate(`/phones/${id}`);
-    }else if(productId){
+    } else if (product === 'phones') {
       navigate(id);
-    } else{
+    }else if(product === 'tablets'){
+      navigate(`/tablets/${id}`);
+    }else {
       navigate(`/phones/${id}`);
     }
     window.scrollTo({top: 0, behavior: 'smooth'});

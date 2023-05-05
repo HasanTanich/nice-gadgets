@@ -3,11 +3,11 @@ import { Phone } from './types/Phone';
 import { Product } from './types/Product';
 
 export function sortData<T>(data: T[], sortKey: keyof T, sortKey2?: keyof T, desc = false): T[] {
-
   // Sort by most expensive if sortKey = 'fullprice' and by cheapest if sortKey = 'price'
   if (sortKey === 'alphabatically' || sortKey === 'fullPrice' || sortKey === 'age') {
     desc = true;
   }
+
   return data.sort((a, b) => {
     let aValue = a[sortKey];
     let bValue = b[sortKey];
@@ -34,7 +34,7 @@ export function sortData<T>(data: T[], sortKey: keyof T, sortKey2?: keyof T, des
   });
 }
 
-export function getProductPageData(data: Product[], filterValue: Product[keyof Product]): Product[] {
+export function getProductsFromType(data: Product[], filterValue: Product[keyof Product]): Product[] {
   let filteredData = data.slice();
 
   filteredData = filteredData.filter((item) => {

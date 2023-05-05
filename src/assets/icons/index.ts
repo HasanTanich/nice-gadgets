@@ -11,3 +11,4 @@ export { default as Home } from './Home.svg';
 export { default as Minus } from './Minus.svg';
 export { default as BlackMinus } from './BlackMinus.svg';
 export { default as Plus } from './Plus.svg';
+export { default as Search } from './Search.svg';
