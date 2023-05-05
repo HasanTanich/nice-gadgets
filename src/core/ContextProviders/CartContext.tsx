@@ -12,7 +12,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [toastMessage, setToastMessage] = useState('');
 
   const maxId = useMemo(() => cartItems.length > 0 ? cartItems[cartItems.length - 1].id : 0, [cartItems.length]);
-  const totalCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.quantity, 0), [cartItems.length]);
+  const totalCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.quantity, 0), [cartItems]);
   
   const addToCart = (product: cartItemProduct) => {
     setToastMessage('Added to cart');

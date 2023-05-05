@@ -40,7 +40,7 @@ const CategoryBanners = () => {
               src={item.image} 
               alt="mobile phones category banner" 
               className="categoryBanners-bannersBox-bannerImg imageLink"
-              onClick={() => navigate(item.path)}
+              onClick={() => navigate(item.path, {state: true})}
             />
             <h4 className="categoryBanners-bannersBox-title">{item.title}</h4>
             <p className="categoryBanners-bannersBox-models">{item.models + ' models'}</p>

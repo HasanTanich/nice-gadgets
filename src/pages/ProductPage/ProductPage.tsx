@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import './ProductPage.scss';
 
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { Home, Arrow } from '../../assets/icons';
 import { FilterSelect, ProductsList, Reload, Loader, Paginator } from '../../components';
 import { NotFound, ProductDetailsPage } from '../../pages';
@@ -14,11 +14,12 @@ export interface FilterOption {
 }
 
 const ProductPage = () => {
+  const location = useLocation();
   const {product, productId} = useParams();
   const [params, setParams] = useSearchParams();
   const [title, setTitle] = useState('');
   const [productType, setProductType] = useState('');
-  
+
   const sortTypeOptions : FilterOption[] = [
     { value: 'age', label: 'Newest' },
     { value: 'name', label: 'Alphabatically' },
@@ -38,6 +39,13 @@ const ProductPage = () => {
   const currentPage = Number(params.get('page')) || 1;
   const searchQuery = params.get('query');
 
+  // if state is passed scroll to the top of the page
+  useEffect(() => {
+    if(location.state){
+      window.scrollTo({top: 0});
+    }
+  }, []);
+  
   useEffect(() => {
     // in case 'sort' or 'perPage' route params values were changed manually by user through route, and didn't match the options, reset to default.
     if(sortTypeOptions.find(item => item.value === sortType) === undefined){
@@ -71,7 +79,6 @@ const ProductPage = () => {
       break;
     }
   },[product]);
-
 
   const {isLoading, isError, data, productDetailsFetchUrl} = GetProductData(product, productType, productId, searchQuery);
 
