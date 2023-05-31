@@ -1,32 +1,32 @@
-@import '../../styles/utils';
+@import "../../styles/utils";
 
 .backBtn {
-    width: 66px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    margin-bottom: 16px;
+  width: 66px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  margin-bottom: 16px;
 
-    & p {
-        color: $secondaryColor;
-    }
+  & p {
+    color: $secondaryColor;
+  }
 }
 
 .techSpecs {
-    @include flex-content(space-between, row, center);
-    gap: 50px;
+  @include flex-content(space-between, row, center);
+  gap: 50px;
 
-    &-value {
-        color: $primaryColor;
-    }
+  &-value {
+    color: $primaryColor;
+  }
 }
 
 .divider {
-    border: 1px solid $elementsColor;
+  border: 1px solid $elementsColor;
 }
 
 p {
-    color: $secondaryColor;
-    font-weight: 500;
+  color: $secondaryColor;
+  font-weight: 500;
 }

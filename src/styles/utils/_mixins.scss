@@ -1,4 +1,8 @@
-@mixin flex-content($position: flex-start, $direction: row, $alignment: center) {
+@mixin flex-content(
+  $position: flex-start,
+  $direction: row,
+  $alignment: center
+) {
   display: flex;
   flex-direction: $direction;
   align-items: $alignment;
@@ -7,28 +11,28 @@
 
 // phone layout
 @mixin onSmall {
-  @media (max-width:639px) {
+  @media (max-width: 639px) {
     @content;
   }
 }
 
-// tablet layout 
+// tablet layout
 @mixin onMedium {
-  @media (max-width:1199px) {
+  @media (max-width: 1199px) {
     @content;
   }
 }
 
 // desktop layout
 @mixin onLarge {
-  @media (max-width:1200px) {
+  @media (max-width: 1200px) {
     @content;
   }
 }
 
 // big screens
 @mixin onXLarge {
-  @media (max-width:1440px) {
+  @media (max-width: 1440px) {
     @content;
   }
 }

@@ -1,19 +1,19 @@
 .reload-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 
-    .reload-button {
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        font-size: 24px;
-        color: #555;
-        transition: all 0.2s ease-in-out;
+  .reload-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 24px;
+    color: #555;
+    transition: all 0.2s ease-in-out;
 
-        &:hover {
-            color: #000;
-        }
+    &:hover {
+      color: #000;
     }
+  }
 }

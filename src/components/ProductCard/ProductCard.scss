@@ -1,126 +1,125 @@
-@import '../../styles/utils';
+@import "../../styles/utils";
 
 .card {
-    @include flex-content(flex-start, column, flex-start);
-    gap: 8px;
-    min-width: 272px;
-    height: 506px;
-    padding: 32px;
-    border: 1px solid $elementsColor;
-    transition: 0.7s;
+  @include flex-content(flex-start, column, flex-start);
+  gap: 8px;
+  min-width: 272px;
+  height: 506px;
+  padding: 32px;
+  border: 1px solid $elementsColor;
+  transition: 0.7s;
 
-    @include onMedium {
-        min-width: 238px;
-    }
+  @include onMedium {
+    min-width: 238px;
+  }
+
+  @include onSmall {
+    min-width: 212px;
+    height: 440px;
+  }
+
+  &-img {
+    flex-grow: 1;
+    height: 200px;
+    align-self: center;
+    cursor: pointer;
 
     @include onSmall {
-        min-width: 212px;
-        height: 440px;
+      height: 130px;
+    }
+  }
+
+  &-title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    align-self: stretch;
+    cursor: pointer;
+  }
+
+  &-priceBox {
+    @include flex-content();
+    gap: 8px;
+
+    &-price {
+      line-height: 140%;
     }
 
-    &-img {
-        flex-grow: 1;
-        height: 200px;
-        align-self: center;
-        cursor: pointer;
+    &-oldPrice {
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 28px;
+      text-decoration-line: line-through;
+      color: $secondaryColor;
+    }
+  }
 
-        @include onSmall {
-            height: 130px;
-        }
+  &-divider {
+    border-top: 1px solid $elementsColor;
+    align-self: stretch;
+  }
+
+  &-specsBox {
+    @include flex-content(flex-start, column);
+    align-self: stretch;
+    padding: 8px 0;
+    gap: 8px;
+
+    &-spec {
+      align-self: stretch;
+      @include flex-content(space-between);
+
+      &-title {
+        color: $secondaryColor;
+      }
+
+      &-value {
+        color: $primaryColor;
+      }
+    }
+  }
+
+  &-buttons {
+    @include flex-content(center);
+    gap: 8px;
+    align-self: stretch;
+    min-height: 40px;
+
+    &-addToCart {
+      background-color: $primaryColor;
+      flex-grow: 1;
+      height: 100%;
+      color: white;
     }
 
-    &-title {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 21px;
-        align-self: stretch;
-        cursor: pointer;
+    &-like {
+      width: 40px;
+      height: 100%;
+      border: 1px solid $iconsColor;
     }
-
-    &-priceBox {
-        @include flex-content();
-        gap: 8px;
-
-        &-price {
-            line-height: 140%;
-        }
-
-        &-oldPrice {
-            font-weight: 600;
-            font-size: 22px;
-            line-height: 28px;
-            text-decoration-line: line-through;
-            color: $secondaryColor;
-        }
-    }
-
-
-    &-divider {
-        border-top: 1px solid $elementsColor;
-        align-self: stretch;
-    }
-
-    &-specsBox {
-        @include flex-content(flex-start, column);
-        align-self: stretch;
-        padding: 8px 0;
-        gap: 8px;
-
-        &-spec {
-            align-self: stretch;
-            @include flex-content(space-between);
-
-            &-title {
-                color: $secondaryColor;
-            }
-
-            &-value {
-                color: $primaryColor;
-            }
-        }
-    }
-
-    &-buttons {
-        @include flex-content(center);
-        gap: 8px;
-        align-self: stretch;
-        min-height: 40px;
-
-        &-addToCart {
-            background-color: $primaryColor;
-            flex-grow: 1;
-            height: 100%;
-            color: white;
-        }
-
-        &-like {
-            width: 40px;
-            height: 100%;
-            border: 1px solid $iconsColor;
-        }
-    }
+  }
 }
 
 .productPageCard {
-    max-width: 272px;
-    width: 272px;
+  max-width: 272px;
+  width: 272px;
 
-    @include onMedium {
-        width: calc(33.33% - 16px);
-        min-width: 229px;
-        max-width: 288px;
-        flex-grow: 1;
-    }
+  @include onMedium {
+    width: calc(33.33% - 16px);
+    min-width: 229px;
+    max-width: 288px;
+    flex-grow: 1;
+  }
 
-    @include onSmall {
-        width: 288px;
-    }
+  @include onSmall {
+    width: 288px;
+  }
 }
 
 .shadow-md {
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .shadow-lg {
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }

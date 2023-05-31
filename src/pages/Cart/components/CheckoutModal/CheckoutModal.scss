@@ -1,61 +1,61 @@
-@import '../../../../styles/utils';
+@import "../../../../styles/utils";
 
 .overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, .7);
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 }
 
 .modal {
-    position: fixed;
-    width: 60%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 1s;
-    background-color: white;
-    padding: 50px;
-    z-index: 1000;
+  position: fixed;
+  width: 60%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 1s;
+  background-color: white;
+  padding: 50px;
+  z-index: 1000;
 
-    @include onMedium {
-        width: 75%;
-        padding: 25px;
+  @include onMedium {
+    width: 75%;
+    padding: 25px;
+  }
+
+  @include onSmall {
+    width: 85%;
+    padding: 25px 15px;
+  }
+
+  &-message-1 {
+    margin-bottom: 10px;
+  }
+
+  &-message-2 {
+    margin-bottom: 20%;
+  }
+
+  &-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-confirm {
+      background-color: lightblue;
     }
 
-    @include onSmall {
-        width: 85%;
-        padding: 25px 15px;
+    &-cancel {
+      background-color: lightyellow;
     }
 
-    &-message-1 {
-        margin-bottom: 10px;
+    button:hover {
+      transform: scale(1.1);
+      transition: 0.3s;
     }
-
-    &-message-2 {
-        margin-bottom: 20%;
-    }
-
-    &-actions {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        &-confirm {
-            background-color: lightblue;
-        }
-
-        &-cancel {
-            background-color: lightyellow;
-        }
-
-        button:hover {
-            transform: scale(1.1);
-            transition: 0.3s;
-        }
-    }
+  }
 }

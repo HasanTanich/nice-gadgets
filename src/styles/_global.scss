@@ -1,4 +1,4 @@
-@use './utils/variables' as variables;
+@use "./utils/variables" as variables;
 
 html {
   box-sizing: border-box;
@@ -9,7 +9,7 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
-  font-family: 'Mont', sans-serif;
+  font-family: "Mont", sans-serif;
 }
 
 body,

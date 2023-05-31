@@ -1,4 +1,4 @@
-@import '../../styles/utils';
+@import "../../styles/utils";
 
 .header {
   @include flex-content;
@@ -24,7 +24,6 @@
     }
 
     &-logo {
-
       @include onMedium {
         height: 22px;
         width: 64px;
@@ -42,7 +41,7 @@
     transition: transform 0.5s;
 
     @include onMedium {
-      gap: 16px
+      gap: 16px;
     }
 
     @include onSmall {
@@ -65,14 +64,13 @@
       transform: translateX(0);
     }
 
-
     &-leftItems {
       display: flex;
       align-self: stretch;
       gap: 64px;
 
       @include onMedium {
-        gap: 32px
+        gap: 32px;
       }
 
       @include onSmall {
@@ -80,7 +78,7 @@
         padding: 0px;
         gap: 16px;
         margin-top: 24px;
-        flex-grow: 1
+        flex-grow: 1;
       }
 
       &-item {
@@ -122,14 +120,14 @@
         @include flex-content(center);
         width: 64px;
         height: 100%;
-        border-left: 1px solid #E2E6E9;
+        border-left: 1px solid #e2e6e9;
 
         &:hover {
           border-bottom: 3px solid $primaryColor;
         }
 
         @include onMedium {
-          width: 48px
+          width: 48px;
         }
 
         @include onSmall {
@@ -137,7 +135,7 @@
           height: 100%;
           flex-grow: 1;
           border: 1px solid $elementsColor;
-          width: 100%
+          width: 100%;
         }
       }
     }
@@ -190,7 +188,7 @@
     top: -7px;
     right: -7px;
     z-index: 2;
-    background-color: #EB5757;
+    background-color: #eb5757;
     border-radius: 50%;
     border: 1px solid white;
     font-size: 9px;

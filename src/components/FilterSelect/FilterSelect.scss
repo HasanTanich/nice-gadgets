@@ -1,24 +1,24 @@
-@import '../../styles/utils';
+@import "../../styles/utils";
 
 .control {
-    text-transform: capitalize;
-    height: 40px;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 21px;
+  text-transform: capitalize;
+  height: 40px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
 
-    &:hover {
-        border-color: $secondaryColor;
-    }
+  &:hover {
+    border-color: $secondaryColor;
+  }
 
-    @include onSmall {
-        max-width: 136px;
-    }
+  @include onSmall {
+    max-width: 136px;
+  }
 }
 
 .option {
-    font-weight: 500 !important;
-    font-size: 14px !important;
-    line-height: 21px !important;
-    text-transform: capitalize;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 21px !important;
+  text-transform: capitalize;
 }

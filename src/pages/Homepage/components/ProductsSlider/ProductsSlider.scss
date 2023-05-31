@@ -1,4 +1,4 @@
-@import '../../../../styles/utils';
+@import "../../../../styles/utils";
 
 .products-slider {
   width: 100%;
@@ -9,7 +9,7 @@
     margin-bottom: 24px;
 
     &-title {
-      flex-basis: 50%
+      flex-basis: 50%;
     }
 
     &-arrows {
@@ -26,7 +26,7 @@
     width: 100%;
 
     @include onSmall {
-      height: 440px
+      height: 440px;
     }
   }
 }
