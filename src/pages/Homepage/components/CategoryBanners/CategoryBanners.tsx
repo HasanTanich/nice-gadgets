@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import './CategoryBanners.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +13,7 @@ const CategoryBanners = () => {
   let mobilePhonesLength = 0;
   let tabletsLength = 0;
   let accessoriesLength = 0;
+  
   if(productData){
     mobilePhonesLength = getProductsFromType(productData, 'phone').length;
     tabletsLength = getProductsFromType(productData, 'tablet').length;

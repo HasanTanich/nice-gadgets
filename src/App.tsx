@@ -4,8 +4,7 @@ import './App.scss';
 
 import { Homepage, NotFound, Favorites, Cart, ProductPage } from './pages';
 import { Header } from './components';
-import { CartProvider } from './core/ContextProviders/CartContext';
-import FavoritesProvider from './core/ContextProviders/FavoritesContext';
+import { FavoritesProvider, CartProvider } from './core/ContextProviders';
 
 const queryClient = new QueryClient();
 

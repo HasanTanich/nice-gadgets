@@ -1,5 +1,5 @@
 import './CartCard.scss';
-import { GrayClose, Minus, Plus, BlackMinus } from '../../../../assets/icons';
+import { GrayClose, Minus, Plus, RedMinus } from '../../../../assets/icons';
 import { CartItem } from '../../../../core/types/Cart';
 import { useCart } from '../../../../core/ContextProviders/CartContext';
 
@@ -30,19 +30,19 @@ const CartCard = ({ data }: { data: CartItem }) => {
         <div className="cartCard-counter">
           <button
             type="button"
-            className="cartCard-counter-minusButton"
             onClick={() => updateCartItemQuantity(id, false)}
+            className={`${quantity > 1 ? 'imageLink' : ''}`}
             disabled={quantity === 1}
           >
-            <img src={quantity === 1 ? Minus : BlackMinus} alt="" />
+            <img src={quantity === 1 ? Minus : RedMinus} alt=""/>
           </button>
 
           <p className="body-text cartCard-counter-quantity">{quantity}</p>
 
           <button
             type="button"
-            className="cartCard-counter-plusButton"
             onClick={() => updateCartItemQuantity(id, true)}
+            className="imageLink"
           >
             <img src={Plus} alt="" />
           </button>

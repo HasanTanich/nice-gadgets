@@ -9,6 +9,6 @@ export { default as Logo } from './Logo.svg';
 export { default as Menu } from './Menu.svg';
 export { default as Home } from './Home.svg';
 export { default as Minus } from './Minus.svg';
-export { default as BlackMinus } from './BlackMinus.svg';
+export { default as RedMinus } from './RedMinus.svg';
 export { default as Plus } from './Plus.svg';
 export { default as Search } from './Search.svg';

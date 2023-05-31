@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import './ProductPage.scss';
 
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
@@ -17,8 +17,6 @@ const ProductPage = () => {
   const location = useLocation();
   const {product, productId} = useParams();
   const [params, setParams] = useSearchParams();
-  const [title, setTitle] = useState('');
-  const [productType, setProductType] = useState('');
 
   const sortTypeOptions : FilterOption[] = [
     { value: 'age', label: 'Newest' },
@@ -62,23 +60,19 @@ const ProductPage = () => {
       setParams(params, {replace: true});
     }
   }, []);
-  
-  useEffect(() => {
+
+  const {title, productType} = useMemo(() => {
     switch (product) {
     case 'phones':
-      setTitle('Mobile Phones');
-      setProductType('phone');
-      break;
+      return {title: 'Mobile Phones', productType: 'phone'};
     case 'tablets':
-      setTitle('Tablets');
-      setProductType('tablet');
-      break;
+      return {title: 'Tablets', productType: 'tablet'};
     case 'accessories':
-      setTitle('Accessories');
-      setProductType('accessory');
-      break;
+      return {title: 'Accessories', productType: 'accessory'};
+    default:
+      return {title: '', productType: ''};
     }
-  },[product]);
+  }, [product]);
 
   const {isLoading, isError, data, productDetailsFetchUrl} = GetProductData(product, productType, productId, searchQuery);
 
