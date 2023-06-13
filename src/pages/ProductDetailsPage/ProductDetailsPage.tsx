@@ -1,45 +1,61 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import './ProductDetailsPage.scss';
+import { useNavigate, useParams } from "react-router-dom";
+import "./ProductDetailsPage.scss";
 
-import { ArrowBlack } from '../../assets/icons';
-import { useGetItems } from '../../core/api';
-import { useGetSuggestedProducts } from '../../core/dataUtils';
+import { ArrowBlack } from "../../assets/icons";
+import { useGetItems } from "../../core/api";
+import { useGetSuggestedProducts } from "../../core/dataUtils";
 
-import { Loader } from '../../components';
-import { ProductsSlider } from '../Homepage/components';
-import { ProductCustomization, ProductDescription } from './components';
+import { Loader } from "../../components";
+import { ProductsSlider } from "../Homepage/components";
+import { ProductCustomization, ProductDescription } from "./components";
 
-const ProductDetailsPage = ({url} : {url : string}) => {
+const ProductDetailsPage = ({ url }: { url: string }) => {
   const navigate = useNavigate();
-  const {productId} = useParams();
-  const {data, isLoading, isError} = useGetItems(url, [productId+'-data']);
-  const suggestedProducts = useGetSuggestedProducts('/phones.json', 'phones');
-  
-  if(isLoading){
+  const { productId } = useParams();
+  const { data, isLoading, isError } = useGetItems(url, [
+    `${productId || ""}data`,
+  ]);
+  const suggestedProducts = useGetSuggestedProducts("/phones.json", "phones");
+
+  if (isLoading) {
     return <Loader />;
   }
-  
-  if(isError){
+
+  if (isError) {
     return <h3>Product was not found</h3>;
   }
-  
-  const { 
-    name, images, colorsAvailable, capacityAvailable, priceRegular, 
-    priceDiscount, screen, resolution, ram, processor, description, camera, 
-    zoom, cell, capacity, color, namespaceId
+
+  const {
+    name,
+    images,
+    colorsAvailable,
+    capacityAvailable,
+    priceRegular,
+    priceDiscount,
+    screen,
+    resolution,
+    ram,
+    processor,
+    description,
+    camera,
+    zoom,
+    cell,
+    capacity,
+    color,
+    namespaceId,
   } = data;
-  
+
   return (
     <>
       <div className="backBtn" onClick={() => navigate(-1)}>
-        <img src={ArrowBlack} alt="Arrow icon" className="leftArrow"/>
+        <img src={ArrowBlack} alt="Arrow icon" className="leftArrow" />
         <p className="small-text">Back</p>
       </div>
 
       <h2>{name}</h2>
 
-      <ProductCustomization 
-        images={images} 
+      <ProductCustomization
+        images={images}
         colorsAvailable={colorsAvailable}
         capacityAvailable={capacityAvailable}
         color={color}
@@ -67,7 +83,7 @@ const ProductDetailsPage = ({url} : {url : string}) => {
         screen={screen}
       />
 
-      <ProductsSlider 
+      <ProductsSlider
         data={suggestedProducts.data}
         title="You may also like"
         isLoading={suggestedProducts.isLoading}

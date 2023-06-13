@@ -1,44 +1,37 @@
 module.exports = {
-    'env': {
-        'browser': true,
-        'es2021': true
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:react/jsx-runtime",
+  ],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: true,
+    ecmaVersion: "latest",
+    sourceType: "module",
+  },
+  plugins: ["react", "react-hooks", "@typescript-eslint"],
+  root: true,
+  settings: {
+    react: {
+      version: "detect",
     },
-    'extends': [
-        'eslint:recommended',
-        'plugin:react/recommended',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:react/jsx-runtime'
+  },
+  rules: {
+    "logical-assignment-operators": "error",
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+      },
     ],
-    'overrides': [
-    ],
-    'parser': '@typescript-eslint/parser',
-    'parserOptions': {
-        'ecmaVersion': 'latest',
-        'sourceType': 'module'
-    },
-    'plugins': [
-        'react',
-        'react-hooks',
-        '@typescript-eslint',
-    ],
-    'rules': {
-        'no-unused-vars': 'error',
-        'indent': [
-            'error',
-            2
-        ],
-        'linebreak-style': [
-            'error',
-            'windows'
-        ],
-        'quotes': [
-            'error',
-            'single'
-        ],
-        'semi': [
-            'error',
-            'always'
-        ],
-        'react-hooks/rules-of-hooks': 'error',
-    }
+    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+  },
 };

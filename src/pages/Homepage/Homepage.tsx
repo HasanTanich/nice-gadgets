@@ -1,30 +1,28 @@
-import './Homepage.scss';
+import "./Homepage.scss";
 
-import { BannerSlider, CategoryBanners, ProductsSlider } from './components';
-import { useGetItems } from '../../core/api';
-import { Phone } from '../../core/types/Phone';
-import { getProductsSliderData } from './utils';
+import { BannerSlider, CategoryBanners, ProductsSlider } from "./components";
+import { useGetItems } from "../../core/api";
+import { Phone } from "../../core/types/Phone";
+import { getProductsSliderData } from "./utils";
 
 const Homepage = () => {
-
-  const {isLoading, data, isError} = useGetItems('/phones.json', ['new-phones-data']);
+  const { isLoading, data, isError } = useGetItems("/phones.json", [
+    "new-phones-data",
+  ]);
 
   let brandNewPhones: Phone[] = [];
   let hotPricesPhones: Phone[] = [];
 
-  if(!isLoading && !isError){
-    brandNewPhones = getProductsSliderData(data, 'fullPrice');
-    hotPricesPhones = getProductsSliderData(data, 'price', 'fullPrice');
+  if (!isLoading && !isError) {
+    brandNewPhones = getProductsSliderData(data, "fullPrice");
+    hotPricesPhones = getProductsSliderData(data, "price", "fullPrice");
   }
-  
+
   return (
     <div className="homepage">
+      <h1 className="title">Welcome to Nice Gadgets store!</h1>
 
-      <h1 className="title">
-        Welcome to Nice Gadgets store!
-      </h1>
-
-      <BannerSlider/>
+      <BannerSlider />
 
       <ProductsSlider
         data={brandNewPhones}
@@ -35,13 +33,12 @@ const Homepage = () => {
 
       <CategoryBanners />
 
-      <ProductsSlider 
+      <ProductsSlider
         data={hotPricesPhones}
         title="Hot prices"
         isLoading={isLoading}
         isError={isError}
       />
-
     </div>
   );
 };

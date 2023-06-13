@@ -1,15 +1,15 @@
 export interface Product {
-    age: number;
-    id: string;
-    type: string;
-    imageUrl: string;
-    name: string;
-    snippet: string;
-    price: number;
-    discount: number;
-    screen: string;
-    capacity: string;
-    ram: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any;
+  age: number;
+  id: string;
+  type: string;
+  imageUrl: string;
+  name: string;
+  snippet: string;
+  price: number;
+  discount: number;
+  screen: string;
+  capacity: string;
+  ram: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 }

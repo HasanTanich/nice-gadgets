@@ -1,10 +1,10 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
-import './ProductCustomization.scss';
-import { useState, useEffect, useMemo } from 'react';
-import { Heart, HeartFilled } from '../../../../assets/icons';
-import Tech from '../Tech';
-import { useCart } from '../../../../core/ContextProviders/CartContext';
-import { useFavorites } from '../../../../core/ContextProviders/FavoritesContext';
+import { useNavigate, useOutletContext } from "react-router-dom";
+import "./ProductCustomization.scss";
+import { useState, useEffect, useMemo } from "react";
+import { Heart, HeartFilled } from "../../../../assets/icons";
+import Tech from "../Tech";
+import { useCart } from "../../../../core/ContextProviders/CartContext";
+import { useFavorites } from "../../../../core/ContextProviders/FavoritesContext";
 
 type Props = {
   images: string[];
@@ -19,51 +19,74 @@ type Props = {
   screen: string;
   priceRegular: number;
   priceDiscount: number;
-  url : string | undefined;
+  url: string | undefined;
   name: string;
-}
+};
 
-const ProductCustomization = ({images, colorsAvailable, capacity, color, capacityAvailable, namespaceId, resolution, processor, ram, screen, priceRegular, priceDiscount, url, name} : Props) => {
-  const screenSize : number = useOutletContext();
-  const {addToCart} = useCart();
-  const {addToFavorites, favoritesItems, removeFromFavorites} = useFavorites();
+const ProductCustomization = ({
+  images,
+  colorsAvailable,
+  capacity,
+  color,
+  capacityAvailable,
+  namespaceId,
+  resolution,
+  processor,
+  ram,
+  screen,
+  priceRegular,
+  priceDiscount,
+  url,
+  name,
+}: Props) => {
+  const screenSize: number = useOutletContext();
+  const { addToCart } = useCart();
+  const { addToFavorites, favoritesItems, removeFromFavorites } =
+    useFavorites();
   const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState(color);
   const [selectedCapacity, setSelectedCapacity] = useState(capacity);
   const [startX, setStartX] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
   const [imageActiveIndex, setImageActiveIndex] = useState(0);
-  const isTranslateImages = useMemo(() => (imageActiveIndex > 3 && imageActiveIndex !== images.length && images.length > 5 && screenSize < 640), [imageActiveIndex, screenSize]);
+  const isTranslateImages = useMemo(
+    () =>
+      imageActiveIndex > 3 &&
+      imageActiveIndex !== images.length &&
+      images.length > 5 &&
+      screenSize < 640,
+    [imageActiveIndex, screenSize]
+  );
   useEffect(() => {
     setSelectedCapacity(capacity);
     setSelectedColor(color);
     setImageActiveIndex(0);
   }, [url]);
-  
+
   const onSelectedColor = (color: string) => {
-    if(selectedColor!== color){
+    if (selectedColor !== color) {
       setSelectedColor(color);
       const newUrl = `/phones/${namespaceId}-${capacity.toLowerCase()}-${color}`;
       navigate(newUrl);
     }
   };
-  
+
   const onSelectedCapacity = (capacity: string) => {
-    if(selectedCapacity !== capacity){
+    if (selectedCapacity !== capacity) {
       setSelectedCapacity(capacity);
       const newUrl = `/phones/${namespaceId}-${capacity.toLowerCase()}-${selectedColor}`;
       navigate(newUrl);
     }
   };
 
-  const updateImageIndex = (i : number) => {
-    if(imageActiveIndex !== i){      
+  const updateImageIndex = (i: number) => {
+    if (imageActiveIndex !== i) {
       const imagesLength = images.length - 1;
-      if(i < 0){
+      if (i < 0) {
         setImageActiveIndex(0);
-      }else if(i > imagesLength){
+      } else if (i > imagesLength) {
         setImageActiveIndex(imagesLength);
-      }else {
+      } else {
         setImageActiveIndex(i);
       }
     }
@@ -78,140 +101,172 @@ const ProductCustomization = ({images, colorsAvailable, capacity, color, capacit
       return;
     }
   };
-  
+
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
     setIsSwiping(false);
 
-    if(screenSize < 640){
+    if (screenSize < 640) {
       const currentX = e.changedTouches[0].clientX;
       const deltaX = currentX - startX;
-      
+
       if (deltaX > 70) {
-        updateImageIndex(imageActiveIndex-1);
+        updateImageIndex(imageActiveIndex - 1);
       } else if (deltaX < -70) {
-        updateImageIndex(imageActiveIndex+1);
+        updateImageIndex(imageActiveIndex + 1);
       }
     }
   };
 
   const onLikeProduct = () => {
-    if(url){
+    if (url) {
       const image = images[0];
-      if(favoritesItems.find(item => item.id === url)){
+      if (favoritesItems.find((item) => item.id === url)) {
         removeFromFavorites(url);
-      }else {
-        addToFavorites({id: url, name, price: priceDiscount, fullPrice: priceRegular, screen, capacity, ram, image});
+      } else {
+        addToFavorites({
+          id: url,
+          name,
+          price: priceDiscount,
+          fullPrice: priceRegular,
+          screen,
+          capacity,
+          ram,
+          image,
+        });
       }
     }
   };
 
   return (
     <div className="productCustomization">
-      <div 
+      <div
         className="productCustomization-productImages"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {images.map((item : string, index: number) =>
-          <div 
+        {images.map((item: string, index: number) => (
+          <div
             key={index}
-            className={`productCustomization-productImages-image productCustomization-productImages-image--${index === imageActiveIndex ? 'active' : ''}`}
-            onClick={ () => updateImageIndex(index)}
-            style={{transform: isTranslateImages ? `translateX(-${imageActiveIndex * 25}%)` : ''}}
+            className={`productCustomization-productImages-image productCustomization-productImages-image--${
+              index === imageActiveIndex ? "active" : ""
+            }`}
+            onClick={() => updateImageIndex(index)}
+            style={{
+              transform: isTranslateImages
+                ? `translateX(-${imageActiveIndex * 25}%)`
+                : "",
+            }}
           >
-            <img
-              src={item}
-              alt="product image"
-            />
+            <img src={item} alt="product image" />
           </div>
-        )}
+        ))}
       </div>
 
-      <div 
+      <div
         className="productCustomization-imageSelectedBox"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <img 
-          src={images[imageActiveIndex]} 
+        <img
+          src={images[imageActiveIndex]}
           alt="image selected"
           className="productCustomization-imageSelectedBox-image"
         />
       </div>
 
       <div className="productCustomization-specs">
-        {colorsAvailable && 
+        {colorsAvailable && (
           <div className="productCustomization-specs-availableColors">
             <p className="small-text">Available Colors</p>
             <div className="productCustomization-specs-colors">
-              {colorsAvailable.map((item: string) =>{
+              {colorsAvailable.map((item: string) => {
                 const customColors = [
-                  {name: 'spacegray', hex: '#110022'},
-                  {name: 'rosegold', hex: '#B76E79'},
-                  {name: 'midnightgreen', hex: '#004953'},
+                  { name: "spacegray", hex: "#110022" },
+                  { name: "rosegold", hex: "#B76E79" },
+                  { name: "midnightgreen", hex: "#004953" },
                 ];
-                const customColor = customColors.find(i => i.name === item);
-                return <div 
-                  key={item} 
-                  className={`productCustomization-specs-colors-colorBox productCustomization-specs-colors-colorBox--${selectedColor === item ? 'active' : ''}`}
-                  onClick={()=>onSelectedColor(item)}
-                >
-                  <div 
-                    className="productCustomization-specs-colors-colorBox-color" 
-                    style={{background: customColor ? customColor.hex : item}}
-                  />
-                </div>;
+                const customColor = customColors.find((i) => i.name === item);
+                return (
+                  <div
+                    key={item}
+                    className={`productCustomization-specs-colors-colorBox productCustomization-specs-colors-colorBox--${
+                      selectedColor === item ? "active" : ""
+                    }`}
+                    onClick={() => onSelectedColor(item)}
+                  >
+                    <div
+                      className="productCustomization-specs-colors-colorBox-color"
+                      style={{
+                        background: customColor ? customColor.hex : item,
+                      }}
+                    />
+                  </div>
+                );
               })}
             </div>
-            
-          </div>}
+          </div>
+        )}
 
-        {colorsAvailable && <hr className="divider colors-divider"/>}
+        {colorsAvailable && <hr className="divider colors-divider" />}
 
-        {capacityAvailable &&
+        {capacityAvailable && (
           <div className="productCustomization-specs-capacitySelection">
             <p className="small-text">Select Capacity</p>
             <div className="productCustomization-specs-capacitySelection-options">
-              {capacityAvailable.map((item: string) => 
-                <button 
-                  key={item} 
+              {capacityAvailable.map((item: string) => (
+                <button
+                  key={item}
                   type="button"
-                  className={`productCustomization-specs-capacitySelection-options-option productCustomization-specs-capacitySelection-options-option--${selectedCapacity === item ? 'active' : ''}`}
+                  className={`productCustomization-specs-capacitySelection-options-option productCustomization-specs-capacitySelection-options-option--${
+                    selectedCapacity === item ? "active" : ""
+                  }`}
                   onClick={() => onSelectedCapacity(item)}
                 >
                   {item}
                 </button>
-              )}
+              ))}
             </div>
           </div>
-        }
+        )}
 
-        {colorsAvailable && <hr className="divider capacity-divider"/>}
+        {colorsAvailable && <hr className="divider capacity-divider" />}
 
         <div className="productCustomization-specs-priceBox">
           <h2>${priceRegular}</h2>
-          {priceDiscount !== priceRegular && 
-              <p className="productCustomization-specs-priceBox-priceDiscount">${priceDiscount}</p>
-          } 
+          {priceDiscount !== priceRegular && (
+            <p className="productCustomization-specs-priceBox-priceDiscount">
+              ${priceDiscount}
+            </p>
+          )}
         </div>
 
         <div className="productCustomization-specs-actionButtons">
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="productCustomization-specs-actionButtons-addToCart"
-            onClick={() => addToCart({image: images[0], price: priceDiscount, name: name})}
+            onClick={() =>
+              addToCart({ image: images[0], price: priceDiscount, name: name })
+            }
           >
-              Add to cart
+            Add to cart
           </button>
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="productCustomization-specs-actionButtons-like"
             onClick={onLikeProduct}
           >
-            <img src={!favoritesItems.find(item => item.name === name) ? Heart : HeartFilled} alt="like" className="imageLink"/>
+            <img
+              src={
+                !favoritesItems.find((item) => item.name === name)
+                  ? Heart
+                  : HeartFilled
+              }
+              alt="like"
+              className="imageLink"
+            />
           </button>
         </div>
 
@@ -221,7 +276,6 @@ const ProductCustomization = ({images, colorsAvailable, capacity, color, capacit
           <Tech label="Processor" value={processor} />
           <Tech label="RAM" value={ram} />
         </div>
-
       </div>
     </div>
   );
