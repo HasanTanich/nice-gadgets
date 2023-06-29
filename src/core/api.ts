@@ -1,4 +1,7 @@
 import { type QueryKey, useQuery } from "@tanstack/react-query";
+// import { type ProductDetailsPageItem } from "../pages/ProductDetailsPage/ProductDetailsPage";
+import { type Phone } from "./types/Phone";
+import { type Product } from "./types/Product";
 
 const BASE_URL = "https://hasantanich.github.io/my-json-data/nice-gadgets/api";
 
@@ -10,7 +13,7 @@ export function useGetItems(url: string, key: QueryKey, enabled?: boolean) {
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
-      const data = await response.json();
+      const data = (await response.json()) as unknown;
       return data;
     },
     { enabled: enabled }
@@ -34,9 +37,9 @@ export function useFetchDataFromMultipleUrls(
       if (!response1.ok || !response2.ok) {
         throw new Error("Failed to fetch data");
       }
-      const data1 = await response1.json();
-      const data2 = await response2.json();
-      return [data1, data2];
+      const newData = (await response1.json()) as Phone[];
+      const oldData = (await response2.json()) as Product[];
+      return { newData, oldData };
     },
     { enabled: enabled }
   );

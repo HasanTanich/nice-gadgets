@@ -59,6 +59,10 @@ export function getProductsFromType(
 }
 
 export function useGetSuggestedProducts(url: string, key: string) {
-  const { data, isError, isLoading } = useGetItems(url, [key]);
+  const { data, isError, isLoading } = useGetItems(url, [key]) as {
+    data: Phone[];
+    isError: boolean;
+    isLoading: boolean;
+  };
   return { data, isError, isLoading };
 }

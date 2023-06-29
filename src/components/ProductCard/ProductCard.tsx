@@ -1,64 +1,98 @@
-import './ProductCard.scss';
-import { Heart, HeartFilled } from '../../assets/icons';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useCart } from '../../core/ContextProviders/CartContext';
-import { useFavorites } from '../../core/ContextProviders/FavoritesContext';
+import "./ProductCard.scss";
+import { Heart, HeartFilled } from "../../assets/icons";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCart } from "../../core/ContextProviders/CartContext";
+import { useFavorites } from "../../core/ContextProviders/FavoritesContext";
 
 type Props = {
-    activeIndex?: number;
-    cardWidth?: number;
-    productPage?: boolean;
-    name: string;
-    fullPrice: number;
-    price: number;
-    screen: string;
-    capacity: string;
-    ram: string;
-    image: string;
-    id: string
-}
+  activeIndex?: number;
+  cardWidth?: number;
+  productPage?: boolean;
+  name: string;
+  fullPrice: number;
+  price: number;
+  screen: string;
+  capacity: string;
+  ram: string;
+  image: string;
+  id: string;
+};
 
-const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, capacity, ram, image, productPage, id}: Props) => {
-  const {product, productId} = useParams();
+const ProductCard = ({
+  activeIndex,
+  cardWidth,
+  name,
+  fullPrice,
+  price,
+  screen,
+  capacity,
+  ram,
+  image,
+  productPage,
+  id,
+}: Props) => {
+  const { product, productId } = useParams();
   const navigate = useNavigate();
-  const {addToCart} = useCart();
-  const {addToFavorites, favoritesItems, removeFromFavorites} = useFavorites();
-  
+  const { addToCart } = useCart();
+  const { addToFavorites, favoritesItems, removeFromFavorites } =
+    useFavorites();
+
   const navigateToItem = () => {
-    if(productId){
+    if (productId) {
       navigate(`/phones/${id}`);
-    } else if (product === 'phones') {
+    } else if (product === "phones") {
       navigate(id);
-    }else if(product === 'tablets'){
+    } else if (product === "tablets") {
       navigate(`/tablets/${id}`);
-    }else {
+    } else {
       navigate(`/phones/${id}`);
     }
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const onLikeProduct = () => {
-    if(favoritesItems.find(item => item.id === id)){
+    if (favoritesItems.find((item) => item.id === id)) {
       removeFromFavorites(id);
-    }else {
-      addToFavorites({id, name, price, fullPrice, screen, capacity, ram, image});
+    } else {
+      addToFavorites({
+        id,
+        name,
+        price,
+        fullPrice,
+        screen,
+        capacity,
+        ram,
+        image,
+      });
     }
   };
 
   return (
     <div
-      className={`card ${productPage ? 'productPageCard' : ''} shadow-lg`} 
-      style={{ transform: activeIndex && cardWidth ? `translateX(-${activeIndex * cardWidth}px)` : '' }}
+      className={`card ${productPage ? "productPageCard" : ""} shadow-lg`}
+      style={{
+        transform:
+          activeIndex && cardWidth
+            ? `translateX(-${activeIndex * cardWidth}px)`
+            : "",
+      }}
     >
-      <img src={image} alt={name} className="card-img imageLink" onClick={navigateToItem}/>
+      <img
+        src={image}
+        alt={name}
+        className="card-img imageLink"
+        onClick={navigateToItem}
+      />
 
       <p className="card-title" onClick={navigateToItem}>
         {name}
       </p>
-              
+
       <div className="card-priceBox">
         <h3 className="card-priceBox-price">${price}</h3>
-        {(price !== fullPrice) &&<p className="card-priceBox-oldPrice">${fullPrice}</p>}
+        {price !== fullPrice && (
+          <p className="card-priceBox-oldPrice">${fullPrice}</p>
+        )}
       </div>
 
       <hr className="card-divider" />
@@ -79,20 +113,28 @@ const ProductCard = ({activeIndex, cardWidth, name, fullPrice, price, screen, ca
       </div>
 
       <div className="card-buttons">
-        <button 
-          type="button" 
+        <button
+          type="button"
           className="card-buttons-addToCart"
-          onClick={() => addToCart({image, price, name})}
+          onClick={() => addToCart({ image, price, name })}
         >
-              Add to cart
+          Add to cart
         </button>
 
-        <button 
-          type="button" 
+        <button
+          type="button"
           className="card-buttons-like"
           onClick={onLikeProduct}
         >
-          <img src={!favoritesItems.find(item => item.name === name) ? Heart : HeartFilled} alt="like" className="imageLink"/>
+          <img
+            src={
+              !favoritesItems.find((item) => item.name === name)
+                ? Heart
+                : HeartFilled
+            }
+            alt="like"
+            className="imageLink"
+          />
         </button>
       </div>
     </div>

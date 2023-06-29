@@ -13,6 +13,9 @@ import {
 import { NotFound, ProductDetailsPage } from "../../pages";
 import { sortData } from "../../core/dataUtils";
 import { GetProductData } from "./utils";
+import { type Phone } from "../../core/types/Phone";
+import { type Product } from "../../core/types/Product";
+import { type ProductsListItem } from "../../core/types/ProductsListItem";
 
 export interface FilterOption {
   value: string;
@@ -63,7 +66,7 @@ const ProductPage = () => {
       setParams(params, { replace: true });
     }
 
-    // in case 'page' route param value was set to 0 or minus manually by user through route, reset to default.
+    // in case 'page' route param value was set to 0 or minus, manually by user through route, reset to default.
     if (currentPage <= 0) {
       params.set("page", String(1));
       setParams(params, { replace: true });
@@ -88,16 +91,27 @@ const ProductPage = () => {
     productType,
     productId,
     searchQuery
-  );
+  ) as {
+    isLoading: boolean;
+    isError: boolean;
+    data: (Phone | Product)[];
+    productDetailsFetchUrl: string;
+  };
 
   const currentProducts = useMemo(() => {
     if (itemsPerPage === "all") {
-      return sortData(data, sortType);
+      return sortData(
+        data,
+        sortType as keyof (Phone | Product)
+      ) as ProductsListItem[];
     } else {
       const indexOfLastProduct = currentPage * Number(itemsPerPage);
       const indexOfFirstProduct = indexOfLastProduct - Number(itemsPerPage);
-      sortData(data, sortType);
-      return data.slice(indexOfFirstProduct, indexOfLastProduct);
+      sortData(data, sortType as keyof (Phone | Product));
+      return data.slice(
+        indexOfFirstProduct,
+        indexOfLastProduct
+      ) as ProductsListItem[];
     }
   }, [data]);
 
@@ -185,14 +199,12 @@ const ProductPage = () => {
             {data.length === 0 && !searchQuery && !isError && !isLoading && (
               <h3>There are no {product} yet</h3>
             )}
-
             {currentProducts.length === 0 &&
               searchQuery &&
               !isError &&
               !isLoading && (
                 <h4>No results found for {"'" + searchQuery + "'"}</h4>
               )}
-
             {!isLoading && !isError && (
               <div className="productsList">
                 <ProductsList data={currentProducts} />

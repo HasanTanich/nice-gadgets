@@ -1,7 +1,7 @@
-import './CartCard.scss';
-import { GrayClose, Minus, Plus, RedMinus } from '../../../../assets/icons';
-import { CartItem } from '../../../../core/types/Cart';
-import { useCart } from '../../../../core/ContextProviders/CartContext';
+import "./CartCard.scss";
+import { GrayClose, Minus, Plus, RedMinus } from "../../../../assets/icons";
+import { type CartItem } from "../../../../core/types/Cart";
+import { useCart } from "../../../../core/ContextProviders/CartContext";
 
 const CartCard = ({ data }: { data: CartItem }) => {
   const { updateCartItemQuantity, removeCartItem } = useCart();
@@ -26,15 +26,14 @@ const CartCard = ({ data }: { data: CartItem }) => {
       </div>
 
       <div className="cartCard-secondColumn">
-
         <div className="cartCard-counter">
           <button
             type="button"
             onClick={() => updateCartItemQuantity(id, false)}
-            className={`${quantity > 1 ? 'imageLink' : ''}`}
+            className={`${quantity > 1 ? "imageLink" : ""}`}
             disabled={quantity === 1}
           >
-            <img src={quantity === 1 ? Minus : RedMinus} alt=""/>
+            <img src={quantity === 1 ? Minus : RedMinus} alt="" />
           </button>
 
           <p className="body-text cartCard-counter-quantity">{quantity}</p>
@@ -50,7 +49,6 @@ const CartCard = ({ data }: { data: CartItem }) => {
 
         <h3 className="cartCard-price">${price * quantity}</h3>
       </div>
-
     </div>
   );
 };

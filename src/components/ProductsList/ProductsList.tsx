@@ -1,11 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProductCard } from "../";
+import { type ProductsListItem } from "../../core/types/ProductsListItem";
 import "./ProductsList.scss";
 
-const ProductsList = ({ data }: { data: any }) => {
+type ProductsListProps = {
+  data: ProductsListItem[];
+};
+
+const ProductsList = ({ data }: ProductsListProps) => {
   return (
     <div className="products">
-      {data.map((item: any) => {
+      {data.map((item) => {
         const {
           id,
           name,
@@ -20,8 +24,9 @@ const ProductsList = ({ data }: { data: any }) => {
           fullPrice,
         } = item;
 
-        // when the array has different property names
-        const imgUrl = imageUrl ? imageUrl : image;
+        // when data has different property names
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const imgUrl = imageUrl ? imageUrl : image!;
         const Id = itemId ? itemId : id;
         const itemPrice = discount ? price - discount : price;
         const itemFullPrice = fullPrice ? fullPrice : price;

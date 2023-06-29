@@ -9,6 +9,31 @@ import { Loader } from "../../components";
 import { ProductsSlider } from "../Homepage/components";
 import { ProductCustomization, ProductDescription } from "./components";
 
+export interface ProductDetailsPageItem {
+  name: string;
+  images: string[];
+  colorsAvailable: string[];
+  capacityAvailable: string[];
+  priceRegular: number;
+  priceDiscount: number;
+  screen: string;
+  resolution: string;
+  ram: string;
+  processor: string;
+  description: [
+    {
+      title: string;
+      text: string[];
+    }
+  ];
+  camera: string;
+  zoom: string;
+  cell: string[];
+  capacity: string;
+  color: string;
+  namespaceId: string;
+}
+
 const ProductDetailsPage = ({ url }: { url: string }) => {
   const navigate = useNavigate();
   const { productId } = useParams();
@@ -43,7 +68,7 @@ const ProductDetailsPage = ({ url }: { url: string }) => {
     capacity,
     color,
     namespaceId,
-  } = data;
+  } = data as ProductDetailsPageItem;
 
   return (
     <>

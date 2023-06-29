@@ -1,14 +1,13 @@
 import { useGetItems, useFetchDataFromMultipleUrls } from "../../core/api";
 import { getProductsFromType } from "../../core/dataUtils";
-
 import { type Phone } from "../../core/types/Phone";
+
 import { type Product } from "../../core/types/Product";
 
 type ProductData = {
   isLoading: boolean;
   isError: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any;
+  data: (Phone | Product)[];
   productDetailsFetchUrl: string;
 };
 
@@ -40,11 +39,11 @@ export function GetProductData(
     "/old-api/products.json",
     [`old-${product || ""}-data"`],
     product !== "phones"
-  );
+  ) as { data: Product[]; isLoading: boolean; isError: boolean };
 
   if (product === "phones" && multipleQueries) {
-    const phonesFromNewApi: Phone[] = multipleQueries[0];
-    const productsFromOldApi: Product[] = multipleQueries[1];
+    const phonesFromNewApi = multipleQueries.newData;
+    const productsFromOldApi = multipleQueries.oldData;
     const phonesFromOldApi = getProductsFromType(
       productsFromOldApi,
       productType
@@ -52,7 +51,7 @@ export function GetProductData(
     let data = [...phonesFromNewApi, ...phonesFromOldApi];
     if (id) {
       // check if id is from old api
-      if (productsFromOldApi.find((item: Product) => item.id === id)) {
+      if (productsFromOldApi.find((item) => item.id === id)) {
         productDetailsFetchUrl = "/old-api/products/" + id + ".json";
       } else {
         productDetailsFetchUrl = "/phones/" + id + ".json";

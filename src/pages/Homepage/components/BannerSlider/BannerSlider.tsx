@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import './BannerSlider.scss';
+import type React from "react";
+import { useEffect, useState } from "react";
+import "./BannerSlider.scss";
 
-import { ArrowBlack} from '../../../../assets/icons';
-import { Banner1, Banner2, Banner3, MobileBanner1} from '../../../../assets/img/homepage-banners';
-import { useOutletContext } from 'react-router-dom';
+import { ArrowBlack } from "../../../../assets/icons";
+import {
+  Banner1,
+  Banner2,
+  Banner3,
+  MobileBanner1,
+} from "../../../../assets/img/homepage-banners";
+import { useOutletContext } from "react-router-dom";
 
 const BannerSlider = () => {
-  const screenSize : number = useOutletContext();
-  
+  const screenSize: number = useOutletContext();
+
   const BannerImages = [
     screenSize <= 639 ? MobileBanner1 : Banner1,
     Banner2,
@@ -20,10 +26,10 @@ const BannerSlider = () => {
   const [isSwiping, setIsSwiping] = useState(false);
   const productslength = BannerImages.length;
 
-  useEffect( () => {
+  useEffect(() => {
     const interval = setInterval(() => {
-      if(!paused) {
-        updateIndex(activeIndex+1);
+      if (!paused) {
+        updateIndex(activeIndex + 1);
       }
     }, 5000);
 
@@ -35,9 +41,9 @@ const BannerSlider = () => {
   });
 
   const updateIndex = (newIndex: number) => {
-    if(newIndex < 0){
-      newIndex = productslength -1;
-    }else if (newIndex >= productslength){
+    if (newIndex < 0) {
+      newIndex = productslength - 1;
+    } else if (newIndex >= productslength) {
       newIndex = 0;
     }
     setActiveIndex(newIndex);
@@ -61,63 +67,67 @@ const BannerSlider = () => {
     const deltaX = currentX - startX;
 
     if (deltaX > 70) {
-      updateIndex(activeIndex-1);
+      updateIndex(activeIndex - 1);
     } else if (deltaX < -70) {
-      updateIndex(activeIndex+1);
+      updateIndex(activeIndex + 1);
     }
   };
 
   return (
     <>
       <div className="bannerSlider">
-        <button 
-          onClick={()=> updateIndex(activeIndex-1)}
+        <button
+          onClick={() => updateIndex(activeIndex - 1)}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          <img src={ArrowBlack} alt="banner img" className="leftArrow"/>
+          <img src={ArrowBlack} alt="banner img" className="leftArrow" />
         </button>
-      
+
         <div className="bannerSlider-banners">
-          {BannerImages.map((item, index) =>
+          {BannerImages.map((item, index) => (
             <div
               key={index}
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              className={`bannerSlider-banners-banner bannerSlider-banners-banner-${index+1}`}
-              style={{transform: `translateX(-${activeIndex * 100}%)`}}
+              className={`bannerSlider-banners-banner bannerSlider-banners-banner-${
+                index + 1
+              }`}
+              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
               onMouseEnter={() => setPaused(true)}
               onMouseLeave={() => setPaused(false)}
             >
               <img src={item} alt="banner img" />
             </div>
-          )}
+          ))}
         </div>
 
-        <button 
-          onClick={() => updateIndex(activeIndex+1)}
+        <button
+          onClick={() => updateIndex(activeIndex + 1)}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          <img src={ArrowBlack} alt="banner img" className="rightArrow"/>
+          <img src={ArrowBlack} alt="banner img" className="rightArrow" />
         </button>
-
       </div>
       <div className="sliderDots">
-        {BannerImages.map((item, index) =>
-          <div 
-            key={index} 
-            className="sliderDots-dotBox" 
+        {BannerImages.map((item, index) => (
+          <div
+            key={index}
+            className="sliderDots-dotBox"
             onClick={() => updateIndex(index)}
           >
-            <div className={`sliderDots-dot sliderDots-dot${activeIndex === index ? '-active' : ''}`} />
+            <div
+              className={`sliderDots-dot sliderDots-dot${
+                activeIndex === index ? "-active" : ""
+              }`}
+            />
           </div>
-        )}
+        ))}
       </div>
     </>
-      
   );
 };
-  
+
 export default BannerSlider;

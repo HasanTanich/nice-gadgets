@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 export interface cartItemProduct {
   image: string;
   price: number;
