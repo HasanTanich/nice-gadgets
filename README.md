@@ -1,5 +1,5 @@
 # Nice Gadgets
-
+## Everything is made from scratch, without any libraries, except for these: "react-select", "react-icons", "lodash.debounce", "@tanstack/react-query":
 ## Finished the initial idea of the project, might finish the bonus tasks later
 
 ### [DEMO LINK](https://hasantanich-nice-gadgets.netlify.app/)
