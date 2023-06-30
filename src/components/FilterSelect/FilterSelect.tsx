@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import "./FilterSelect.scss";
+import { useSearchParams } from "react-router-dom";
 import Select, {
   type CSSObjectWithLabel,
   type SingleValue,
 } from "react-select";
 import { type FilterOption } from "../../pages/ProductPage/ProductPage";
-import { useSearchParams } from "react-router-dom";
+import "./FilterSelect.scss";
 
 type Props = {
   options: FilterOption[];

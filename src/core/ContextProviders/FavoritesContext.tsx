@@ -1,8 +1,8 @@
 import React, {
   createContext,
+  useEffect,
   useState,
   type ReactNode,
-  useEffect,
 } from "react";
 import { type FavoritesContextType } from "../types/Favorites";
 import { type ProductsListItem } from "../types/ProductsListItem";

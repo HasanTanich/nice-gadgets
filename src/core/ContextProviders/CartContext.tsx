@@ -1,16 +1,16 @@
 import React, {
   createContext,
-  useState,
-  type ReactNode,
   useEffect,
   useMemo,
+  useState,
+  type ReactNode,
 } from "react";
+import { Toaster } from "../../components";
 import {
   type CartContextType,
   type CartItem,
   type cartItemProduct,
 } from "../types/Cart";
-import { Toaster } from "../../components";
 
 export const CartContext = createContext<CartContextType | null>(null);
 

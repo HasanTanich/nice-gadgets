@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Arrow, ArrowBlack } from "../../assets/icons";
 import "./Paginator.scss";

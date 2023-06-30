@@ -1,10 +1,9 @@
-import { Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Route, Routes } from "react-router-dom";
 import "./App.scss";
-
-import { Homepage, NotFound, Favorites, Cart, ProductPage } from "./pages";
 import { Header } from "./components";
-import { FavoritesProvider, CartProvider } from "./core/ContextProviders";
+import { CartProvider, FavoritesProvider } from "./core/ContextProviders";
+import { Cart, Favorites, Homepage, NotFound, ProductPage } from "./pages";
 
 const queryClient = new QueryClient();
 

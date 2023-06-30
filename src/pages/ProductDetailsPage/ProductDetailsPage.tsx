@@ -1,13 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
-import "./ProductDetailsPage.scss";
-
 import { ArrowBlack } from "../../assets/icons";
+import { Loader } from "../../components";
 import { useGetItems } from "../../core/api";
 import { useGetSuggestedProducts } from "../../core/dataUtils";
-
-import { Loader } from "../../components";
 import { ProductsSlider } from "../Homepage/components";
 import { ProductCustomization, ProductDescription } from "./components";
+import "./ProductDetailsPage.scss";
 
 export interface ProductDetailsPageItem {
   name: string;

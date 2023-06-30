@@ -1,21 +1,22 @@
 import { useEffect, useMemo } from "react";
-import "./ProductPage.scss";
-
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
-import { Home, Arrow } from "../../assets/icons";
+
+import { Arrow, Home } from "../../assets/icons";
 import {
   FilterSelect,
-  ProductsList,
-  Reload,
   Loader,
   Paginator,
+  ProductsList,
+  Reload,
 } from "../../components";
-import { NotFound, ProductDetailsPage } from "../../pages";
 import { sortData } from "../../core/dataUtils";
-import { GetProductData } from "./utils";
 import { type Phone } from "../../core/types/Phone";
 import { type Product } from "../../core/types/Product";
 import { type ProductsListItem } from "../../core/types/ProductsListItem";
+
+import { NotFound, ProductDetailsPage } from "../../pages";
+import "./ProductPage.scss";
+import { GetProductData } from "./utils";
 
 export interface FilterOption {
   value: string;

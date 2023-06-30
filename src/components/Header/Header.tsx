@@ -1,12 +1,11 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, Outlet, useParams } from "react-router-dom";
-import "./Header.scss";
-
-import { Logo, Heart, Cart, Menu, Close } from "../../assets/icons";
 import { Footer } from "../";
-import SearchBar from "./SearchBar";
+import { Cart, Close, Heart, Logo, Menu } from "../../assets/icons";
 import { useCart } from "../../core/ContextProviders/CartContext";
 import { useFavorites } from "../../core/ContextProviders/FavoritesContext";
+import "./Header.scss";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   const { totalCount } = useCart();

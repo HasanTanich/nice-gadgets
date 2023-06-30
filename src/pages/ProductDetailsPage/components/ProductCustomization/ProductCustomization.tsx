@@ -1,10 +1,10 @@
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import "./ProductCustomization.scss";
-import { useState, useEffect, useMemo } from "react";
 import { Heart, HeartFilled } from "../../../../assets/icons";
-import Tech from "../Tech";
 import { useCart } from "../../../../core/ContextProviders/CartContext";
 import { useFavorites } from "../../../../core/ContextProviders/FavoritesContext";
+import Tech from "../Tech";
+import "./ProductCustomization.scss";
 
 type Props = {
   images: string[];

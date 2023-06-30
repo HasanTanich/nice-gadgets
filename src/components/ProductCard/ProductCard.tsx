@@ -1,8 +1,8 @@
-import "./ProductCard.scss";
-import { Heart, HeartFilled } from "../../assets/icons";
 import { useNavigate, useParams } from "react-router-dom";
+import { Heart, HeartFilled } from "../../assets/icons";
 import { useCart } from "../../core/ContextProviders/CartContext";
 import { useFavorites } from "../../core/ContextProviders/FavoritesContext";
+import "./ProductCard.scss";
 
 type Props = {
   activeIndex?: number;

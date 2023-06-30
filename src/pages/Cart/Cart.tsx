@@ -1,12 +1,15 @@
-import './Cart.scss';
-import { BackButton } from '../../components';
-import { useCart } from '../../core/ContextProviders/CartContext';
-import { CartCard, CheckoutModal } from './components';
-import { useState } from 'react';
+import { useState } from "react";
+import { BackButton } from "../../components";
+import { useCart } from "../../core/ContextProviders/CartContext";
+import "./Cart.scss";
+import { CartCard, CheckoutModal } from "./components";
 
 const Cart = () => {
   const { cartItems, totalCount } = useCart();
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.quantity * item.product.price, 0);
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.quantity * item.product.price,
+    0
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const onCloseModal = () => {
@@ -19,11 +22,10 @@ const Cart = () => {
 
       <h1 className="cartTitle">Cart</h1>
 
-      {cartItems.length > 0 &&
+      {cartItems.length > 0 && (
         <div className="columns">
-
           <div className="cartItems">
-            {cartItems.map(item => (
+            {cartItems.map((item) => (
               <div className="cartItemsCard" key={item.id}>
                 <CartCard key={item.id} data={item} />
               </div>
@@ -34,19 +36,14 @@ const Cart = () => {
             <h2>${totalPrice}</h2>
             <p className="body-text">Total for {totalCount} items</p>
             <div className="divider checkoutDivider" />
-            <button 
-              type="button" 
-              onClick={() => setIsOpen(true)}
-            >
+            <button type="button" onClick={() => setIsOpen(true)}>
               Checkout
             </button>
-            
           </div>
-        </div>}
+        </div>
+      )}
 
-      {cartItems.length === 0 &&
-        <h3>Your cart is empty</h3>
-      }
+      {cartItems.length === 0 && <h3>Your cart is empty</h3>}
 
       <CheckoutModal open={isOpen} onClose={onCloseModal} />
     </div>

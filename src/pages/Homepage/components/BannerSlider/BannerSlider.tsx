@@ -1,7 +1,6 @@
 import type React from "react";
 import { useEffect, useState } from "react";
-import "./BannerSlider.scss";
-
+import { useOutletContext } from "react-router-dom";
 import { ArrowBlack } from "../../../../assets/icons";
 import {
   Banner1,
@@ -9,7 +8,7 @@ import {
   Banner3,
   MobileBanner1,
 } from "../../../../assets/img/homepage-banners";
-import { useOutletContext } from "react-router-dom";
+import "./BannerSlider.scss";
 
 const BannerSlider = () => {
   const screenSize: number = useOutletContext();

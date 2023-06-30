@@ -1,15 +1,14 @@
-import "./CategoryBanners.scss";
 import { useNavigate } from "react-router-dom";
-
-import { useGetItems } from "../../../../core/api";
-import { getProductsFromType } from "../../../../core/dataUtils";
 import {
+  accessories,
   mobilePhones,
   tablets,
-  accessories,
 } from "../../../../assets/img/category-banners";
-import { type Product } from "../../../../core/types/Product";
+import { useGetItems } from "../../../../core/api";
+import { getProductsFromType } from "../../../../core/dataUtils";
 import { type Phone } from "../../../../core/types/Phone";
+import { type Product } from "../../../../core/types/Product";
+import "./CategoryBanners.scss";
 
 const CategoryBanners = () => {
   const navigate = useNavigate();

@@ -1,5 +1,4 @@
-import { type QueryKey, useQuery } from "@tanstack/react-query";
-// import { type ProductDetailsPageItem } from "../pages/ProductDetailsPage/ProductDetailsPage";
+import { useQuery, type QueryKey } from "@tanstack/react-query";
 import { type Phone } from "./types/Phone";
 import { type Product } from "./types/Product";
 

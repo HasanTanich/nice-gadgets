@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import "./ProductsSlider.scss";
-
-import { ArrowBlack, Arrow } from "../../../../assets/icons";
-import { type Phone } from "../../../../core/types/Phone";
 import { useOutletContext } from "react-router-dom";
+import { Arrow, ArrowBlack } from "../../../../assets/icons";
 import { Loader, ProductCard } from "../../../../components";
+import { type Phone } from "../../../../core/types/Phone";
+import "./ProductsSlider.scss";
 
 type Props = {
   data: Phone[];

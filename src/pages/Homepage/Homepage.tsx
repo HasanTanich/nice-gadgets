@@ -1,8 +1,7 @@
-import "./Homepage.scss";
-
-import { BannerSlider, CategoryBanners, ProductsSlider } from "./components";
 import { useGetItems } from "../../core/api";
 import { type Phone } from "../../core/types/Phone";
+import { BannerSlider, CategoryBanners, ProductsSlider } from "./components";
+import "./Homepage.scss";
 import { getProductsSliderData } from "./utils";
 
 const Homepage = () => {

@@ -1,7 +1,7 @@
-import "./CartCard.scss";
 import { GrayClose, Minus, Plus, RedMinus } from "../../../../assets/icons";
-import { type CartItem } from "../../../../core/types/Cart";
 import { useCart } from "../../../../core/ContextProviders/CartContext";
+import { type CartItem } from "../../../../core/types/Cart";
+import "./CartCard.scss";
 
 const CartCard = ({ data }: { data: CartItem }) => {
   const { updateCartItemQuantity, removeCartItem } = useCart();

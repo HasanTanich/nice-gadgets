@@ -1,7 +1,6 @@
-import { useGetItems, useFetchDataFromMultipleUrls } from "../../core/api";
+import { useFetchDataFromMultipleUrls, useGetItems } from "../../core/api";
 import { getProductsFromType } from "../../core/dataUtils";
 import { type Phone } from "../../core/types/Phone";
-
 import { type Product } from "../../core/types/Product";
 
 type ProductData = {
